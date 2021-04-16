@@ -1,0 +1,29 @@
+Config { font = "xft:Hack Nerd Font:weight=bold:pixelsize=11"
+       , additionalFonts = [ "xft:Arimo Nerd Font:pixelsize=16:spacing=3"]
+       , bgColor = "#152429"
+       , fgColor = "#ffaa00"
+       , alpha = 127
+       , position = Static { xpos = 0 , ypos = 0, width = 1366, height = 30 }
+       , lowerOnStart = True
+       , hideOnStart = False
+       , persistent = False
+      --  , overrideRedirect = False
+       , commands = [ Run BatteryP ["BAT0"]
+                 	[ "-t", "<acstatus>"
+                 	, "-l", "red", "-h", "green"
+                 	, "-L", "20", "-H", "60"
+                 	, "-l", "red", "-h", "green"
+                 	, "--", "-i", "<fn=1>\62851 </fn>Full", "-O", "<fn=1>\62855 </fn><left>+", "-o", "<fn=1>\62845 </fn><left>%"
+                 	] 10
+                    , Run Date "<fc=#00d1ff><fn=1>\61555 </fn></fc>%d/%m" "date" 600
+                    , Run Date "<fc=#00d1ff><fn=1>\61463 </fn></fc>%H:%M" "time" 600
+                    , Run UnsafeStdinReader
+                    , Run Cpu ["-t", "<fc=#00d1ff><fn=1>\63578 </fn></fc><total>%","-H","80","--high","red"] 10
+                    , Run Memory ["-t", "<fc=#00d1ff><fn=1>\64281 </fn></fc><used>M"] 10
+                    , Run DynNetwork ["-t", "<fc=#00d1ff><fn=1>\61699 </fn></fc><rx>kb","--", "--devices", "wls2,ens3"] 10
+                    , Run Com "echo" ["<fc=#ffffff><fn=1> | </fn></fc>"] "SEP" 9000
+                    ]
+       , sepChar = "%"
+       , alignSep = "}{"
+       , template = " %battery%%SEP%%date%%SEP%%time%}<fc=#00d1ff>%UnsafeStdinReader%</fc>{<action=alacritty -e 'htop'>%cpu%%SEP%%memory%</action>%SEP%%dynnetwork% "
+       }

@@ -1,0 +1,1 @@
+nitrogen --random --set-zoom-fill /home/andres/dotFiles/backup/wallpapers/Pc/R\&M

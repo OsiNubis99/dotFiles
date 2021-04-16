@@ -1,0 +1,85 @@
+env:
+  TERM: xterm-256color
+window:
+  dimensions:
+    columns: 0
+    lines: 0
+  padding:
+    x: 4
+    y: 4
+  title: Alacritty
+  class:
+    instance: Alacritty
+    general: Alacritty
+scrolling:
+  history: 5000
+  auto_scroll: false
+tabspaces: 2
+font:
+  normal:
+    family: Hack Nerd Font
+    style: Regular
+  bold:
+    family: Hack Nerd Font
+    style: Bold
+  italic:
+    family: Hack Nerd Font
+    style: Italic
+  bold_italic:
+    family: Hack Nerd Font
+    style: Bold Italic
+  size: 9.5
+  offset:
+    x: 0
+    y: 0
+draw_bold_text_with_bright_colors: true
+colors:
+  primary:
+    background: "0x152429"
+    foreground: "0xfff1da"
+  cursor:
+    text: "0x000000"
+    cursor: "0xffd832"
+  normal:
+    black: "0x000000"
+    red: "0xfd0807"
+    green: "0x32a725"
+    yellow: "0xfffc00"
+    blue: "0xffaa00"
+    magenta: "0xee00ff"
+    cyan: "0x007eff"
+    white: "0xdedede"
+  bright:
+    black: "0xffd832"
+    red: "0xff3000"
+    green: "0x3fd12e"
+    yellow: "0xeeff00"
+    blue: "0xffbe00"
+    magenta: "0xff30cd"
+    cyan: "0x00d1ff"
+    white: "0xffffff"
+background_opacity: 0.95
+selection:
+  # This string contains all characters that are used as separators for
+  # "semantic words" in Alacritty.
+  semantic_escape_chars: ",│`|:\"' ()[]{}<>\t"
+
+  # When set to `true`, selected text will be copied to the primary clipboard.
+  save_to_clipboard: true
+cursor:
+  style: Block
+shell:
+  program: /bin/zsh
+key_bindings:
+  - { key: L, mods: Control, chars: "\x0c" }
+  - { key: V, mods: Control, action: Paste }
+  - { key: L, mods: Control, action: ClearLogNotice }
+  - { key: Key0, mods: Control, action: ResetFontSize }
+  - { key: Insert, mods: Shift, action: PasteSelection }
+  - { key: Plus, mods: Control, action: IncreaseFontSize }
+  - { key: Minus, mods: Control, action: DecreaseFontSize }
+  - { key: Equals, mods: Control, action: IncreaseFontSize }
+  - { key: Home, mods: Shift, action: ScrollToTop, mode: ~Alt }
+  - { key: End, mods: Shift, action: ScrollToBottom, mode: ~Alt }
+  - { key: PageUp, mods: None, action: ScrollPageUp, mode: ~Alt }
+  - { key: PageDown, mods: None, action: ScrollPageDown, mode: ~Alt }
