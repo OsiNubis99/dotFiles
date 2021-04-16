@@ -104,6 +104,7 @@ myStartupHook = do
         spawnOnce "qlipper"
         spawnOnce "picom -f"
         spawnOnce "nm-applet"
+        spawnOnce "flameshot"
         spawnOnce "volumeicon"
         spawnOnce "~/dotFiles/scripts/spawnOnceFDM.sh"
         spawnOnce "~/dotFiles/scripts/spawnOnceTelegram.sh"
