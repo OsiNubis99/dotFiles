@@ -198,23 +198,22 @@ myLogHook = fadeInactiveLogHook fadeAmount
 
 myKeys :: [(String, X ())]
 myKeys =
-    [ ("M-<Space>", spawn "ulauncher-toggle") -- ulaunch
-    , ("M-c", kill1) -- Kill the currently focused client
+    [ ("M-c", kill1) -- Kill the currently focused client
     , ("M-S-c", killAll) -- Kill all windows on current workspace
     , ("M-S-q", io exitSuccess) -- Quits xmonad
     , ("M-S-r", spawn "xmonad --restart") -- Restarts xmonad
     , ("M-C-r", spawn "xmonad --recompile") -- Recompiles xmonad
--- Useful programs to have a keybinding for launch
+			-- Useful programs to have a keybinding for launch
     , ("M-<Return>", spawn (myTerminal)) -- Launch a terminal
+    , ("M-<Space>", spawn "ulauncher-toggle") -- ulaunch
+    , ("M-x", spawn "~/dotFiles/scripts/spawnTrayer.sh") -- Toggle the trayer
     , ("M-z", spawn (myTerminal)) -- Launch a terminal
-    , ("M-x", spawn "~/dotFiles/scripts/spawnTrayer.sh") -- Launch the trayer
-    , ("M-q", spawn "~/dotFiles/scripts/killTrayers.sh") -- Kill all trayers
--- Workspaces
+			-- Workspaces
     , ("M-<Right>", moveTo Next NonEmptyWS) -- Shifts focused window to next ws
     , ("M-<Left>", moveTo Prev NonEmptyWS) -- Shifts focused window to prev ws
     , ("M-S-<Right>", moveTo Next EmptyWS) -- Shifts focused window to next ws
     , ("M-S-<Left>", moveTo Prev EmptyWS) -- Shifts focused window to prev ws
--- Layouts
+			-- Layouts
     , ("M-<Up>", sendMessage (MT.Toggle NBFULL) >> sendMessage ToggleStruts) -- Toggles noborder/full
     , ("M-<Down>", sendMessage NextLayout) -- Change to the next layaout
     , ("M-b", sendMessage Toggle) -- Expand the focus windows (Magnify)
@@ -235,23 +234,23 @@ myKeys =
     , ("M-C-<Right>", sendMessage Expand) -- Expand horiz window
     , ("M-C-<Up>", sendMessage MirrorExpand) -- Expand vert window
     , ("M-C-<Down>", sendMessage MirrorShrink) -- Shrink vert window
--- Wallpapers
+			-- Wallpapers
     , ("M-w o", spawn "nitrogen") -- Set a random wallpaper
     , ("M-w a", spawn "nitrogen --random --set-zoom-fill") -- Set a random wallpaper
     , ("M-w f", spawn "nitrogen --restore") -- Set a default wallpaper
     , ("M-w 1", spawn "~/dotFiles/scripts/setWallAC.sh") -- Set a random wallpaper from AC folder
     , ("M-w 2", spawn "~/dotFiles/scripts/setWallCOD.sh") -- Set a random wallpaper from COD folder
     , ("M-w 3", spawn "~/dotFiles/scripts/setWallRM.sh") -- Set a random wallpaper from R&M folder
--- Sub layouts
-    , ("M-S-;", sendMessage $ pullGroup L)
-    , ("M-S-]", sendMessage $ pullGroup R)
-    , ("M-S-[", sendMessage $ pullGroup U)
-    , ("M-S-'", sendMessage $ pullGroup D)
-    , ("M-S-m", withFocused (sendMessage . MergeAll))
-    , ("M-S-u", withFocused (sendMessage . UnMerge))
-    , ("M-S-/", withFocused (sendMessage . UnMergeAll))
+			-- Sub layouts
+    , ("M-s ;", sendMessage $ pullGroup L)
+    , ("M-s ]", sendMessage $ pullGroup R)
+    , ("M-s [", sendMessage $ pullGroup U)
+    , ("M-s '", sendMessage $ pullGroup D)
+    , ("M-s m", withFocused (sendMessage . MergeAll))
+    , ("M-s u", withFocused (sendMessage . UnMerge))
+    , ("M-s a", withFocused (sendMessage . UnMergeAll))
 
--- Windows navigation
+			-- Windows navigation
     , ("M-k", windows W.focusUp)    -- Move focus to the prev window
     , ("M-S-j", windows W.swapDown)  -- Swap focused window with next window
     , ("M-S-k", windows W.swapUp)  -- Swap focused window with prev window
@@ -259,21 +258,21 @@ myKeys =
     , ("M-S-<Tab>", rotSlavesDown)  -- Rotate all windows except master and keep focus in place
     , ("M-C-<Tab>", rotAllDown)    -- Rotate all the windows in the current stack
 
--- Multimedia Keys
-    -- , ("<XF86AudioPlay>", spawn (myTerminal ++ "mocp --play"))
-    -- , ("<XF86AudioPrev>", spawn (myTerminal ++ "mocp --previous"))
-    -- , ("<XF86AudioNext>", spawn (myTerminal ++ "mocp --next"))
-    , ("<XF86AudioMute>",  spawn "amixer set Master toggle")
+			-- Multimedia Keys
     , ("<XF86AudioLowerVolume>", spawn "amixer set Master 5%- unmute")
     , ("<XF86AudioRaiseVolume>", spawn "amixer set Master 5%+ unmute")
+    , ("<XF86AudioMute>",  spawn "amixer set Master toggle")
     , ("<XF86MonBrightnessUp>", spawn "xbacklight -inc 20")
     , ("<XF86MonBrightnessDown>", spawn "xbacklight -dec 20")
     , ("<XF86HomePage>", spawn (myBrowser))
-    -- , ("<XF86Search>", safeSpawn (myBrowser) ["https://www.duckduckgo.com/"])
+    , ("<Print>", spawn "flameshot gui")
+    -- , ("<XF86AudioNext>", spawn (myTerminal ++ "mocp --next"))
+    -- , ("<XF86AudioPlay>", spawn (myTerminal ++ "mocp --play"))
+    -- , ("<XF86AudioPrev>", spawn (myTerminal ++ "mocp --previous"))
     -- , ("<XF86Mail>", runOrRaise "thunderbird" (resource =? "thunderbird"))
+    -- , ("<XF86Search>", safeSpawn (myBrowser) ["https://www.duckduckgo.com/"])
     -- , ("<XF86Calculator>", runOrRaise "qalculate-gtk" (resource =? "qalculate-gtk"))
     -- , ("<XF86Eject>", spawn "toggleeject")
-    , ("<Print>", spawn "flameshot gui")
     ]
 
 main :: IO ()
