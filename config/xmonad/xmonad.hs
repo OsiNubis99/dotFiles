@@ -100,14 +100,15 @@ windowCount = gets $ Just . show . length . W.integrate' . W.stack . W.workspace
 
 myStartupHook :: X ()
 myStartupHook = do
-        spawnOnce "nitrogen --random q--set-zoom-fill"
+        -- spawnOnce "zsh"
+        spawnOnce "nitrogen --random --set-zoom-fill"
         spawnOnce "qlipper"
         spawnOnce "picom -f"
         spawnOnce "nm-applet"
-        spawnOnce "flameshot"
+        -- spawnOnce "flameshot"
         spawnOnce "volumeicon"
-        spawnOnce "~/dotFiles/scripts/spawnOnceFDM.sh"
-        spawnOnce "~/dotFiles/scripts/spawnOnceTelegram.sh"
+        -- spawnOnce "~/dotFiles/scripts/spawnOnceFDM.sh"
+        -- spawnOnce "~/dotFiles/scripts/spawnOnceTelegram.sh"
         spawnOnce "ulauncher --no-window-shadow --hide-window"
         spawnOnce "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
 
