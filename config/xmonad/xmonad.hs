@@ -220,6 +220,7 @@ myKeys =
     , ("M-w o", spawn "nitrogen")
     , ("M-w a", spawn "~/dotFiles/scripts/setWallpaper.sh '10'")
     , ("M-w f", spawn "nitrogen --restore")
+    , ("M-w l", spawn "~/dotFiles/scripts/listWallpaper.sh")
     , ("M-w 1", spawn "~/dotFiles/scripts/setWallpaper.sh '0'")
     , ("M-w 2", spawn "~/dotFiles/scripts/setWallpaper.sh '1'")
     , ("M-w 3", spawn "~/dotFiles/scripts/setWallpaper.sh '2'")

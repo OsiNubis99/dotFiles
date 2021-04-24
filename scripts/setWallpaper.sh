@@ -1,5 +1,5 @@
 dirs=($(ls -d /home/andres/dotFiles/backup/wallpapers/Pc/*/))
-if ((${#dirs[@]} >= $1 && $1 > 0))
+if ((${#dirs[@]} > $1))
 	then 
 		nitrogen --random --set-zoom-fill ${dirs[$1]}
 	else 
