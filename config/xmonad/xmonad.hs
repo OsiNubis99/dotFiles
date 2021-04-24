@@ -237,11 +237,18 @@ myKeys =
     , ("M-C-<Down>", sendMessage MirrorShrink) -- Shrink vert window
 			-- Wallpapers
     , ("M-w o", spawn "nitrogen") -- Set a random wallpaper
-    , ("M-w a", spawn "nitrogen --random --set-zoom-fill") -- Set a random wallpaper
+    , ("M-w a", spawn "~/dotFiles/scripts/setWallpaper.sh 0") -- Set a random wallpaper
     , ("M-w f", spawn "nitrogen --restore") -- Set a default wallpaper
-    , ("M-w 1", spawn "~/dotFiles/scripts/setWallAC.sh") -- Set a random wallpaper from AC folder
-    , ("M-w 2", spawn "~/dotFiles/scripts/setWallCOD.sh") -- Set a random wallpaper from COD folder
-    , ("M-w 3", spawn "~/dotFiles/scripts/setWallRM.sh") -- Set a random wallpaper from R&M folder
+    , ("M-w 1", spawn "~/dotFiles/scripts/setWallpaper.sh 1") -- Set a random wallpaper from folder
+    , ("M-w 2", spawn "~/dotFiles/scripts/setWallpaper.sh 2") -- Set a random wallpaper from folder
+    , ("M-w 3", spawn "~/dotFiles/scripts/setWallpaper.sh 3") -- Set a random wallpaper from folder
+    , ("M-w 4", spawn "~/dotFiles/scripts/setWallpaper.sh 4") -- Set a random wallpaper from folder
+    , ("M-w 5", spawn "~/dotFiles/scripts/setWallpaper.sh 5") -- Set a random wallpaper from folder
+    , ("M-w 6", spawn "~/dotFiles/scripts/setWallpaper.sh 6") -- Set a random wallpaper from folder
+    , ("M-w 7", spawn "~/dotFiles/scripts/setWallpaper.sh 7") -- Set a random wallpaper from folder
+    , ("M-w 8", spawn "~/dotFiles/scripts/setWallpaper.sh 8") -- Set a random wallpaper from folder
+    , ("M-w 9", spawn "~/dotFiles/scripts/setWallpaper.sh 9") -- Set a random wallpaper from folder
+    , ("M-w 10", spawn "~/dotFiles/scripts/setWallpaper.sh 10") -- Set a random wallpaper from folder
 			-- Sub layouts
     , ("M-s ;", sendMessage $ pullGroup L)
     , ("M-s ]", sendMessage $ pullGroup R)
