@@ -5,43 +5,25 @@ import System.Exit (exitSuccess)
 import qualified XMonad.StackSet as W
 -- Actions
 import XMonad.Actions.CopyWindow (kill1)
-import XMonad.Actions.CycleWS (moveTo, shiftTo, WSType(..), nextScreen, prevScreen)
-import XMonad.Actions.GridSelect
-import XMonad.Actions.MouseResize
-import XMonad.Actions.Promote
-import XMonad.Actions.RotSlaves (rotSlavesDown, rotAllDown)
-import XMonad.Actions.WindowGo (runOrRaise)
+import XMonad.Actions.CycleWS (moveTo, shiftTo, WSType(..))
 import XMonad.Actions.WithAll (sinkAll, killAll)
 -- Data
 import Data.Monoid
 -- Hooks
 import XMonad.Hooks.DynamicLog ( dynamicLogWithPP  , wrap, xmobarPP , xmobarColor , PP(..))
-import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.FadeInactive
-import XMonad.Hooks.ManageDocks (avoidStruts, docksEventHook, manageDocks, ToggleStruts(..))
+import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers (isFullscreen, doFullFloat)
-import XMonad.Hooks.ServerMode
-import XMonad.Hooks.SetWMName
-import XMonad.Hooks.WorkspaceHistory
 -- Layouts
-import XMonad.Layout.SimplestFloat
+import XMonad.Layout.Accordion
+import XMonad.Layout.Drawer
 import XMonad.Layout.ResizableTile
 import XMonad.Layout.Tabbed
 -- Layouts modifiers
-import XMonad.Layout.LayoutModifier
-import XMonad.Layout.LimitWindows (limitWindows, increaseLimit, decreaseLimit)
-import XMonad.Layout.Magnifier
-import XMonad.Layout.MultiToggle (mkToggle, single, EOT(EOT), (??))
-import XMonad.Layout.MultiToggle.Instances (StdTransformers(NBFULL, MIRROR))
-import XMonad.Layout.NoBorders
+import XMonad.Layout.LimitWindows (limitWindows)
 import XMonad.Layout.PerWorkspace
 import XMonad.Layout.Renamed
--- import XMonad.Layout.ShowWName
-import XMonad.Layout.Simplest
 import XMonad.Layout.Spacing
-import XMonad.Layout.SubLayouts
-import XMonad.Layout.WindowNavigation
-import XMonad.Layout.WindowArranger (windowArrange)
 import qualified XMonad.Layout.ToggleLayouts as T (toggleLayouts, ToggleLayout(Toggle))
 import qualified XMonad.Layout.MultiToggle as MT (Toggle(..))
 -- Prompt
@@ -53,9 +35,6 @@ import XMonad.Util.SpawnOnce (spawnOnce)
 
 myFont :: String
 myFont = "xft:Hack Nerd Font:weight=bold:pixelsize=11:antialias=true:hinting=true"
-
-myBigFont :: String
-myBigFont = "xft:Hack Nerd Font:regular:size=73:antialias=true:hinting=true"
 
 myModMask :: KeyMask
 myModMask = mod4Mask
@@ -75,77 +54,55 @@ myNormColor  = "#152429"
 myFocusColor :: String
 myFocusColor  = "#ffaa00"
 
-altMask :: KeyMask
-altMask = mod1Mask
-
 windowCount :: X (Maybe String)
 windowCount = gets $ Just . show . length . W.integrate' . W.stack . W.workspace . W.current . windowset
 
 myStartupHook :: X ()
 myStartupHook = do
-        spawnOnce "~/dotFiles/scripts/setWallpaper.sh '10'"
-        spawnOnce "qlipper"
-        spawnOnce "picom -f"
-        spawnOnce "nm-applet"
-        spawnOnce "volumeicon"
-        spawnOnce "ulauncher --no-window-shadow --hide-window"
-        spawnOnce "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
+  spawnOnce "lxsession -r"
+  spawnOnce "~/dotFiles/scripts/setWallpaper.sh '10'"
+  spawnOnce "qlipper"
+  spawnOnce "picom -f"
+  spawnOnce "nm-applet"
+  spawnOnce "volumeicon"
+  spawnOnce "ulauncher --no-window-shadow --hide-window"
+  spawnOnce "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
 
 myTabTheme = def
-        { fontName      = myFont
-        , activeColor    = "#ffaa00"
-        , inactiveColor    = "#152429"
-        , activeBorderColor  = "#ffaa00"
-        , inactiveBorderColor = "#152429"
-        , activeTextColor  = "#152429"
-        , inactiveTextColor  = "#ffaa00"
-        }
+  { fontName      = myFont
+  , activeColor    = myFocusColor
+  , inactiveColor    = myNormColor
+  , activeBorderColor  = myFocusColor
+  , inactiveBorderColor = myNormColor
+  , activeTextColor  = myNormColor
+  , inactiveTextColor  = myFocusColor
+  }
+-- Border U D R L
+accordion = spacingRaw False (Border 8 8 0 0) True (Border 0 0 0 0 ) True
+  $ Mirror Accordion
+-- floats = limitWindows 20 simplestFloat
+tabs = renamed [Replace "T"]
+  $ spacingRaw False (Border 38 8 8 8) True (Border 0 0 0 0 ) True
+  $ tabbed shrinkText myTabTheme
+tall = renamed [Replace "G"]
+  $ limitWindows 12
+  $ spacingRaw False (Border 34 4 4 4) True (Border 4 4 4 4 ) True
+  $ ResizableTall 1 (1/100) (1/2) []
+gridTall = renamed [Replace "A"]
+  $ drawer 0.1 0.65 (ClassName "Alacritty") accordion `onBottom` tall
+gridTabs = renamed [Replace "A"]
+  $ drawer 0.05 0.65 (ClassName "Alacritty") accordion `onBottom` tabs
 
-defaultSpacing :: Integer -> l a -> XMonad.Layout.LayoutModifier.ModifiedLayout Spacing l a
-defaultSpacing i = spacingRaw False (Border i i i i) True (Border i i i i) True
+defaultLayout = tall ||| gridTall ||| tabs ||| gridTabs
+editorLayout = gridTabs ||| tall
+webLayout = tabs ||| gridTabs
 
-otherSpacing :: Integer -> l a -> XMonad.Layout.LayoutModifier.ModifiedLayout Spacing l a
-otherSpacing i = spacingRaw False (Border i i i i) True (Border i i i i) False
-
-tall  = renamed [Replace "G"]
-    $ windowNavigation
-    $ addTabs shrinkText myTabTheme
-    $ subLayout [] (smartBorders $ tabbed shrinkText myTabTheme)
-    $ magnifierOff
-    $ limitWindows 12
-    $ defaultSpacing 4
-    $ ResizableTall 1 (3/100) (1/2) []
-floats  = renamed [Replace "F"]
-    $ windowNavigation
-    $ addTabs shrinkText myTabTheme
-    $ subLayout [] (smartBorders Simplest)
-    $ limitWindows 20 simplestFloat
-tabs  = renamed [Replace "T"]
-    $ otherSpacing 8
-    $ tabbed shrinkText myTabTheme
-
-firstTall= tall ||| tabs
-
-firstTabs= tabs ||| tall
-
-myLayoutHook = avoidStruts
-				-- $ mouseResize
-								-- $ windowArrange
-								$ T.toggleLayouts floats
-        $ mkToggle (NBFULL ?? EOT) myDefaultLayout
-      where
-        myDefaultLayout = onWorkspaces [( myWorkspaces !! 1 )] firstTabs firstTall
-
-
-xmobarEscape :: String -> String
-xmobarEscape = concatMap doubleLts
-  where
-    doubleLts '<' = "<"
-    doubleLts x  = [x]
+myLayoutHook = onWorkspace ( head myWorkspaces ) editorLayout
+  $ onWorkspace ( myWorkspaces !! 1 ) webLayout defaultLayout
 
 myWorkspaces :: [String]
 myWorkspaces =
-  clickable . map xmobarEscape $
+  clickable
   [ "<fc=#ffaa00><fn=1>\61595 </fn></fc>Editor"
   , "<fc=#ffaa00><fn=1>\62057 </fn></fc>Web"
   , "<fc=#ffaa00><fn=1>\57879 </fn></fc>Chat"
@@ -159,7 +116,7 @@ myWorkspaces =
 
 myManageHook :: XMonad.Query (Data.Monoid.Endo WindowSet)
 myManageHook = composeAll
-  [ className =? "Code" --> doShift ( myWorkspaces !! 0 )
+  [ className =? "Code" --> doShift ( head myWorkspaces )
   , className =? "firefox" --> doShift ( myWorkspaces !! 1 )
   , className =? "Opera" --> doShift ( myWorkspaces !! 1 )
   , className =? "discord" --> doShift (  myWorkspaces !! 2 )
@@ -170,7 +127,7 @@ myManageHook = composeAll
   , className =? "Nm-connection-editorq"  --> doFloat
   , title =? "Oracle VM VirtualBox Manager"  --> doFloat
   , title =? "File Operation Progress"  --> doFloat
-  , (resource =? "Dialog") --> doFloat  -- Float All Dialogs
+  , resource =? "Dialog" --> doFloat
   , isFullscreen --> doFullFloat
   ]
 
@@ -186,32 +143,29 @@ myKeys =
     , ("M-S-r", spawn "xmonad --restart")
     , ("M-C-r", spawn "xmonad --recompile")
       -- Programs
-			    , ("M-<Return>", spawn (myTerminal))
-    , ("M-<Space>", spawn "ulauncher-toggle")
+    , ("M-<Return>", spawn myTerminal)
+    , ("M-<Space>", spawn "~/dotFiles/scripts/spawnRofi.sh")
     , ("M-x", spawn "~/dotFiles/scripts/spawnTrayer.sh")
-    , ("M-z", spawn (myTerminal))
+    , ("M-z", spawn myTerminal)
       -- Workspaces
     , ("M-<Right>", moveTo Next NonEmptyWS)
     , ("M-<Left>", moveTo Prev NonEmptyWS)
     , ("M-S-<Right>", moveTo Next EmptyWS)
     , ("M-S-<Left>", moveTo Prev EmptyWS)
       -- Layouts
-    , ("M-<Up>", sendMessage (MT.Toggle NBFULL) >> sendMessage ToggleStruts)
-    , ("M-<Down>", sendMessage NextLayout)
-    , ("M-b", sendMessage Toggle)
+    , ("M-<Up>", windows W.focusDown)
+    , ("M-<Down>", windows W.focusUp)
+    -- , ("M-b", sendMessage Toggle) -- TODO Toggle full screen
     , ("M-t", withFocused $ windows . W.sink)  -- Push floating window back to tile
     , ("M-a", sinkAll)
     , ("M-m", windows W.swapMaster)
-    , ("M-/", windows W.focusDown)
+    , ("M-/", sendMessage NextLayout)
     , ("M-,", sendMessage (IncMasterN 1))
     , ("M-.", sendMessage (IncMasterN (-1)))
     , ("M-d", decWindowSpacing 2)
     , ("M-i", incWindowSpacing 2)
-    , ("M-C-d", decScreenSpacing 2)
-    , ("M-C-i", incScreenSpacing 2)
-    , ("M-S-<Up>", sendMessage MagnifyMore)
-    , ("M-S-<Down>", sendMessage MagnifyLess)
-    , ("M-S-<Space>", sendMessage ToggleStruts)
+    , ("M-S-d", decScreenSpacing 2)
+    , ("M-S-i", incScreenSpacing 2)
     , ("M-C-<Left>", sendMessage Shrink)
     , ("M-C-<Right>", sendMessage Expand)
     , ("M-C-<Up>", sendMessage MirrorExpand)
@@ -231,41 +185,31 @@ myKeys =
     , ("M-w 8", spawn "~/dotFiles/scripts/setWallpaper.sh '7'")
     , ("M-w 9", spawn "~/dotFiles/scripts/setWallpaper.sh '8'")
     , ("M-w 0", spawn "~/dotFiles/scripts/setWallpaper.sh '9'")
-      -- Sub layouts
-    , ("M-s ;", sendMessage $ pullGroup L)
-    , ("M-s ]", sendMessage $ pullGroup R)
-    , ("M-s [", sendMessage $ pullGroup U)
-    , ("M-s '", sendMessage $ pullGroup D)
-    , ("M-s m", withFocused (sendMessage . MergeAll))
-    , ("M-s u", withFocused (sendMessage . UnMerge))
-    , ("M-s a", withFocused (sendMessage . UnMergeAll))
+      -- Editor
+    , ("M-e 0", spawn "code ~/Repos/OsiNubis99")
+    , ("M-e 1", spawn "code ~/dotFiles")
+    , ("M-e 3", spawn "code ~/Repos/Bots/CaidaVZLABot")
+    , ("M-e 4", spawn "code ~/Repos/Web/Ofimania")
+    , ("M-e 5", spawn "code ~/Repos")
+    , ("M-e 6", spawn "code ~/Repos")
+    , ("M-e 7", spawn "code ~/Repos")
+    , ("M-e 8", spawn "code ~/Repos")
+    , ("M-e 9", spawn "code ~/Repos")
       -- Multimedia Keys
     , ("<XF86AudioLowerVolume>", spawn "amixer set Master 5%- unmute")
     , ("<XF86AudioRaiseVolume>", spawn "amixer set Master 5%+ unmute")
     , ("<XF86AudioMute>",  spawn "amixer set Master toggle")
     , ("<XF86MonBrightnessUp>", spawn "xbacklight -inc 20")
     , ("<XF86MonBrightnessDown>", spawn "xbacklight -dec 20")
-    , ("<XF86HomePage>", spawn (myBrowser))
+    , ("<XF86HomePage>", spawn myBrowser)
     , ("<Print>", spawn "flameshot gui")
-
-      -- Windows navigation
-    , ("M-k", windows W.focusUp)    -- Move focus to the prev window
-    , ("M-S-j", windows W.swapDown)  -- Swap focused window with next window
-    , ("M-S-k", windows W.swapUp)  -- Swap focused window with prev window
-    , ("M-S-<Backspace>", promote)    -- Moves focused window to master, others maintain order
-    , ("M-S-<Tab>", rotSlavesDown)  -- Rotate all windows except master and keep focus in place
-    , ("M-C-<Tab>", rotAllDown)    -- Rotate all the windows in the current stack
     ]
 
 main :: IO ()
 main = do
   xmproc <- spawnPipe "xmobar"
-  xmonad $ ewmh def
-    { manageHook = ( isFullscreen --> doFullFloat ) <+> myManageHook <+> manageDocks
-    , handleEventHook = serverModeEventHookCmd
-        <+> serverModeEventHook
-        <+> serverModeEventHookF "XMONAD_PRINT" (io . putStrLn)
-        <+> docksEventHook
+  xmonad $ def
+    { manageHook = manageDocks <+> myManageHook
     , modMask = myModMask
     , terminal = myTerminal
     , startupHook = myStartupHook
@@ -274,11 +218,11 @@ main = do
     , borderWidth = myBorderWidth
     , normalBorderColor = myNormColor
     , focusedBorderColor = myFocusColor
-    , logHook = workspaceHistoryHook <+> myLogHook <+> dynamicLogWithPP xmobarPP
-        { ppOutput = \x -> hPutStrLn xmproc x
+    , logHook = myLogHook <+> dynamicLogWithPP xmobarPP
+        { ppOutput = hPutStrLn xmproc
         , ppCurrent = xmobarColor "#ffaa00" "" -- Current workspace in xmobar
         , ppHidden = xmobarColor "#3fd12e" "" -- Hidden workspaces in xmobar
-        , ppHiddenNoWindows = \ws -> ws            -- Hidden workspaces (no windows)
+        , ppHiddenNoWindows = id            -- Hidden workspaces (no windows)
         , ppSep =  "<fc=#ffffff><fn=1> | </fn></fc>"    -- Separators in xmobar
         , ppWsSep = " "                    -- Separators
         , ppUrgent = xmobarColor "#C45500" "" . wrap "!" "!" -- Urgent workspace
