@@ -4,10 +4,6 @@ Config { font = "xft:Hack Nerd Font:weight=bold:pixelsize=11"
        , fgColor = "#ffaa00"
        , alpha = 127
        , position = Static { xpos = 0 , ypos = 0, width = 1366, height = 30 }
-       , lowerOnStart = True
-       , hideOnStart = False
-       , persistent = False
-      --  , overrideRedirect = False
        , commands = [ Run BatteryP ["BAT0"]
                  	[ "-t", "<acstatus>"
                  	, "-l", "red", "-h", "green"
