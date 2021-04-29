@@ -65,8 +65,6 @@ myStartupHook = do
   spawnOnce "picom -f"
   spawnOnce "nm-applet"
   spawnOnce "volumeicon"
-  spawnOnce "ulauncher --no-window-shadow --hide-window"
-  spawnOnce "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
 
 myTabTheme = def
   { fontName      = myFont
