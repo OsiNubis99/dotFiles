@@ -136,8 +136,8 @@ myLogHook = fadeInactiveLogHook fadeAmount
 myKeys :: [(String, X ())]
 myKeys =
     [ ("M-c", kill1)
+    , ("M-q", spawn "lxsession-logout")
     , ("M-S-c", killAll)
-    , ("M-S-q", io exitSuccess)
     , ("M-S-r", spawn "xmonad --restart")
     , ("M-C-r", spawn "xmonad --recompile")
       -- Programs
