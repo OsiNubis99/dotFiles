@@ -61,6 +61,7 @@ myStartupHook :: X ()
 myStartupHook = do
   spawnOnce "lxsession -r"
   spawnOnce "~/dotFiles/scripts/setWallpaper.sh '10'"
+  spawnOnce "dunst -config ~/.config/dunst/dunstrc"
   spawnOnce "qlipper"
   spawnOnce "picom -f"
   spawnOnce "nm-applet"
