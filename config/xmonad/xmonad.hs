@@ -92,9 +92,9 @@ gridTall = renamed [Replace "A"]
 gridTabs = renamed [Replace "A"]
   $ drawer 0.05 0.65 (ClassName "Alacritty") accordion `onBottom` tabs
 
-defaultLayout = tall ||| gridTall ||| tabs ||| gridTabs
-editorLayout = gridTabs ||| tall
-webLayout = tabs ||| gridTabs
+defaultLayout = tall ||| gridTabs ||| gridTall ||| tabs
+editorLayout = gridTabs ||| gridTall ||| tabs ||| tall
+webLayout = tabs ||| tall ||| gridTabs ||| gridTall
 
 myLayoutHook = onWorkspace ( head myWorkspaces ) editorLayout
   $ onWorkspace ( myWorkspaces !! 1 ) webLayout defaultLayout
@@ -187,8 +187,9 @@ myKeys =
       -- Editor
     , ("M-e 0", spawn "code ~/Repos/OsiNubis99")
     , ("M-e 1", spawn "code ~/dotFiles")
-    , ("M-e 3", spawn "code ~/Repos/Bots/CaidaVZLABot")
-    , ("M-e 4", spawn "code ~/Repos/Web/Ofimania")
+    , ("M-e 2", spawn "code ~/Repos/Bots/CaidaVZLABot")
+    , ("M-e 3", spawn "code ~/Repos/Web/Ofimania")
+    , ("M-e 4", spawn "code ~/Repos")
     , ("M-e 5", spawn "code ~/Repos")
     , ("M-e 6", spawn "code ~/Repos")
     , ("M-e 7", spawn "code ~/Repos")
