@@ -31,6 +31,7 @@ network-manager-applet
 networkmanager-openrc
 nitrogen
 nodejs
+nomacs
 npm
 numlockx
 opera
@@ -50,6 +51,7 @@ wpa_supplicant
 xdotool
 xf86-video-intel
 xf86-video-vesa
+xarchiver
 xmobar
 xmonad
 xmonad-contrib
