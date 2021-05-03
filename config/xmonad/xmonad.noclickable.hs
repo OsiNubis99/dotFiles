@@ -23,6 +23,7 @@ import XMonad.Layout.Tabbed
 import XMonad.Layout.LimitWindows (limitWindows)
 import XMonad.Layout.PerWorkspace
 import XMonad.Layout.Renamed
+import XMonad.Layout.ShowWName
 import XMonad.Layout.Spacing
 import qualified XMonad.Layout.ToggleLayouts as T (toggleLayouts, ToggleLayout(Toggle))
 import qualified XMonad.Layout.MultiToggle as MT (Toggle(..))
@@ -87,9 +88,9 @@ tall = renamed [Replace "G"]
   $ limitWindows 12
   $ spacingRaw False (Border 34 4 4 4) True (Border 4 4 4 4 ) True
   $ ResizableTall 1 (1/100) (1/2) []
-gridTall = renamed [Replace "A"]
-  $ drawer 0.1 0.65 (ClassName "Alacritty") accordion `onBottom` tall
-gridTabs = renamed [Replace "A"]
+gridTall = renamed [Replace "t"]
+  $ drawer 0.05 0.65 (ClassName "Alacritty") accordion `onBottom` tall
+gridTabs = renamed [Replace "g"]
   $ drawer 0.05 0.65 (ClassName "Alacritty") accordion `onBottom` tabs
 
 defaultLayout = tall ||| gridTabs ||| gridTall ||| tabs
@@ -100,18 +101,21 @@ myLayoutHook = onWorkspace ( head myWorkspaces ) editorLayout
   $ onWorkspace ( myWorkspaces !! 1 ) webLayout defaultLayout
 
 myWorkspaces :: [String]
-myWorkspaces =
-  clickable
-  [ "<fc=#ffaa00><fn=1>\61595 </fn></fc>Editor"
-  , "<fc=#ffaa00><fn=1>\62057 </fn></fc>Web"
-  , "<fc=#ffaa00><fn=1>\57879 </fn></fc>Chat"
-  , "<fc=#ffaa00><fn=1>\61563 </fn></fc>File"
-  , "<fc=#ffaa00><fn=1>\57871 </fn></fc>Tool"
-  , "<fc=#ffaa00><fn=1>\57969 </fn></fc>Media"]
-    where
-      clickable l = [ "<action=xdotool key super+" ++ show n ++ ">" ++ ws ++ "</action>" |
-        (i,ws) <- zip [1..9] l,
-        let n = i]
+myWorkspaces = 
+  [ "\61595 Editor"
+  , "\62057 Web"
+  , "\57879 Chat"
+  , "\61563 File"
+  , "\57871 Tool"
+  , "\57969 Media"]
+
+myShowWNameTheme :: SWNConfig
+myShowWNameTheme = def
+    { swn_font              = "xft:Ubuntu:bold:size=60"
+    , swn_fade              = 0.95
+    , swn_bgcolor           = "#152429"
+    , swn_color             = "#ffaa00"
+    }
 
 myManageHook :: XMonad.Query (Data.Monoid.Endo WindowSet)
 myManageHook = composeAll
@@ -125,8 +129,8 @@ myManageHook = composeAll
   , className =? "vlc" --> doShift ( myWorkspaces !! 5 )
   , className =? "Nm-connection-editorq"  --> doFloat
   , title =? "Oracle VM VirtualBox Manager"  --> doFloat
-  , title =? "File Operation Progress"  --> doFloat
-  , resource =? "Dialog" --> doFloat
+  , title =? "File Operation Progress"  --> doFullFloat
+  , resource =? "Dialog" --> doFullFloat
   , isFullscreen --> doFullFloat
   ]
 
@@ -141,6 +145,7 @@ myKeys =
     , ("M-S-c", killAll)
     , ("M-S-r", spawn "xmonad --restart")
     , ("M-C-r", spawn "xmonad --recompile")
+    , ("M-S-x", spawn "~/dotFiles/scripts/xmonadClickable.sh")
       -- Programs
     , ("M-<Return>", spawn myTerminal)
     , ("M-<Space>", spawn "~/dotFiles/scripts/spawnRofi.sh")
@@ -154,8 +159,8 @@ myKeys =
       -- Layouts
     , ("M-<Up>", windows W.focusDown)
     , ("M-<Down>", windows W.focusUp)
-    -- , ("M-b", sendMessage Toggle) -- TODO Toggle full screen
-    , ("M-t", withFocused $ windows . W.sink)  -- Push floating window back to tile
+    , ("M-b", sendMessage (T.Toggle "tall"))
+    , ("M-t", withFocused $ windows . W.sink)
     , ("M-a", sinkAll)
     , ("M-m", windows W.swapMaster)
     , ("M-/", sendMessage NextLayout)
@@ -213,20 +218,20 @@ main = do
     , modMask = myModMask
     , terminal = myTerminal
     , startupHook = myStartupHook
-    , layoutHook = myLayoutHook
+    , layoutHook = showWName' myShowWNameTheme $ myLayoutHook
     , workspaces = myWorkspaces
     , borderWidth = myBorderWidth
     , normalBorderColor = myNormColor
     , focusedBorderColor = myFocusColor
     , logHook = myLogHook <+> dynamicLogWithPP xmobarPP
         { ppOutput = hPutStrLn xmproc
-        , ppCurrent = xmobarColor "#ffaa00" "" -- Current workspace in xmobar
-        , ppHidden = xmobarColor "#3fd12e" "" -- Hidden workspaces in xmobar
-        , ppHiddenNoWindows = id            -- Hidden workspaces (no windows)
-        , ppSep =  "<fc=#ffffff><fn=1> | </fn></fc>"    -- Separators in xmobar
-        , ppWsSep = " "                    -- Separators
-        , ppUrgent = xmobarColor "#C45500" "" . wrap "!" "!" -- Urgent workspace
-        , ppExtras  = [windowCount]              -- # of windows current workspace
+        , ppCurrent = xmobarColor "#ffaa00" ""
+        , ppHidden = xmobarColor "#3fd12e" ""
+        , ppHiddenNoWindows = id
+        , ppSep =  "<fc=#ffffff><fn=1> | </fn></fc>"
+        , ppWsSep = " "
+        , ppUrgent = xmobarColor "#C45500" "" . wrap "!" "!"
+        , ppExtras  = [windowCount]
         , ppOrder  = \(ws:l:t:ex) -> [l,ws]++ex
         }
     } `additionalKeysP` myKeys

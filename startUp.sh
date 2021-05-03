@@ -49,6 +49,7 @@ ln -s ~/dotFiles/config/xmobar ~/.config/xmobar
 ## Xmonad
 rm -r -f ~/.xmonad
 ln -s ~/dotFiles/config/xmonad ~/.xmonad
+ln -s ~/.xmonad/xmonad.clickable.hs ~/.xmonad/xmonad.hs
 
 ## Wallpapers
 rm -r -f ~/Pictures/wallpapers
