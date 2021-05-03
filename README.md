@@ -126,4 +126,3 @@ Andrés Hurtado - [@OsiNubis](https://t.me/OsiNubis99) - OsiNubis99@PM.me
 [issues-url]: https://github.com/OsiNubis99/dotFiles/issues
 [license-shield]: https://img.shields.io/github/license/OsiNubis99/dotFiles.svg?style=for-the-badge
 [license-url]: https://github.com/OsiNubis99/dotFiles/blob/master/LICENSE
-[product-screenshot]: https://telegram.org/img/t_logo.svg?1
