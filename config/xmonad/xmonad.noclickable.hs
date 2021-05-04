@@ -88,9 +88,9 @@ tall = renamed [Replace "G"]
   $ limitWindows 12
   $ spacingRaw False (Border 34 4 4 4) True (Border 4 4 4 4 ) True
   $ ResizableTall 1 (1/100) (1/2) []
-gridTall = renamed [Replace "t"]
+gridTall = renamed [Replace "g"]
   $ drawer 0.05 0.65 (ClassName "Alacritty") accordion `onBottom` tall
-gridTabs = renamed [Replace "g"]
+gridTabs = renamed [Replace "t"]
   $ drawer 0.05 0.65 (ClassName "Alacritty") accordion `onBottom` tabs
 
 defaultLayout = tall ||| gridTabs ||| gridTall ||| tabs
