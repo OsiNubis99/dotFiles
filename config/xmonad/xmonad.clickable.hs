@@ -196,12 +196,16 @@ myKeys =
     , ("M-e 7", spawn "code ~/Repos")
     , ("M-e 8", spawn "code ~/Repos")
     , ("M-e 9", spawn "code ~/Repos")
+      -- Notifications
+    , ("M-C-o", spawn "dunstctl history-pop")
+    , ("M-C-c", spawn "dunstctl close")
+    , ("M-C-a", spawn "dunstctl close-all")
       -- Multimedia Keys
-    , ("<XF86AudioLowerVolume>", spawn "amixer set Master 5%- unmute")
-    , ("<XF86AudioRaiseVolume>", spawn "amixer set Master 5%+ unmute")
-    , ("<XF86AudioMute>",  spawn "amixer set Master toggle")
-    , ("<XF86MonBrightnessUp>", spawn "xbacklight -inc 20")
-    , ("<XF86MonBrightnessDown>", spawn "xbacklight -dec 20")
+    , ("<XF86AudioLowerVolume>", spawn "~/dotFiles/scripts/volume.sh down")
+    , ("<XF86AudioRaiseVolume>", spawn "~/dotFiles/scripts/volume.sh up")
+    , ("<XF86AudioMute>",  spawn "~/dotFiles/scripts/volume.sh mute")
+    , ("<XF86MonBrightnessUp>", spawn "~/dotFiles/scripts/backlight.sh up")
+    , ("<XF86MonBrightnessDown>", spawn "~/dotFiles/scripts/backlight.sh down")
     , ("<XF86HomePage>", spawn myBrowser)
     , ("<Print>", spawn "flameshot gui")
     ]
