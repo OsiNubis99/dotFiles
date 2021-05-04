@@ -8,7 +8,9 @@ import XMonad.Actions.CopyWindow (kill1)
 import XMonad.Actions.CycleWS (moveTo, shiftTo, WSType(..))
 import XMonad.Actions.WithAll (sinkAll, killAll)
 -- Data
+import Data.Maybe (fromJust)
 import Data.Monoid
+import qualified Data.Map as M
 -- Hooks
 import XMonad.Hooks.DynamicLog ( dynamicLogWithPP  , wrap, xmobarPP , xmobarColor , PP(..))
 import XMonad.Hooks.FadeInactive
@@ -35,7 +37,7 @@ import XMonad.Util.Run (spawnPipe)
 import XMonad.Util.SpawnOnce (spawnOnce)
 
 myFont :: String
-myFont = "xft:Hack Nerd Font:weight=bold:pixelsize=11:antialias=true:hinting=true"
+myFont = "xft:Arimo Nerd Font:weight=bold:pixelsize=11:antialias=true:hinting=true"
 
 myModMask :: KeyMask
 myModMask = mod4Mask
@@ -63,6 +65,7 @@ myStartupHook = do
   spawnOnce "lxsession -r"
   spawnOnce "~/dotFiles/scripts/setWallpaper.sh '10'"
   spawnOnce "dunst -config ~/.config/dunst/dunstrc"
+  spawnOnce "~/dotFiles/scripts/spawnTrayer.sh"
   spawnOnce "qlipper"
   spawnOnce "picom -f"
   spawnOnce "nm-applet"
@@ -102,19 +105,33 @@ myLayoutHook = onWorkspace ( head myWorkspaces ) editorLayout
 
 myWorkspaces :: [String]
 myWorkspaces = 
-  [ "\61595 Editor"
-  , "\62057 Web"
-  , "\57879 Chat"
-  , "\61563 File"
-  , "\57871 Tool"
-  , "\57969 Media"]
+  [ "Editor"
+  , "Web"
+  , "Chat"
+  , "File"
+  , "Tool"
+  , "Media"]
+
+myWorkspaceIcons = M.fromList $ zipWith (,) myWorkspaces 
+  [ "\61595"
+  , "\62057"
+  , "\57879"
+  , "\61563"
+  , "\57871"
+  , "\57969"]
+
+myWorkspaceIndices = M.fromList $ zipWith (,) myWorkspaces [1..]
+
+clickable wsName = "<action=xdotool key super+"++show i++"><fc=#ffaa00><fn=1>"++wsIcon++" </fn></fc>"++wsName++"</action>"
+    where i = fromJust $ M.lookup wsName myWorkspaceIndices
+          wsIcon = fromJust $ M.lookup wsName myWorkspaceIcons
 
 myShowWNameTheme :: SWNConfig
 myShowWNameTheme = def
-    { swn_font              = "xft:Ubuntu:bold:size=60"
-    , swn_fade              = 0.95
-    , swn_bgcolor           = "#152429"
-    , swn_color             = "#ffaa00"
+    { swn_font = myFont
+    , swn_fade = 1
+    , swn_bgcolor = "#152429"
+    , swn_color = "#ffaa00"
     }
 
 myManageHook :: XMonad.Query (Data.Monoid.Endo WindowSet)
@@ -126,8 +143,9 @@ myManageHook = composeAll
   , className =? "TelegramDesktop" --> doShift (  myWorkspaces !! 2 )
   , className =? "Thunar" --> doShift (  myWorkspaces !! 3 )
   , className =? "Free Download Manager" --> doShift  ( myWorkspaces !! 4 )
+  , className =? "zoom"  --> doFloat <+> doShift  ( myWorkspaces !! 4 )
   , className =? "vlc" --> doShift ( myWorkspaces !! 5 )
-  , className =? "Nm-connection-editorq"  --> doFloat
+  , className =? "Nm-connection-editor"  --> doFloat
   , title =? "Oracle VM VirtualBox Manager"  --> doFloat
   , title =? "File Operation Progress"  --> doFullFloat
   , resource =? "Dialog" --> doFullFloat
@@ -145,7 +163,6 @@ myKeys =
     , ("M-S-c", killAll)
     , ("M-S-r", spawn "xmonad --restart")
     , ("M-C-r", spawn "xmonad --recompile")
-    , ("M-S-x", spawn "~/dotFiles/scripts/xmonadClickable.sh")
       -- Programs
     , ("M-<Return>", spawn myTerminal)
     , ("M-<Space>", spawn "~/dotFiles/scripts/spawnRofi.sh")
@@ -229,12 +246,13 @@ main = do
     , focusedBorderColor = myFocusColor
     , logHook = myLogHook <+> dynamicLogWithPP xmobarPP
         { ppOutput = hPutStrLn xmproc
-        , ppCurrent = xmobarColor "#ffaa00" ""
-        , ppHidden = xmobarColor "#3fd12e" ""
-        , ppHiddenNoWindows = id
+        , ppCurrent = xmobarColor "#ffaa00" "" . clickable
+        , ppVisible = xmobarColor "#c792ea" "" . clickable
+        , ppHidden = xmobarColor "#3fd12e" "" . clickable
+        , ppHiddenNoWindows = clickable 
+        , ppUrgent = xmobarColor "#C45500" "" . wrap "!" "!" . clickable
         , ppSep =  "<fc=#ffffff><fn=1> | </fn></fc>"
         , ppWsSep = " "
-        , ppUrgent = xmobarColor "#C45500" "" . wrap "!" "!"
         , ppExtras  = [windowCount]
         , ppOrder  = \(ws:l:t:ex) -> [l,ws]++ex
         }
