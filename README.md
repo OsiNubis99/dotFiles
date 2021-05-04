@@ -4,7 +4,7 @@
 [![Issues][issues-shield]][issues-url]
 [![MIT License][license-shield]][license-url]
 
-<!-- PROJECT LOGO -->
+<!-- PROJECT DESCRIPTION -->
 <p align="center">
   <a href="https://github.com/OsiNubis99/dotFiles">
     <img src="https://www.vectorlogo.zone/logos/linux/linux-icon.svg" alt="Logo" width="80" height="80">
@@ -23,21 +23,19 @@
 
 ## Table of Contents
 
-  <ol>
-    <li>
-      <a href="#built-with">Built With</a>
-    <li>
-      <a href="#getting-started">Getting Started</a>
-      <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#deployment">Deployment</a></li>
-      </ul>
-    </li>
-    <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ol>
+- [Table of Contents](#table-of-contents)
+- [Built With](#built-with)
+  - [Content](#content)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Deployment](#deployment)
+- [Roadmap](#roadmap)
+- [Contributing](#contributing)
+- [License](#license)
+- [Contact](#contact)
+  - [Social medias](#social-medias)
+  - [Email](#email)
+- [Acknowledgements](#acknowledgements)
 
 <!-- ABOUT THE PROJECT -->
 
@@ -47,6 +45,16 @@
 - [Paru](https://github.com/morganamilo/paru)
 
 ### Content
+
+- [Alacritty](https://github.com/OsiNubis99/dotFiles/tree/main/config/alacritty)
+- [Dunst](https://github.com/OsiNubis99/dotFiles/tree/main/config/dunst)
+- [Nitrogen](https://github.com/OsiNubis99/dotFiles/tree/main/config/nitrogen)
+- [Picom](https://github.com/OsiNubis99/dotFiles/tree/main/config/picom)
+- [Rofi](https://github.com/OsiNubis99/dotFiles/tree/main/config/rofi)
+- [Scripts](https://github.com/OsiNubis99/dotFiles/tree/main/scripts)
+- [Xmobar](https://github.com/OsiNubis99/dotFiles/tree/main/config/xmobar)
+- [Xmonad](https://github.com/OsiNubis99/dotFiles/tree/main/config/xmonad)
+- [ZSH](https://github.com/OsiNubis99/dotFiles/tree/main/config/zsh)
 
 <!-- GETTING STARTED -->
 
@@ -111,10 +119,22 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ## Contact
 
-Andrés Hurtado - [@OsiNubis](https://t.me/OsiNubis99) - OsiNubis99@PM.me
+### Social medias
+
+[![Telegram](https://www.vectorlogo.zone/logos/telegram/telegram-icon.svg)](https://t.me/OsiNubis99)
+[![Vue](https://www.vectorlogo.zone/logos/twitter/twitter-icon.svg)](https://twitter.com/OsiNubis99)
+
+### Email
+
+My email address OsiNubis99@PM.me
+
+<!-- ACKNOWLEDGEMENTS -->
+
+## Acknowledgements
+
+- [Distro Tube](distrotube.com/)
 
 <!-- MARKDOWN LINKS & IMAGES -->
-<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 
 [contributors-shield]: https://img.shields.io/github/contributors/OsiNubis99/dotFiles.svg?style=for-the-badge
 [contributors-url]: https://github.com/OsiNubis99/dotFiles/graphs/contributors
