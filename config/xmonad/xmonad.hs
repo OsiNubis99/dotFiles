@@ -39,6 +39,9 @@ import XMonad.Util.SpawnOnce (spawnOnce)
 myFont :: String
 myFont = "xft:Arimo Nerd Font:weight=bold:pixelsize=11:antialias=true:hinting=true"
 
+myBigFont :: String
+myBigFont = "xft:Arimo Nerd Font:regular:size=73:antialias=true:hinting=true"
+
 myModMask :: KeyMask
 myModMask = mod4Mask
 
@@ -128,7 +131,7 @@ clickable wsName = "<action=xdotool key super+"++show i++"><fc=#ffaa00><fn=1>"++
 
 myShowWNameTheme :: SWNConfig
 myShowWNameTheme = def
-    { swn_font = myFont
+    { swn_font = myBigFont
     , swn_fade = 1
     , swn_bgcolor = "#152429"
     , swn_color = "#ffaa00"
