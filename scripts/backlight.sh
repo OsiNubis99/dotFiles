@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # You can call this script like this:
-# backlight.sh up
-# backlight.sh down
+# backlight.sh up 10
+# backlight.sh down 10
 
 function get_backlight {
   xbacklight -get | cut -d '.' -f 1
@@ -15,11 +15,11 @@ function send_notification {
 
 case $1 in
   up)
-	  xbacklight -inc 20 > /dev/null
+	  xbacklight -inc $2 > /dev/null
 	  send_notification
 	  ;;
   down)
-	  xbacklight -dec 20 > /dev/null
+	  xbacklight -dec $2 > /dev/null
 	  send_notification
 	  ;;
 esac

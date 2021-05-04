@@ -225,11 +225,11 @@ myKeys =
     , ("M-C-c", spawn "dunstctl close")
     , ("M-C-a", spawn "dunstctl close-all")
       -- Multimedia Keys
-    , ("<XF86AudioLowerVolume>", spawn "~/dotFiles/scripts/volume.sh down")
-    , ("<XF86AudioRaiseVolume>", spawn "~/dotFiles/scripts/volume.sh up")
+    , ("<XF86AudioLowerVolume>", spawn "~/dotFiles/scripts/volume.sh down 5")
+    , ("<XF86AudioRaiseVolume>", spawn "~/dotFiles/scripts/volume.sh up 5")
     , ("<XF86AudioMute>",  spawn "~/dotFiles/scripts/volume.sh mute")
-    , ("<XF86MonBrightnessUp>", spawn "~/dotFiles/scripts/backlight.sh up")
-    , ("<XF86MonBrightnessDown>", spawn "~/dotFiles/scripts/backlight.sh down")
+    , ("<XF86MonBrightnessUp>", spawn "~/dotFiles/scripts/backlight.sh up 10")
+    , ("<XF86MonBrightnessDown>", spawn "~/dotFiles/scripts/backlight.sh down 10")
     , ("<XF86HomePage>", spawn myBrowser)
     , ("<Print>", spawn "flameshot gui")
     ]

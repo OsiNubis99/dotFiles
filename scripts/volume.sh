@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # You can call this script like this:
-# volume.sh up
-# volume.sh down
+# volume.sh up 5
+# volume.sh down 5
 # volume.sh mute
 
 function get_volume {
@@ -20,11 +20,11 @@ function send_notification {
 
 case $1 in
   up)
-	  amixer set Master 5%+ unmute > /dev/null
+	  amixer set Master $2%+ unmute > /dev/null
 	  send_notification
 	  ;;
   down)
-	  amixer set Master 5%- unmute > /dev/null
+	  amixer set Master $2%- unmute > /dev/null
 	  send_notification
 	  ;;
   mute)
