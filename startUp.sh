@@ -13,8 +13,8 @@ rm -r -f ~/.config/alacritty
 ln -s ~/dotFiles/config/alacritty ~/.config/alacritty
 
 ## Donts
-rm -r -f ~/.config/donts
-ln -s ~/dotFiles/config/donts ~/.config/donts
+rm -r -f ~/.config/dunst
+ln -s ~/dotFiles/config/dunst ~/.config/dunst
 
 ## Fontconfig
 rm -r -f ~/.local/share/fonts
