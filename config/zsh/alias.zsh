@@ -11,6 +11,15 @@ alias edi="sudo nvim"
 alias srm="sudo rm -r"
 alias ls="ls --color=auto -A"
 alias gitu="git add . && git commit && git push"
+# vim and emacs
+alias vim="nvim"
+alias em="/usr/bin/emacs -nw"
+alias emacs="emacsclient -c -a 'emacs'"
+alias doomsync="~/.emacs.d/bin/doom sync"
+alias doomdoctor="~/.emacs.d/bin/doom doctor"
+alias doomupgrade="~/.emacs.d/bin/doom upgrade"
+alias doompurge="~/.emacs.d/bin/doom purge"
+
 # Pacman
 alias pai="paru -S --removemake --cleanafter --skipreview"
 alias pain="pai --needed --noconfirm"
