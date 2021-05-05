@@ -23,6 +23,8 @@ import XMonad.Layout.ResizableTile
 import XMonad.Layout.Tabbed
 -- Layouts modifiers
 import XMonad.Layout.LimitWindows (limitWindows)
+import XMonad.Layout.MultiToggle (mkToggle, EOT(EOT), (??))
+import XMonad.Layout.MultiToggle.Instances (StdTransformers(NBFULL, NOBORDERS))
 import XMonad.Layout.PerWorkspace
 import XMonad.Layout.Renamed
 import XMonad.Layout.ShowWName
@@ -86,7 +88,6 @@ myTabTheme = def
 -- Border U D R L
 accordion = spacingRaw False (Border 8 8 0 0) True (Border 0 0 0 0 ) True
   $ Mirror Accordion
--- floats = limitWindows 20 simplestFloat
 tabs = renamed [Replace "T"]
   $ spacingRaw False (Border 38 8 8 8) True (Border 0 0 0 0 ) True
   $ tabbed shrinkText myTabTheme
@@ -103,8 +104,9 @@ defaultLayout = tall ||| gridTabs ||| gridTall ||| tabs
 editorLayout = gridTabs ||| gridTall ||| tabs ||| tall
 webLayout = tabs ||| tall ||| gridTabs ||| gridTall
 
-myLayoutHook = onWorkspace ( head myWorkspaces ) editorLayout
-  $ onWorkspace ( myWorkspaces !! 1 ) webLayout defaultLayout
+myLayoutHook = mkToggle (NBFULL ?? NOBORDERS ?? EOT) myDefaultLayout
+  where
+    myDefaultLayout = onWorkspace ( head myWorkspaces ) editorLayout $ onWorkspace ( myWorkspaces !! 1 ) webLayout defaultLayout
 
 myWorkspaces :: [String]
 myWorkspaces = 
@@ -179,8 +181,8 @@ myKeys =
       -- Layouts
     , ("M-<Up>", windows W.focusDown)
     , ("M-<Down>", windows W.focusUp)
-    , ("M-b", sendMessage (T.Toggle "tall"))
-    , ("M-t", withFocused $ windows . W.sink)
+    , ("M-f", sendMessage (MT.Toggle NBFULL) >> sendMessage ToggleStruts)
+    , ("M-s", withFocused $ windows . W.sink)
     , ("M-a", sinkAll)
     , ("M-m", windows W.swapMaster)
     , ("M-/", sendMessage NextLayout)
