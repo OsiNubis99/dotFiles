@@ -53,6 +53,9 @@ myTerminal = "alacritty"
 myBrowser :: String
 myBrowser = "firefox"
 
+myEditor :: String
+myEditor = "emacsclient -c -a 'emacs' "
+
 myBorderWidth :: Dimension
 myBorderWidth = 2
 
@@ -70,6 +73,7 @@ myStartupHook = do
   spawnOnce "lxsession -r"
   spawnOnce "~/dotFiles/scripts/setWallpaper.sh '10'"
   spawnOnce "dunst -config ~/.config/dunst/dunstrc"
+  spawnOnce "/usr/bin/emacs --daemon" 
   spawnOnce "~/dotFiles/scripts/spawnTrayer.sh"
   spawnOnce "qlipper"
   spawnOnce "picom -f"
@@ -142,6 +146,7 @@ myShowWNameTheme = def
 myManageHook :: XMonad.Query (Data.Monoid.Endo WindowSet)
 myManageHook = composeAll
   [ className =? "Code" --> doShift ( head myWorkspaces )
+  , className =? "Emacs" --> doShift ( head myWorkspaces )
   , className =? "firefox" --> doShift ( myWorkspaces !! 1 )
   , className =? "Opera" --> doShift ( myWorkspaces !! 1 )
   , className =? "discord" --> doShift (  myWorkspaces !! 2 )
@@ -212,16 +217,27 @@ myKeys =
     , ("M-w 9", spawn "~/dotFiles/scripts/setWallpaper.sh '8'")
     , ("M-w 0", spawn "~/dotFiles/scripts/setWallpaper.sh '9'")
       -- Editor
-    , ("M-e 0", spawn "code ~/Repos/OsiNubis99")
-    , ("M-e 1", spawn "code ~/dotFiles")
-    , ("M-e 2", spawn "code ~/Repos/Bots/CaidaVZLABot")
-    , ("M-e 3", spawn "code ~/Repos/Web/Ofimania")
-    , ("M-e 4", spawn "code ~/Repos")
-    , ("M-e 5", spawn "code ~/Repos")
-    , ("M-e 6", spawn "code ~/Repos")
-    , ("M-e 7", spawn "code ~/Repos")
-    , ("M-e 8", spawn "code ~/Repos")
-    , ("M-e 9", spawn "code ~/Repos")
+    , ("M-e 0", spawn (myEditor ++ " ~/Repos/OsiNubis99"))
+    , ("M-e 1", spawn (myEditor ++ " ~/dotFiles"))
+    , ("M-e 2", spawn (myEditor ++ " ~/Repos/Bots/CaidaVZLABot"))
+    , ("M-e 3", spawn (myEditor ++ " ~/Repos/Web/Ofimania"))
+    , ("M-e 4", spawn (myEditor ++ " ~/Repos"))
+    , ("M-e 5", spawn (myEditor ++ " ~/Repos"))
+    , ("M-e 6", spawn (myEditor ++ " ~/Repos"))
+    , ("M-e 7", spawn (myEditor ++ " ~/Repos"))
+    , ("M-e 8", spawn (myEditor ++ " ~/Repos"))
+    , ("M-e 9", spawn (myEditor ++ " ~/Repos"))
+    , ("C-e e", spawn (myEditor ++ ("--eval '(dashboard-refresh-buffer)'")))
+    , ("C-e b", spawn (myEditor ++ ("--eval '(ibuffer)'")))
+    , ("C-e d", spawn (myEditor ++ ("--eval '(dired nil)'")))
+    , ("C-e i", spawn (myEditor ++ ("--eval '(erc)'")))
+    , ("C-e m", spawn (myEditor ++ ("--eval '(mu4e)'")))
+    , ("C-e n", spawn (myEditor ++ ("--eval '(elfeed)'")))
+    , ("C-e s", spawn (myEditor ++ ("--eval '(eshell)'")))
+    , ("C-e t", spawn (myEditor ++ ("--eval '(mastodon)'")))
+    , ("C-e v", spawn (myEditor ++ ("--eval '(+vterm/here nil)'")))
+    , ("C-e w", spawn (myEditor ++ ("--eval '(doom/window-maximize-buffer(eww \"distrotube.com\"))'")))
+    , ("C-e a", spawn (myEditor ++ ("--eval '(emms)' --eval '(emms-play-directory-tree \"~/Music/Non-Classical/70s-80s/\")'")))
       -- Notifications
     , ("M-C-o", spawn "dunstctl history-pop")
     , ("M-C-c", spawn "dunstctl close")
