@@ -60,4 +60,10 @@ ln -s ~/dotFiles/backup/wallpapers ~/Pictures/wallpapers
 
 ## ZSH
 rm -r -f ~/.zshrc
-ln -s ~/dotFiles/config/zsh/.zshrc ~/.zshrc
+ln -s ~/dotFiles/config/zsh/.zshrc ~/.zshrcln -s ~/dotFiles/config/zsh/.zshrc ~/.zshrc
+
+## Response
+echo "You must configure manually (./configs can help): "
+echo "lightdm"
+echo "system-connections"
+echo "X11"
