@@ -130,16 +130,16 @@ myWorkspaceIcons = M.fromList $ zipWith (,) myWorkspaces
 myWorkspaceIndices = M.fromList $ zipWith (,) myWorkspaces [1..]
 
 clickable wsName = "<action=xdotool key super+"++show i++"><fc=#ffaa00><fn=1>"++wsIcon++" </fn></fc>"++wsName++"</action>"
-    where i = fromJust $ M.lookup wsName myWorkspaceIndices
-          wsIcon = fromJust $ M.lookup wsName myWorkspaceIcons
+  where i = fromJust $ M.lookup wsName myWorkspaceIndices
+        wsIcon = fromJust $ M.lookup wsName myWorkspaceIcons
 
 myShowWNameTheme :: SWNConfig
 myShowWNameTheme = def
-    { swn_font = myBigFont
-    , swn_fade = 1
-    , swn_bgcolor = "#152429"
-    , swn_color = "#ffaa00"
-    }
+  { swn_font = myBigFont
+  , swn_fade = 1
+  , swn_bgcolor = "#152429"
+  , swn_color = "#ffaa00"
+  }
 
 myManageHook :: XMonad.Query (Data.Monoid.Endo WindowSet)
 myManageHook = composeAll
@@ -166,89 +166,89 @@ myLogHook = fadeInactiveLogHook fadeAmount
 
 myKeys :: [(String, X ())]
 myKeys =
-    [ ("M-c", kill1)
-    , ("M-q", spawn "lxsession-logout")
-    , ("M-S-c", killAll)
-    , ("M-S-r", spawn "xmonad --restart")
-    , ("M-C-r", spawn "xmonad --recompile")
-      -- Programs
-    , ("M-<Return>", spawn myTerminal)
-    , ("M-<Space>", spawn "~/dotFiles/scripts/spawnRofi.sh")
-    , ("M-x", spawn "~/dotFiles/scripts/spawnTrayer.sh")
-    , ("M-z", spawn myTerminal)
-      -- Workspaces
-    , ("M-<Right>", moveTo Next NonEmptyWS)
-    , ("M-<Left>", moveTo Prev NonEmptyWS)
-    , ("M-S-<Right>", moveTo Next EmptyWS)
-    , ("M-S-<Left>", moveTo Prev EmptyWS)
-      -- Layouts
-    , ("M-<Up>", windows W.focusDown)
-    , ("M-<Down>", windows W.focusUp)
-    , ("M-f", sendMessage (MT.Toggle NBFULL) >> sendMessage ToggleStruts)
-    , ("M-s", withFocused $ windows . W.sink)
-    , ("M-a", sinkAll)
-    , ("M-m", windows W.swapMaster)
-    , ("M-/", sendMessage NextLayout)
-    , ("M-,", sendMessage (IncMasterN 1))
-    , ("M-.", sendMessage (IncMasterN (-1)))
-    , ("M-d", decWindowSpacing 2)
-    , ("M-i", incWindowSpacing 2)
-    , ("M-S-d", decScreenSpacing 2)
-    , ("M-S-i", incScreenSpacing 2)
-    , ("M-C-<Left>", sendMessage Shrink)
-    , ("M-C-<Right>", sendMessage Expand)
-    , ("M-C-<Up>", sendMessage MirrorExpand)
-    , ("M-C-<Down>", sendMessage MirrorShrink)
-      -- Wallpapers
-    , ("M-w o", spawn "nitrogen")
-    , ("M-w a", spawn "~/dotFiles/scripts/setWallpaper.sh '10'")
-    , ("M-w f", spawn "nitrogen --restore")
-    , ("M-w l", spawn "~/dotFiles/scripts/listWallpaper.sh")
-    , ("M-w 1", spawn "~/dotFiles/scripts/setWallpaper.sh '0'")
-    , ("M-w 2", spawn "~/dotFiles/scripts/setWallpaper.sh '1'")
-    , ("M-w 3", spawn "~/dotFiles/scripts/setWallpaper.sh '2'")
-    , ("M-w 4", spawn "~/dotFiles/scripts/setWallpaper.sh '3'")
-    , ("M-w 5", spawn "~/dotFiles/scripts/setWallpaper.sh '4'")
-    , ("M-w 6", spawn "~/dotFiles/scripts/setWallpaper.sh '5'")
-    , ("M-w 7", spawn "~/dotFiles/scripts/setWallpaper.sh '6'")
-    , ("M-w 8", spawn "~/dotFiles/scripts/setWallpaper.sh '7'")
-    , ("M-w 9", spawn "~/dotFiles/scripts/setWallpaper.sh '8'")
-    , ("M-w 0", spawn "~/dotFiles/scripts/setWallpaper.sh '9'")
-      -- Editor
-    , ("M-e 0", spawn (myEditor ++ " ~/Repos/OsiNubis99"))
-    , ("M-e 1", spawn (myEditor ++ " ~/dotFiles"))
-    , ("M-e 2", spawn (myEditor ++ " ~/Repos/Bots/CaidaVZLABot"))
-    , ("M-e 3", spawn (myEditor ++ " ~/Repos/Web/Ofimania"))
-    , ("M-e 4", spawn (myEditor ++ " ~/Repos"))
-    , ("M-e 5", spawn (myEditor ++ " ~/Repos"))
-    , ("M-e 6", spawn (myEditor ++ " ~/Repos"))
-    , ("M-e 7", spawn (myEditor ++ " ~/Repos"))
-    , ("M-e 8", spawn (myEditor ++ " ~/Repos"))
-    , ("M-e 9", spawn (myEditor ++ " ~/Repos"))
-    , ("M-e e", spawn (myEditor ++ ("--eval '(dashboard-refresh-buffer)'")))
-    , ("M-e b", spawn (myEditor ++ ("--eval '(ibuffer)'")))
-    , ("M-e d", spawn (myEditor ++ ("--eval '(dired nil)'")))
-    , ("M-e i", spawn (myEditor ++ ("--eval '(erc)'")))
-    , ("M-e m", spawn (myEditor ++ ("--eval '(mu4e)'")))
-    , ("M-e n", spawn (myEditor ++ ("--eval '(elfeed)'")))
-    , ("M-e s", spawn (myEditor ++ ("--eval '(eshell)'")))
-    , ("M-e t", spawn (myEditor ++ ("--eval '(mastodon)'")))
-    , ("M-e v", spawn (myEditor ++ ("--eval '(+vterm/here nil)'")))
-    , ("M-e w", spawn (myEditor ++ ("--eval '(doom/window-maximize-buffer(eww \"distrotube.com\"))'")))
-    , ("M-e a", spawn (myEditor ++ ("--eval '(emms)' --eval '(emms-play-directory-tree \"~/Music/Non-Classical/70s-80s/\")'")))
-      -- Notifications
-    , ("M-C-o", spawn "dunstctl history-pop")
-    , ("M-C-c", spawn "dunstctl close")
-    , ("M-C-a", spawn "dunstctl close-all")
-      -- Multimedia Keys
-    , ("<XF86AudioLowerVolume>", spawn "~/dotFiles/scripts/volume.sh down 5")
-    , ("<XF86AudioRaiseVolume>", spawn "~/dotFiles/scripts/volume.sh up 5")
-    , ("<XF86AudioMute>",  spawn "~/dotFiles/scripts/volume.sh mute")
-    , ("<XF86MonBrightnessUp>", spawn "~/dotFiles/scripts/backlight.sh up 10")
-    , ("<XF86MonBrightnessDown>", spawn "~/dotFiles/scripts/backlight.sh down 10")
-    , ("<XF86HomePage>", spawn myBrowser)
-    , ("<Print>", spawn "flameshot gui")
-    ]
+  [ ("M-c", kill1)
+  , ("M-q", spawn "lxsession-logout")
+  , ("M-S-c", killAll)
+  , ("M-S-r", spawn "xmonad --restart")
+  , ("M-C-r", spawn "xmonad --recompile")
+    -- Programs
+  , ("M-<Return>", spawn myTerminal)
+  , ("M-<Space>", spawn "~/dotFiles/scripts/spawnRofi.sh")
+  , ("M-x", spawn "~/dotFiles/scripts/spawnTrayer.sh")
+  , ("M-z", spawn myTerminal)
+    -- Workspaces
+  , ("M-<Right>", moveTo Next NonEmptyWS)
+  , ("M-<Left>", moveTo Prev NonEmptyWS)
+  , ("M-S-<Right>", moveTo Next EmptyWS)
+  , ("M-S-<Left>", moveTo Prev EmptyWS)
+    -- Layouts
+  , ("M-<Up>", windows W.focusDown)
+  , ("M-<Down>", windows W.focusUp)
+  , ("M-f", sendMessage (MT.Toggle NBFULL) >> sendMessage ToggleStruts)
+  , ("M-s", withFocused $ windows . W.sink)
+  , ("M-a", sinkAll)
+  , ("M-m", windows W.swapMaster)
+  , ("M-/", sendMessage NextLayout)
+  , ("M-,", sendMessage (IncMasterN 1))
+  , ("M-.", sendMessage (IncMasterN (-1)))
+  , ("M-d", decWindowSpacing 2)
+  , ("M-i", incWindowSpacing 2)
+  , ("M-S-d", decScreenSpacing 2)
+  , ("M-S-i", incScreenSpacing 2)
+  , ("M-C-<Left>", sendMessage Shrink)
+  , ("M-C-<Right>", sendMessage Expand)
+  , ("M-C-<Up>", sendMessage MirrorExpand)
+  , ("M-C-<Down>", sendMessage MirrorShrink)
+    -- Wallpapers
+  , ("M-w o", spawn "nitrogen")
+  , ("M-w a", spawn "~/dotFiles/scripts/setWallpaper.sh '10'")
+  , ("M-w f", spawn "nitrogen --restore")
+  , ("M-w l", spawn "~/dotFiles/scripts/listWallpaper.sh")
+  , ("M-w 1", spawn "~/dotFiles/scripts/setWallpaper.sh '0'")
+  , ("M-w 2", spawn "~/dotFiles/scripts/setWallpaper.sh '1'")
+  , ("M-w 3", spawn "~/dotFiles/scripts/setWallpaper.sh '2'")
+  , ("M-w 4", spawn "~/dotFiles/scripts/setWallpaper.sh '3'")
+  , ("M-w 5", spawn "~/dotFiles/scripts/setWallpaper.sh '4'")
+  , ("M-w 6", spawn "~/dotFiles/scripts/setWallpaper.sh '5'")
+  , ("M-w 7", spawn "~/dotFiles/scripts/setWallpaper.sh '6'")
+  , ("M-w 8", spawn "~/dotFiles/scripts/setWallpaper.sh '7'")
+  , ("M-w 9", spawn "~/dotFiles/scripts/setWallpaper.sh '8'")
+  , ("M-w 0", spawn "~/dotFiles/scripts/setWallpaper.sh '9'")
+    -- Editor
+  , ("M-e 0", spawn (myEditor ++ " ~/Repos/OsiNubis99"))
+  , ("M-e 1", spawn (myEditor ++ " ~/dotFiles"))
+  , ("M-e 2", spawn (myEditor ++ " ~/Repos/Bots/CaidaVZLABot"))
+  , ("M-e 3", spawn (myEditor ++ " ~/Repos/Web/Ofimania"))
+  , ("M-e 4", spawn (myEditor ++ " ~/Repos"))
+  , ("M-e 5", spawn (myEditor ++ " ~/Repos"))
+  , ("M-e 6", spawn (myEditor ++ " ~/Repos"))
+  , ("M-e 7", spawn (myEditor ++ " ~/Repos"))
+  , ("M-e 8", spawn (myEditor ++ " ~/Repos"))
+  , ("M-e 9", spawn (myEditor ++ " ~/Repos"))
+  , ("M-e e", spawn (myEditor ++ ("--eval '(dashboard-refresh-buffer)'")))
+  , ("M-e b", spawn (myEditor ++ ("--eval '(ibuffer)'")))
+  , ("M-e d", spawn (myEditor ++ ("--eval '(dired nil)'")))
+  , ("M-e i", spawn (myEditor ++ ("--eval '(erc)'")))
+  , ("M-e m", spawn (myEditor ++ ("--eval '(mu4e)'")))
+  , ("M-e n", spawn (myEditor ++ ("--eval '(elfeed)'")))
+  , ("M-e s", spawn (myEditor ++ ("--eval '(eshell)'")))
+  , ("M-e t", spawn (myEditor ++ ("--eval '(mastodon)'")))
+  , ("M-e v", spawn (myEditor ++ ("--eval '(+vterm/here nil)'")))
+  , ("M-e w", spawn (myEditor ++ ("--eval '(doom/window-maximize-buffer(eww \"distrotube.com\"))'")))
+  , ("M-e a", spawn (myEditor ++ ("--eval '(emms)' --eval '(emms-play-directory-tree \"~/Music/Non-Classical/70s-80s/\")'")))
+    -- Notifications
+  , ("M-C-o", spawn "dunstctl history-pop")
+  , ("M-C-c", spawn "dunstctl close")
+  , ("M-C-a", spawn "dunstctl close-all")
+    -- Multimedia Keys
+  , ("<XF86AudioLowerVolume>", spawn "~/dotFiles/scripts/volume.sh down 5")
+  , ("<XF86AudioRaiseVolume>", spawn "~/dotFiles/scripts/volume.sh up 5")
+  , ("<XF86AudioMute>",  spawn "~/dotFiles/scripts/volume.sh mute")
+  , ("<XF86MonBrightnessUp>", spawn "~/dotFiles/scripts/backlight.sh up 10")
+  , ("<XF86MonBrightnessDown>", spawn "~/dotFiles/scripts/backlight.sh down 10")
+  , ("<XF86HomePage>", spawn myBrowser)
+  , ("<Print>", spawn "flameshot gui")
+  ]
 
 main :: IO ()
 main = do
@@ -264,15 +264,15 @@ main = do
     , normalBorderColor = myNormColor
     , focusedBorderColor = myFocusColor
     , logHook = myLogHook <+> dynamicLogWithPP xmobarPP
-        { ppOutput = hPutStrLn xmproc
-        , ppCurrent = xmobarColor "#ffaa00" "" . clickable
-        , ppVisible = xmobarColor "#c792ea" "" . clickable
-        , ppHidden = xmobarColor "#3fd12e" "" . clickable
-        , ppHiddenNoWindows = clickable 
-        , ppUrgent = xmobarColor "#C45500" "" . wrap "!" "!" . clickable
-        , ppSep =  "<fc=#ffffff><fn=1> | </fn></fc>"
-        , ppWsSep = " "
-        , ppExtras  = [windowCount]
-        , ppOrder  = \(ws:l:ex) -> [l,ws]++ex
-        }
+      { ppOutput = hPutStrLn xmproc
+      , ppCurrent = xmobarColor "#ffaa00" "" . clickable
+      , ppVisible = xmobarColor "#c792ea" "" . clickable
+      , ppHidden = xmobarColor "#3fd12e" "" . clickable
+      , ppHiddenNoWindows = clickable 
+      , ppUrgent = xmobarColor "#C45500" "" . wrap "!" "!" . clickable
+      , ppSep =  "<fc=#ffffff><fn=1> | </fn></fc>"
+      , ppWsSep = " "
+      , ppExtras  = [windowCount]
+      , ppOrder  = \(ws:l:ex) -> [l,ws]++ex
+      }
     } `additionalKeysP` myKeys
