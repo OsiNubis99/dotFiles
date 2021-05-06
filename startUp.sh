@@ -55,16 +55,18 @@ rm -r -f ~/Pictures/wallpapers
 ln -s ~/dotFiles/backup/wallpapers ~/Pictures/wallpapers
 
 ## Wifi Connections
-# sudo rm -r -f /etc/NetworkManager/system-connections
-# sudo ln -s ~/dotFiles/backup/wifi/ /etc/NetworkManager/system-connections
+# doas rm -r -f /etc/NetworkManager/system-connections
+# doas ln -s ~/dotFiles/backup/wifi/ /etc/NetworkManager/system-connections
 
 ## ZSH
 rm -r -f ~/.zshrc
-ln -s ~/dotFiles/config/zsh/.zshrc ~/.zshrcln -s ~/dotFiles/config/zsh/.zshrc ~/.zshrc
+ln -s ~/dotFiles/config/zsh/.zshrc ~/.zshrc
 
 ## Response
 echo "You must configure manually (./configs can help): "
+echo "doas"
 echo "lightdm"
 echo "pacman"
+echo "paru"
 echo "system-connections"
 echo "X11"
