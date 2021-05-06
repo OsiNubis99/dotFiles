@@ -273,6 +273,6 @@ main = do
       , ppSep =  "<fc=#ffffff><fn=1> | </fn></fc>"
       , ppWsSep = " "
       , ppExtras  = [windowCount]
-      , ppOrder  = \(ws:l:ex) -> [l,ws]++ex
+      , ppOrder  = \(ws:l:t:ex) -> [l,ws]++ex
       }
     } `additionalKeysP` myKeys
