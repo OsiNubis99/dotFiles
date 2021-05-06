@@ -1,5 +1,10 @@
 [init]
 	defaultBranch = main
 [user]
-	name = Andrés Hurtado
+	name = Andrés David Hurtado Fernández
 	email = OsiNubis99@PM.me
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
