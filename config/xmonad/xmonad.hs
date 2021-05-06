@@ -5,7 +5,7 @@ import System.Exit (exitSuccess)
 import qualified XMonad.StackSet as W
 -- Actions
 import XMonad.Actions.CopyWindow (kill1)
-import XMonad.Actions.CycleWS (moveTo, shiftTo, WSType(..))
+import XMonad.Actions.CycleWS (moveTo, WSType(..))
 import XMonad.Actions.WithAll (sinkAll, killAll)
 -- Data
 import Data.Maybe (fromJust)
@@ -31,8 +31,6 @@ import XMonad.Layout.ShowWName
 import XMonad.Layout.Spacing
 import qualified XMonad.Layout.ToggleLayouts as T (toggleLayouts, ToggleLayout(Toggle))
 import qualified XMonad.Layout.MultiToggle as MT (Toggle(..))
--- Prompt
-import XMonad.Prompt
 -- Utilities
 import XMonad.Util.EZConfig (additionalKeysP)
 import XMonad.Util.Run (spawnPipe)
@@ -275,6 +273,6 @@ main = do
         , ppSep =  "<fc=#ffffff><fn=1> | </fn></fc>"
         , ppWsSep = " "
         , ppExtras  = [windowCount]
-        , ppOrder  = \(ws:l:t:ex) -> [l,ws]++ex
+        , ppOrder  = \(ws:l:ex) -> [l,ws]++ex
         }
     } `additionalKeysP` myKeys
