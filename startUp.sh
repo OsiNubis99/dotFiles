@@ -65,5 +65,6 @@ ln -s ~/dotFiles/config/zsh/.zshrc ~/.zshrcln -s ~/dotFiles/config/zsh/.zshrc ~/
 ## Response
 echo "You must configure manually (./configs can help): "
 echo "lightdm"
+echo "pacman"
 echo "system-connections"
 echo "X11"
