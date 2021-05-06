@@ -37,7 +37,7 @@ ln -s ~/dotFiles/config/picom ~/.config/picom
 ## SSH
 rm -r -f ~/.ssh
 ln -s ~/dotFiles/backup/ssh ~/.ssh
-if [[ -e ".ssh/id_ed25519" ]]; then
+if [[ -e "$HOME/.ssh/id_ed25519" ]]; then
 	ssh-add ~/.ssh/id_ed25519
 	cat .ssh/id_ed25519.pub
 fi
