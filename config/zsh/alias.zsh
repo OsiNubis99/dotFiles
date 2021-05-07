@@ -21,10 +21,10 @@ alias doomupgrade="~/.emacs.d/bin/doom upgrade"
 alias doompurge="~/.emacs.d/bin/doom purge"
 
 # Pacman
-alias pai="paru -S --removemake --cleanafter --skipreview"
-alias pain="pai --needed --noconfirm"
+alias pain="paru -S --removemake --cleanafter --skipreview"
 alias pais="paru -Ss"
-alias pau="pain -yyu --upgrademenu"
+alias pai="pain --needed --noconfirm"
+alias pau="pai -yyu --upgrademenu"
 alias par="paru -Rcnsu"
 alias pale="paru -Qqe"
 alias pald="paru -Qqd"
