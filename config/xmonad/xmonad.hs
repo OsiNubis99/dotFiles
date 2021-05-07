@@ -6,6 +6,8 @@ import qualified XMonad.StackSet as W
 -- Actions
 import XMonad.Actions.CopyWindow (kill1)
 import XMonad.Actions.CycleWS (moveTo, WSType(..))
+import XMonad.Actions.Promote
+import XMonad.Actions.RotSlaves (rotSlavesUp)
 import XMonad.Actions.WithAll (sinkAll, killAll)
 -- Data
 import Data.Maybe (fromJust)
@@ -26,6 +28,7 @@ import XMonad.Layout.LimitWindows (limitWindows)
 import XMonad.Layout.MultiToggle (mkToggle, EOT(EOT), (??))
 import XMonad.Layout.MultiToggle.Instances (StdTransformers(NBFULL, NOBORDERS))
 import XMonad.Layout.PerWorkspace
+import XMonad.Layout.Reflect
 import XMonad.Layout.Renamed
 import XMonad.Layout.ShowWName
 import XMonad.Layout.Spacing
@@ -52,7 +55,7 @@ myBrowser :: String
 myBrowser = "firefox"
 
 myEditor :: String
-myEditor = "emacsclient -c -a 'emacs' "
+myEditor = "code "
 
 myBorderWidth :: Dimension
 myBorderWidth = 2
@@ -71,7 +74,6 @@ myStartupHook = do
   spawnOnce "lxsession -r"
   spawnOnce "~/dotFiles/scripts/setWallpaper.sh '10'"
   spawnOnce "dunst -config ~/.config/dunst/dunstrc"
-  spawnOnce "/usr/bin/emacs --daemon" 
   spawnOnce "~/dotFiles/scripts/spawnTrayer.sh"
   spawnOnce "qlipper"
   spawnOnce "picom -f"
@@ -89,14 +91,14 @@ myTabTheme = def
   }
 -- Border U D R L
 accordion = spacingRaw False (Border 8 8 0 0) True (Border 0 0 0 0 ) True
-  $ Mirror Accordion
+  $ Mirror (reflectVert Accordion)
 tabs = renamed [Replace "T"]
   $ spacingRaw False (Border 38 8 8 8) True (Border 0 0 0 0 ) True
   $ tabbed shrinkText myTabTheme
 tall = renamed [Replace "G"]
   $ limitWindows 12
   $ spacingRaw False (Border 34 4 4 4) True (Border 4 4 4 4 ) True
-  $ ResizableTall 1 (1/100) (1/2) []
+  $ ResizableTall 1 (1/100) (1/2) [] 
 gridTall = renamed [Replace "g"]
   $ drawer 0.05 0.65 (ClassName "Alacritty") accordion `onBottom` tall
 gridTabs = renamed [Replace "t"]
@@ -106,9 +108,9 @@ defaultLayout = tall ||| gridTabs ||| gridTall ||| tabs
 editorLayout = gridTabs ||| gridTall ||| tabs ||| tall
 webLayout = tabs ||| tall ||| gridTabs ||| gridTall
 
-myLayoutHook = mkToggle (NBFULL ?? NOBORDERS ?? EOT) myDefaultLayout
-  where
-    myDefaultLayout = onWorkspace ( head myWorkspaces ) editorLayout $ onWorkspace ( myWorkspaces !! 1 ) webLayout defaultLayout
+myLayoutHook = mkToggle (NBFULL ?? NOBORDERS ?? EOT)
+  $ onWorkspace ( head myWorkspaces ) editorLayout
+  $ onWorkspaces [myWorkspaces !! 1 ,myWorkspaces !! 3] webLayout defaultLayout
 
 myWorkspaces :: [String]
 myWorkspaces = 
@@ -119,7 +121,7 @@ myWorkspaces =
   , "Tool"
   , "Media"]
 
-myWorkspaceIcons = M.fromList $ zipWith (,) myWorkspaces 
+myWorkspaceIcons = M.fromList $ zip myWorkspaces 
   [ "\61595"
   , "\62057"
   , "\57879"
@@ -127,7 +129,7 @@ myWorkspaceIcons = M.fromList $ zipWith (,) myWorkspaces
   , "\57871"
   , "\57969"]
 
-myWorkspaceIndices = M.fromList $ zipWith (,) myWorkspaces [1..]
+myWorkspaceIndices = M.fromList $ zip myWorkspaces [1..]
 
 clickable wsName = "<action=xdotool key super+"++show i++"><fc=#ffaa00><fn=1>"++wsIcon++" </fn></fc>"++wsName++"</action>"
   where i = fromJust $ M.lookup wsName myWorkspaceIndices
@@ -147,11 +149,12 @@ myManageHook = composeAll
   , className =? "Emacs" --> doShift ( head myWorkspaces )
   , className =? "firefox" --> doShift ( myWorkspaces !! 1 )
   , className =? "Opera" --> doShift ( myWorkspaces !! 1 )
+  , className =? "zoom"  --> doFloat <+> doShift  ( myWorkspaces !! 1 )
   , className =? "discord" --> doShift (  myWorkspaces !! 2 )
   , className =? "TelegramDesktop" --> doShift (  myWorkspaces !! 2 )
   , className =? "Thunar" --> doShift (  myWorkspaces !! 3 )
+  , className =? "libreoffice-writer" --> doShift (  myWorkspaces !! 3 )
   , className =? "Free Download Manager" --> doShift  ( myWorkspaces !! 4 )
-  , className =? "zoom"  --> doFloat <+> doShift  ( myWorkspaces !! 4 )
   , className =? "vlc" --> doShift ( myWorkspaces !! 5 )
   , className =? "Nm-connection-editor"  --> doFloat
   , title =? "Oracle VM VirtualBox Manager"  --> doFloat
@@ -170,35 +173,37 @@ myKeys =
   , ("M-q", spawn "lxsession-logout")
   , ("M-S-c", killAll)
   , ("M-S-r", spawn "xmonad --restart")
-  , ("M-C-r", spawn "xmonad --recompile")
     -- Programs
   , ("M-<Return>", spawn myTerminal)
   , ("M-<Space>", spawn "~/dotFiles/scripts/spawnRofi.sh")
   , ("M-x", spawn "~/dotFiles/scripts/spawnTrayer.sh")
   , ("M-z", spawn myTerminal)
     -- Workspaces
-  , ("M-<Right>", moveTo Next NonEmptyWS)
   , ("M-<Left>", moveTo Prev NonEmptyWS)
-  , ("M-S-<Right>", moveTo Next EmptyWS)
+  , ("M-<Right>", moveTo Next NonEmptyWS)
   , ("M-S-<Left>", moveTo Prev EmptyWS)
+  , ("M-S-<Right>", moveTo Next EmptyWS)
     -- Layouts
-  , ("M-<Up>", windows W.focusDown)
-  , ("M-<Down>", windows W.focusUp)
-  , ("M-f", sendMessage (MT.Toggle NBFULL) >> sendMessage ToggleStruts)
-  , ("M-s", withFocused $ windows . W.sink)
-  , ("M-a", sinkAll)
-  , ("M-m", windows W.swapMaster)
+  , ("M-<Up>", windows W.focusUp)
+  , ("M-<Down>", windows W.focusDown)
   , ("M-/", sendMessage NextLayout)
   , ("M-,", sendMessage (IncMasterN 1))
   , ("M-.", sendMessage (IncMasterN (-1)))
+  , ("M-a", sinkAll)
   , ("M-d", decWindowSpacing 2)
+  , ("M-f", sendMessage (MT.Toggle NBFULL) >> sendMessage ToggleStruts)
   , ("M-i", incWindowSpacing 2)
-  , ("M-S-d", decScreenSpacing 2)
-  , ("M-S-i", incScreenSpacing 2)
+  , ("M-m", promote)
+  , ("M-s", withFocused $ windows . W.sink)
   , ("M-C-<Left>", sendMessage Shrink)
   , ("M-C-<Right>", sendMessage Expand)
   , ("M-C-<Up>", sendMessage MirrorExpand)
   , ("M-C-<Down>", sendMessage MirrorShrink)
+  , ("M-S-<Up>", windows W.swapUp)
+  , ("M-S-<Down>", windows W.swapDown)
+  , ("M-S-/", rotSlavesUp)
+  , ("M-S-i", incScreenSpacing 2)
+  , ("M-S-d", decScreenSpacing 2)
     -- Wallpapers
   , ("M-w o", spawn "nitrogen")
   , ("M-w a", spawn "~/dotFiles/scripts/setWallpaper.sh '10'")
@@ -215,31 +220,21 @@ myKeys =
   , ("M-w 9", spawn "~/dotFiles/scripts/setWallpaper.sh '8'")
   , ("M-w 0", spawn "~/dotFiles/scripts/setWallpaper.sh '9'")
     -- Editor
-  , ("M-e 0", spawn (myEditor ++ " ~/Repos/OsiNubis99"))
-  , ("M-e 1", spawn (myEditor ++ " ~/dotFiles"))
-  , ("M-e 2", spawn (myEditor ++ " ~/Repos/Bots/CaidaVZLABot"))
-  , ("M-e 3", spawn (myEditor ++ " ~/Repos/Web/Ofimania"))
-  , ("M-e 4", spawn (myEditor ++ " ~/Repos"))
-  , ("M-e 5", spawn (myEditor ++ " ~/Repos"))
-  , ("M-e 6", spawn (myEditor ++ " ~/Repos"))
-  , ("M-e 7", spawn (myEditor ++ " ~/Repos"))
-  , ("M-e 8", spawn (myEditor ++ " ~/Repos"))
-  , ("M-e 9", spawn (myEditor ++ " ~/Repos"))
-  , ("M-e e", spawn (myEditor ++ ("--eval '(dashboard-refresh-buffer)'")))
-  , ("M-e b", spawn (myEditor ++ ("--eval '(ibuffer)'")))
-  , ("M-e d", spawn (myEditor ++ ("--eval '(dired nil)'")))
-  , ("M-e i", spawn (myEditor ++ ("--eval '(erc)'")))
-  , ("M-e m", spawn (myEditor ++ ("--eval '(mu4e)'")))
-  , ("M-e n", spawn (myEditor ++ ("--eval '(elfeed)'")))
-  , ("M-e s", spawn (myEditor ++ ("--eval '(eshell)'")))
-  , ("M-e t", spawn (myEditor ++ ("--eval '(mastodon)'")))
-  , ("M-e v", spawn (myEditor ++ ("--eval '(+vterm/here nil)'")))
-  , ("M-e w", spawn (myEditor ++ ("--eval '(doom/window-maximize-buffer(eww \"distrotube.com\"))'")))
-  , ("M-e a", spawn (myEditor ++ ("--eval '(emms)' --eval '(emms-play-directory-tree \"~/Music/Non-Classical/70s-80s/\")'")))
+  , ("M-e 0", spawn (myEditor ++ "~/Repos/OsiNubis99"))
+  , ("M-e 1", spawn (myEditor ++ "~/dotFiles"))
+  , ("M-e 2", spawn (myEditor ++ "~/Repos/Bots/CaidaVZLABot"))
+  , ("M-e 3", spawn (myEditor ++ "~/Repos/Web/Ofimania"))
+  , ("M-e 4", spawn (myEditor ++ "~/Repos"))
+  , ("M-e 5", spawn (myEditor ++ "~/Repos"))
+  , ("M-e 6", spawn (myEditor ++ "~/Repos"))
+  , ("M-e 7", spawn (myEditor ++ "~/Repos"))
+  , ("M-e 8", spawn (myEditor ++ "~/Repos"))
+  , ("M-e 9", spawn (myEditor ++ "~/Repos"))
+  , ("M-e e", spawn myEditor)
     -- Notifications
-  , ("M-C-o", spawn "dunstctl history-pop")
-  , ("M-C-c", spawn "dunstctl close")
   , ("M-C-a", spawn "dunstctl close-all")
+  , ("M-C-c", spawn "dunstctl close")
+  , ("M-C-o", spawn "dunstctl history-pop")
     -- Multimedia Keys
   , ("<XF86AudioLowerVolume>", spawn "~/dotFiles/scripts/volume.sh down 5")
   , ("<XF86AudioRaiseVolume>", spawn "~/dotFiles/scripts/volume.sh up 5")
