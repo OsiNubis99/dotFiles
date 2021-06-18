@@ -15,6 +15,7 @@ import Data.Monoid
 import qualified Data.Map as M
 -- Hooks
 import XMonad.Hooks.DynamicLog ( dynamicLogWithPP  , wrap, xmobarPP , xmobarColor , PP(..))
+import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.FadeInactive
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers (isFullscreen, doFullFloat)
@@ -55,7 +56,8 @@ myBrowser :: String
 myBrowser = "firefox"
 
 myEditor :: String
-myEditor = "code "
+-- myEditor = "code "
+myEditor = "emacsclient -c -a 'emacs' "
 
 myBorderWidth :: Dimension
 myBorderWidth = 2
@@ -72,9 +74,9 @@ windowCount = gets $ Just . show . length . W.integrate' . W.stack . W.workspace
 myStartupHook :: X ()
 myStartupHook = do
   spawnOnce "lxsession -r"
+  spawnOnce "/usr/bin/emacs --daemon &" 
   spawnOnce "~/dotFiles/scripts/setWallpaper.sh '10'"
   spawnOnce "dunst -config ~/.config/dunst/dunstrc"
-  spawnOnce "~/dotFiles/scripts/spawnTrayer.sh"
   spawnOnce "qlipper"
   spawnOnce "picom -f"
   spawnOnce "nm-applet"
@@ -105,12 +107,12 @@ gridTabs = renamed [Replace "t"]
   $ drawer 0.05 0.65 (ClassName "Alacritty") accordion `onBottom` tabs
 
 defaultLayout = tall ||| gridTabs ||| gridTall ||| tabs
-editorLayout = gridTabs ||| gridTall ||| tabs ||| tall
-webLayout = tabs ||| tall ||| gridTabs ||| gridTall
+gridLayout = gridTabs ||| gridTall ||| tabs ||| tall
+tabLayout = tabs ||| tall ||| gridTabs ||| gridTall
 
 myLayoutHook = mkToggle (NBFULL ?? NOBORDERS ?? EOT)
-  $ onWorkspace ( head myWorkspaces ) editorLayout
-  $ onWorkspaces [myWorkspaces !! 1 ,myWorkspaces !! 3] webLayout defaultLayout
+  $ onWorkspace ( head myWorkspaces ) gridLayout
+  $ onWorkspaces [myWorkspaces !! 1 ,myWorkspaces !! 3] tabLayout defaultLayout
 
 myWorkspaces :: [String]
 myWorkspaces = 
@@ -149,11 +151,11 @@ myManageHook = composeAll
   , className =? "Emacs" --> doShift ( head myWorkspaces )
   , className =? "firefox" --> doShift ( myWorkspaces !! 1 )
   , className =? "Opera" --> doShift ( myWorkspaces !! 1 )
-  , className =? "zoom"  --> doFloat <+> doShift  ( myWorkspaces !! 1 )
   , className =? "discord" --> doShift (  myWorkspaces !! 2 )
   , className =? "TelegramDesktop" --> doShift (  myWorkspaces !! 2 )
   , className =? "Thunar" --> doShift (  myWorkspaces !! 3 )
-  , className =? "libreoffice-writer" --> doShift (  myWorkspaces !! 3 )
+  , className =? "libreoffice" --> doShift (  myWorkspaces !! 3 )
+  , className =? "zoom"  --> doFloat <+> doShift  ( myWorkspaces !! 4 )
   , className =? "Free Download Manager" --> doShift  ( myWorkspaces !! 4 )
   , className =? "vlc" --> doShift ( myWorkspaces !! 5 )
   , className =? "Nm-connection-editor"  --> doFloat
@@ -169,16 +171,18 @@ myLogHook = fadeInactiveLogHook fadeAmount
 
 myKeys :: [(String, X ())]
 myKeys =
-  [ ("M-c", kill1)
-  , ("M-q", spawn "lxsession-logout")
-  , ("M-S-c", killAll)
+  [ ("M-j", kill1)
+  , ("M-z", spawn "lxsession-logout")
+  , ("M-S-j", killAll)
   , ("M-S-r", spawn "xmonad --restart")
     -- Programs
   , ("M-<Return>", spawn myTerminal)
   , ("M-<Space>", spawn "~/dotFiles/scripts/spawnRofi.sh")
-  , ("M-x", spawn "~/dotFiles/scripts/spawnTrayer.sh")
-  , ("M-z", spawn myTerminal)
+  , ("M-q", spawn "~/dotFiles/scripts/spawnTrayer.sh")
+  , ("M-;", spawn myTerminal)
     -- Workspaces
+  , ("M-,", moveTo Prev NonEmptyWS)
+  , ("M-.", moveTo Next NonEmptyWS)
   , ("M-<Left>", moveTo Prev NonEmptyWS)
   , ("M-<Right>", moveTo Next NonEmptyWS)
   , ("M-S-<Left>", moveTo Prev EmptyWS)
@@ -186,24 +190,25 @@ myKeys =
     -- Layouts
   , ("M-<Up>", windows W.focusUp)
   , ("M-<Down>", windows W.focusDown)
-  , ("M-/", sendMessage NextLayout)
-  , ("M-,", sendMessage (IncMasterN 1))
-  , ("M-.", sendMessage (IncMasterN (-1)))
+  , ("M-'", sendMessage NextLayout)
   , ("M-a", sinkAll)
   , ("M-d", decWindowSpacing 2)
   , ("M-f", sendMessage (MT.Toggle NBFULL) >> sendMessage ToggleStruts)
   , ("M-i", incWindowSpacing 2)
   , ("M-m", promote)
-  , ("M-s", withFocused $ windows . W.sink)
-  , ("M-C-<Left>", sendMessage Shrink)
-  , ("M-C-<Right>", sendMessage Expand)
-  , ("M-C-<Up>", sendMessage MirrorExpand)
-  , ("M-C-<Down>", sendMessage MirrorShrink)
-  , ("M-S-<Up>", windows W.swapUp)
-  , ("M-S-<Down>", windows W.swapDown)
-  , ("M-S-/", rotSlavesUp)
+  , ("M-S-<Up>", sendMessage (IncMasterN 1))
+  , ("M-S-<Down>", sendMessage (IncMasterN (-1)))
+  , ("M-S-'", rotSlavesUp)
+  , ("M-S-,", windows W.swapUp)
+  , ("M-S-.", windows W.swapDown)
   , ("M-S-i", incScreenSpacing 2)
   , ("M-S-d", decScreenSpacing 2)
+  , ("M1-,", windows W.focusUp)
+  , ("M1-.", windows W.focusDown)
+  , ("M1-<Left>", sendMessage Shrink)
+  , ("M1-<Right>", sendMessage Expand)
+  , ("M1-<Up>", sendMessage MirrorExpand)
+  , ("M1-<Down>", sendMessage MirrorShrink)
     -- Wallpapers
   , ("M-w o", spawn "nitrogen")
   , ("M-w a", spawn "~/dotFiles/scripts/setWallpaper.sh '10'")
@@ -220,6 +225,8 @@ myKeys =
   , ("M-w 9", spawn "~/dotFiles/scripts/setWallpaper.sh '8'")
   , ("M-w 0", spawn "~/dotFiles/scripts/setWallpaper.sh '9'")
     -- Editor
+  , ("M-e o", spawn myEditor)
+  , ("M-e e", spawn (myEditor ++ "--eval '(dashboard-refresh-buffer)'")) 
   , ("M-e 0", spawn (myEditor ++ "~/Repos/OsiNubis99"))
   , ("M-e 1", spawn (myEditor ++ "~/dotFiles"))
   , ("M-e 2", spawn (myEditor ++ "~/Repos/Bots/CaidaVZLABot"))
@@ -230,11 +237,10 @@ myKeys =
   , ("M-e 7", spawn (myEditor ++ "~/Repos"))
   , ("M-e 8", spawn (myEditor ++ "~/Repos"))
   , ("M-e 9", spawn (myEditor ++ "~/Repos"))
-  , ("M-e e", spawn myEditor)
     -- Notifications
-  , ("M-C-a", spawn "dunstctl close-all")
-  , ("M-C-c", spawn "dunstctl close")
-  , ("M-C-o", spawn "dunstctl history-pop")
+  , ("M1-a", spawn "dunstctl close-all")
+  , ("M1-j", spawn "dunstctl close")
+  , ("M1-o", spawn "dunstctl history-pop")
     -- Multimedia Keys
   , ("<XF86AudioLowerVolume>", spawn "~/dotFiles/scripts/volume.sh down 5")
   , ("<XF86AudioRaiseVolume>", spawn "~/dotFiles/scripts/volume.sh up 5")
@@ -250,10 +256,11 @@ main = do
   xmproc <- spawnPipe "xmobar"
   xmonad $ def
     { manageHook = manageDocks <+> myManageHook
+    , handleEventHook    = docksEventHook <+> fullscreenEventHook
     , modMask = myModMask
     , terminal = myTerminal
     , startupHook = myStartupHook
-    , layoutHook = showWName' myShowWNameTheme $ myLayoutHook
+    , layoutHook = showWName' myShowWNameTheme myLayoutHook
     , workspaces = myWorkspaces
     , borderWidth = myBorderWidth
     , normalBorderColor = myNormColor
