@@ -56,7 +56,6 @@ myBrowser :: String
 myBrowser = "firefox"
 
 myEditor :: String
--- myEditor = "code "
 myEditor = "emacsclient -c -a 'emacs' "
 
 myBorderWidth :: Dimension

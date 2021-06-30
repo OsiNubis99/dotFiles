@@ -16,6 +16,10 @@ ln -s ~/dotFiles/config/alacritty ~/.config/alacritty
 rm -r -f ~/.config/dunst
 ln -s ~/dotFiles/config/dunst ~/.config/dunst
 
+## Doom Emacs
+rm -r -f ~/.config/doom
+ln -s ~/dotFiles/config/doom ~/.config/doom
+
 ## Fontconfig
 rm -r -f ~/.local/share/fonts
 ln -s ~/dotFiles/config/fonts ~/.local/share/fonts
