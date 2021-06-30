@@ -18,10 +18,12 @@ gvfs
 gvfs-mtp
 gvfs-smb
 htop
+libreoffice-fresh
 lightdm-gtk-greeter
 lightdm-openrc
 linux-firmware
 linux-headers
+linux-zen-headers
 linux-zen
 lxappearance
 neofetch
@@ -34,6 +36,7 @@ nodejs
 nomacs
 npm
 numlockx
+opendoas
 opera
 php-sqlite
 picom
