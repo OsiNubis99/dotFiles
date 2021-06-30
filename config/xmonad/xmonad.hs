@@ -1,7 +1,6 @@
 -- Base
 import XMonad
 import System.IO (hPutStrLn)
-import System.Exit (exitSuccess)
 import qualified XMonad.StackSet as W
 -- Actions
 import XMonad.Actions.CopyWindow (kill1)
@@ -33,7 +32,6 @@ import XMonad.Layout.Reflect
 import XMonad.Layout.Renamed
 import XMonad.Layout.ShowWName
 import XMonad.Layout.Spacing
-import qualified XMonad.Layout.ToggleLayouts as T (toggleLayouts, ToggleLayout(Toggle))
 import qualified XMonad.Layout.MultiToggle as MT (Toggle(..))
 -- Utilities
 import XMonad.Util.EZConfig (additionalKeysP)
@@ -81,6 +79,7 @@ myStartupHook = do
   spawnOnce "nm-applet"
   spawnOnce "volumeicon"
 
+myTabTheme :: Theme
 myTabTheme = def
   { fontName      = myFont
   , activeColor    = myFocusColor
@@ -90,6 +89,7 @@ myTabTheme = def
   , activeTextColor  = myNormColor
   , inactiveTextColor  = myFocusColor
   }
+
 -- Border U D R L
 accordion = spacingRaw False (Border 8 8 0 0) True (Border 0 0 0 0 ) True
   $ Mirror (reflectVert Accordion)
@@ -122,6 +122,7 @@ myWorkspaces =
   , "Tool"
   , "Media"]
 
+myWorkspaceIcons :: M.Map String [Char]
 myWorkspaceIcons = M.fromList $ zip myWorkspaces 
   [ "\61595"
   , "\62057"
@@ -130,8 +131,10 @@ myWorkspaceIcons = M.fromList $ zip myWorkspaces
   , "\57871"
   , "\57969"]
 
+myWorkspaceIndices :: M.Map String Integer
 myWorkspaceIndices = M.fromList $ zip myWorkspaces [1..]
 
+clickable :: String -> String
 clickable wsName = "<action=xdotool key super+"++show i++"><fc=#ffaa00><fn=1>"++wsIcon++" </fn></fc>"++wsName++"</action>"
   where i = fromJust $ M.lookup wsName myWorkspaceIndices
         wsIcon = fromJust $ M.lookup wsName myWorkspaceIcons
@@ -237,9 +240,8 @@ myKeys =
   , ("M-e 8", spawn (myEditor ++ "~/Repos"))
   , ("M-e 9", spawn (myEditor ++ "~/Repos"))
     -- Notifications
-  , ("M1-a", spawn "dunstctl close-all")
-  , ("M1-j", spawn "dunstctl close")
-  , ("M1-o", spawn "dunstctl history-pop")
+  , ("M-j", spawn "dunstctl close")
+  , ("M-o", spawn "dunstctl history-pop")
     -- Multimedia Keys
   , ("<XF86AudioLowerVolume>", spawn "~/dotFiles/scripts/volume.sh down 5")
   , ("<XF86AudioRaiseVolume>", spawn "~/dotFiles/scripts/volume.sh up 5")
