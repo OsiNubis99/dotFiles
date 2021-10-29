@@ -78,8 +78,7 @@ You need any linux distribution. I recommend an Arch linux based one.
 1. Clone this repository
 
 ```sh
-cd ~/
-git clone https://github.com/OsiNubis99/dotFiles.git
+git clone https://github.com/OsiNubis99/dotFiles.git ~/dotFiles
 ```
 
 2. Run the installer
