@@ -7,11 +7,11 @@
 <!-- PROJECT DESCRIPTION -->
 <p align="center">
   <a href="https://github.com/OsiNubis99/dotFiles">
-    <img src="https://www.vectorlogo.zone/logos/linux/linux-icon.svg" alt="Logo" width="80" height="80">
+    <img src="https://github.com/OsiNubis99/dotFiles/blob/main/docs/Base.png?raw=true" alt="Base">
   </a>
   <h3 align="center">DotFiles</h3>
   <p align="center">
-    DotFiles are the customization files that are used to personalize your Linux or other Unix-based system.
+    DotFiles are the customization files that I use to setup my ArchLinux or other Arch-based system.
     <br />
     <a href="https://github.com/OsiNubis99/dotFiles/issues">Report Bug</a>
     ·
@@ -26,6 +26,7 @@
 - [Table of Contents](#table-of-contents)
 - [Built With](#built-with)
   - [Content](#content)
+  - [Preview](#preview)
 - [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
   - [Deployment](#deployment)
@@ -47,6 +48,7 @@
 ### Content
 
 - [Alacritty](https://github.com/OsiNubis99/dotFiles/tree/main/config/alacritty)
+- [Conky](https://github.com/brndnmtthws/conky)
 - [Dunst](https://github.com/OsiNubis99/dotFiles/tree/main/config/dunst)
 - [Nitrogen](https://github.com/OsiNubis99/dotFiles/tree/main/config/nitrogen)
 - [Picom](https://github.com/OsiNubis99/dotFiles/tree/main/config/picom)
@@ -55,6 +57,13 @@
 - [Xmobar](https://github.com/OsiNubis99/dotFiles/tree/main/config/xmobar)
 - [Xmonad](https://github.com/OsiNubis99/dotFiles/tree/main/config/xmonad)
 - [ZSH](https://github.com/OsiNubis99/dotFiles/tree/main/config/zsh)
+
+### Preview
+
+![grid](https://github.com/OsiNubis99/dotFiles/blob/main/docs/Grid.png?raw=true)
+![terminal](https://github.com/OsiNubis99/dotFiles/blob/main/docs/Terminal.png?raw=true)
+![terminal2](https://github.com/OsiNubis99/dotFiles/blob/main/docs/Terminal2.png?raw=true)
+![terminal3](https://github.com/OsiNubis99/dotFiles/blob/main/docs/Terminal3.png?raw=true)
 
 <!-- GETTING STARTED -->
 
@@ -73,22 +82,10 @@ cd ~/
 git clone https://github.com/OsiNubis99/dotFiles.git
 ```
 
-2. Install Paru
+2. Run the installer
 
 ```sh
-bash ~/dotFiles/scripts/install-paru.sh
-```
-
-3. Install all recommended Apps
-
-```sh
-paru $(cat ~/dotFiles/apps) $(cat ~/dotFiles/aurApps)
-```
-
-4. Create all symbolic links
-
-```sh
-bash ~/dotFiles/startUp.sh
+bash ~/dotFiles/install.sh
 ```
 
 <!-- ROADMAP -->
@@ -122,7 +119,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 ### Social medias
 
 [![Telegram](https://www.vectorlogo.zone/logos/telegram/telegram-icon.svg)](https://t.me/OsiNubis99)
-[![Vue](https://www.vectorlogo.zone/logos/twitter/twitter-icon.svg)](https://twitter.com/OsiNubis99)
+[![Twitter](https://www.vectorlogo.zone/logos/twitter/twitter-icon.svg)](https://twitter.com/OsiNubis99)
 
 ### Email
 
@@ -145,4 +142,4 @@ My email address OsiNubis99@PM.me
 [issues-shield]: https://img.shields.io/github/issues/OsiNubis99/dotFiles.svg?style=for-the-badge
 [issues-url]: https://github.com/OsiNubis99/dotFiles/issues
 [license-shield]: https://img.shields.io/github/license/OsiNubis99/dotFiles.svg?style=for-the-badge
-[license-url]: https://github.com/OsiNubis99/dotFiles/blob/master/LICENSE
+[license-url]: https://github.com/OsiNubis99/dotFiles/blob/main/LICENSE
