@@ -5,21 +5,21 @@
 # backlight.sh down 10
 
 function get_backlight {
-  xbacklight -get | cut -d '.' -f 1
+  light -G | cut -d '.' -f 1
 }
 
 function send_notification {
-    backlight=`get_backlight`
-    dunstify -t 5000 -r 1 -u normal "Backlight" -h "int:value:$backlight"
+  backlight=`get_backlight`
+  dunstify -t 5000 -r 1 -u normal "Backlight" -h "int:value:$backlight"
 }
 
 case $1 in
   up)
-	  xbacklight -inc $2
-	  send_notification
-	  ;;
+    light -A $2
+    send_notification
+    ;;
   down)
-	  xbacklight -dec $2
-	  send_notification
-	  ;;
+    light -U $2
+    send_notification
+    ;;
 esac
