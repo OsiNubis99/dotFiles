@@ -15,11 +15,11 @@ function send_notification {
 
 case $1 in
   up)
-	  xbacklight -inc $2 > /dev/null
+	  xbacklight -inc $2
 	  send_notification
 	  ;;
   down)
-	  xbacklight -dec $2 > /dev/null
+	  xbacklight -dec $2
 	  send_notification
 	  ;;
 esac
