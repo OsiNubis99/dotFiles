@@ -6,29 +6,29 @@
 # volume.sh mute
 
 function get_volume {
-    amixer get Master | grep '%' | head -n 1 | cut -d '[' -f 2 | cut -d '%' -f 1
+  pamixer --get-volume
 }
 
 function is_mute {
-    amixer get Master | grep '%' | grep -oE '[^ ]+$' | grep off > /dev/null
+  pamixer --get-mute
 }
 
 function send_notification {
-    volume=`get_volume`
-    dunstify -t 5000 -r 1 -u normal "Volume" -h "int:value:$volume"
+  volume=`get_volume`
+  dunstify -t 5000 -r 1 -u normal "Volume" -h "int:value:$volume"
 }
 
 case $1 in
   up)
-	  amixer set Master $2%+ unmute > /dev/null
+	  pamixer -i $2
 	  send_notification
 	  ;;
   down)
-	  amixer set Master $2%- unmute > /dev/null
+	  pamixer -d $2
 	  send_notification
 	  ;;
   mute)
-	  amixer set Master toggle > /dev/null
+	  pamixer -t
 	  if is_mute ; then
 	      dunstify -t 5000 -r 1 -u normal "Mute"
 	  else
