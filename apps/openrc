@@ -1,0 +1,7 @@
+acpid-openrc
+elogind-openrc
+connman-openrc
+lightdm-openrc
+ntp-openrc
+openrc
+openssh-openrc

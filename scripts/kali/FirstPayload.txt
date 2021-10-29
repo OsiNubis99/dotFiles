@@ -1,0 +1,18 @@
+REM My First Payload
+WINDOWS r
+DELAY 100
+STRING notepad.exe
+ENTER
+DELAY 200
+STRING Hey Que haces con mi pendrive...
+DELAY 100
+ENTER
+STRING Borrando System32 en 3s: 
+DELAY 100
+STRING .3
+DELAY 100
+STRING .2
+DELAY 100
+STRING .1 
+DELAY 1000
+STRING Te Cagaste!

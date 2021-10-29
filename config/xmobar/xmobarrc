@@ -1,25 +1,28 @@
-Config { font = "xft:Hack Nerd Font:weight=bold:pixelsize=11"
-       , additionalFonts = [ "xft:Arimo Nerd Font:pixelsize=16:spacing=3"]
-       , bgColor = "#152429"
+Config { font = "xft:Hack Nerd Font:pixelsize=14"
+       , additionalFonts = [ "xft:Arimo Nerd Font:pixelsize=17"]
+       , bgColor = "#000000"
        , fgColor = "#ffaa00"
-       , alpha = 127
-       , position = Static { xpos = 0 , ypos = 0, width = 1366, height = 30 }
+       , alpha = 165
+       , position = Static { xpos = 0 , ypos = 0, width = 1920, height = 30 }
        , commands = [ Run BatteryP ["BAT0"]
-                 	[ "-t", "<acstatus>"
-                 	, "-l", "red", "-h", "green"
-                 	, "-L", "20", "-H", "60"
-                 	, "-l", "red", "-h", "green"
-                 	, "--", "-i", "<fn=1>\62851 </fn>Full", "-O", "<fn=1>\62855 </fn><left>+", "-o", "<fn=1>\62845 </fn><left>%"
-                 	] 10
-                    , Run Date "<fc=#00d1ff><fn=1>\61555 </fn></fc>%d/%m" "date" 600
-                    , Run Date "<fc=#00d1ff><fn=1>\61463 </fn></fc>%H:%M" "time" 600
+                                   [ "-t", "<acstatus>"
+                                   , "-l", "red", "-h", "green"
+                                   , "-L", "20", "-H", "60"
+                                   , "-l", "red", "-h", "green"
+                                   , "--", "-i", "<fn=1>\62851</fn> Full", "-O", "<fn=1>\62855</fn> <left>+", "-o", "<fn=1>\62845</fn> <left>%"
+                                   ] 50
+                    , Run Date "<fc=#00d1ff><fn=1>\61463</fn> </fc>%H:%M" "time" 600
+                    , Run Date "<fc=#00d1ff><fn=1>\61555</fn> </fc>%a %d %b %Y" "date" 600
                     , Run UnsafeStdinReader
-                    , Run Cpu ["-t", "<fc=#00d1ff><fn=1>\63578 </fn></fc><total>%","-H","80","--high","red"] 10
-                    , Run Memory ["-t", "<fc=#00d1ff><fn=1>\64281 </fn></fc><used>M"] 10
-                    , Run DynNetwork ["-t", "<fc=#00d1ff><fn=1>\61699 </fn></fc><rx>kb","--", "--devices", "wls2,ens3"] 10
-                    , Run Com "echo" ["<fc=#ffffff><fn=1> | </fn></fc>"] "SEP" 9000
+                    , Run MultiCpu ["-t", "<fc=#00d1ff><fn=1>\63578</fn> </fc><autototal>","-H","80","--high","red"] 50
+                    , Run MultiCoreTemp [ "-t", "<max>"
+                                        , "-L", "55", "-H", "75"
+                                        , "-l", "#ffaa00", "-n", "#00d1ff", "-h", "red"] 50
+                    , Run Memory ["-t", "<fc=#00d1ff><fn=1>\64281</fn> </fc><used>"] 50
+                    , Run DynNetwork ["-t", "<fc=#00d1ff><fn=1>\61699</fn> </fc><rx> ","--", "--devices", "wls2,ens3"] 50
+                    , Run Com "echo" ["<fc=#ffffff> <fn=1>|</fn> </fc>"] "SEP" 9000
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = " %battery%%SEP%%date%%SEP%%time%}<fc=#00d1ff>%UnsafeStdinReader%</fc>{<action=alacritty -e 'htop'>%cpu%%SEP%%memory%</action>%SEP%%dynnetwork% "
+       , template = " %battery%%SEP%%time%%SEP%%date%}<fc=#ffaa00>%UnsafeStdinReader%</fc>{<action=alacritty -e 'htop'>%multicpu% %multicoretemp%%SEP%%memory%</action>%SEP%%dynnetwork% "
        }

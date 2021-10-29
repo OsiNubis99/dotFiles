@@ -1,13 +1,14 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
-;; Place your private configuration here! Remember, you do not need to run 'doom
-;; sync' after modifying this file!
+(setq-default user-full-name "Andrés David Hurtado Fernández"
+              user-mail-address "OsiNubis99@PM.me")
 
-;; Some functionality uses this to identify you, e.g. GPG configuration, email
-;; clients, file templates and snippets.
-(setq user-full-name "Andrés David Hurtado Fernández"
-      user-mail-address "OsiNubis99@PM.me")
+                                        ;               PERSONAL KEY BINDING
+(global-set-key (kbd "M-d") 'evil-multiedit-match-and-next)
+(global-set-key (kbd "M-u") 'evil-multiedit-match-and-prev)
+(global-set-key (kbd "C-/") 'comment-line)
 
+                                        ;               INTERFACE
 ;; Doom exposes five (optional) variables for controlling fonts in Doom. Here
 ;; are the three important ones:
 ;;
@@ -21,21 +22,20 @@
 ;; (setq doom-font (font-spec :family "monospace" :size 12 :weight 'semi-light)
 ;;       doom-variable-pitch-font (font-spec :family "sans" :size 13))
 
-;; Personal keybindigs
-(global-set-key (kbd "M-d") 'evil-multiedit-match-and-next)
-(global-set-key (kbd "M-u") 'evil-multiedit-match-and-prev)
-(global-set-key (kbd "C-/") 'comment-line)
-
-;; There are two ways to load a theme. Both assume the theme is installed and
-;; available. You can either set `doom-theme' or manually load a theme with the
-;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-acario-dark)
+(setq-default doom-theme 'doom-acario-dark)
 (map! :leader
       :desc "Load new theme" "h t" #'counsel-load-theme)
 
 (use-package emojify
   :hook (after-init . global-emojify-mode))
 
+(setq-default display-line-numbers-type 'relative)
+
+                                        ;               TABS CONFIG
+(setq-default indent-tabs-mode nil)
+(setq-default tab-width 2)
+(setq-default electric-indent-mode 1)
+(setq backward-delete-char-untabify-method 'hungry)
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
@@ -44,31 +44,32 @@
 (map! :leader
       (:prefix ("-" . "open file")
        :desc "Edit agenda file" "a" #'(lambda () (interactive) (find-file "~/dotFiles/Org/agenda.org"))
-       :desc "Edit doom config.org" "c" #'(lambda () (interactive) (find-file "~/.config/doom/config.org"))
+       :desc "Edit doom config.el" "c" #'(lambda () (interactive) (find-file "~/.config/doom/config.el"))
+       :desc "Edit doom config.org" "o" #'(lambda () (interactive) (find-file "~/.config/doom/config.org"))
        :desc "Edit doom init.el" "i" #'(lambda () (interactive) (find-file "~/.config/doom/init.el"))
        :desc "Edit doom packages.el" "p" #'(lambda () (interactive) (find-file "~/.config/doom/packages.el"))))
 
 (defun my/org-mode/load-prettify-symbols () "Prettify org mode keywords"
-  (interactive)
-  (setq prettify-symbols-alist
-    (mapcan (lambda (x) (list x (cons (upcase (car x)) (cdr x))))
-          '(("#+begin_src" . ?)
-            ("#+end_src" . ?)
-            ("#+begin_example" . ?)
-            ("#+end_example" . ?)
-            ("#+DATE:" . ?⏱)
-            ("#+AUTHOR:" . ?✏)
-            ("[ ]" .  ?☐)
-            ("[X]" . ?☑ )
-            ("[-]" . ?❍ )
-            ("lambda" . ?λ)
-            ("#+header:" . ?)
-            ("#+name:" . ?﮸)
-            ("#+results:" . ?)
-            ("#+call:" . ?)
-            (":properties:" . ?)
-            (":logbook:" . ?))))
-  (prettify-symbols-mode 1))
+       (interactive)
+       (setq prettify-symbols-alist
+             (mapcan (lambda (x) (list x (cons (upcase (car x)) (cdr x))))
+                     '(("#+begin_src" . ?)
+                       ("#+end_src" . ?)
+                       ("#+begin_example" . ?)
+                       ("#+end_example" . ?)
+                       ("#+DATE:" . ?⏱)
+                       ("#+AUTHOR:" . ?✏)
+                       ("[ ]" .  ?☐)
+                       ("[X]" . ?☑ )
+                       ("[-]" . ?❍ )
+                       ("lambda" . ?λ)
+                       ("#+header:" . ?)
+                       ("#+name:" . ?﮸)
+                       ("#+results:" . ?)
+                       ("#+call:" . ?)
+                       (":properties:" . ?)
+                       (":logbook:" . ?))))
+       (prettify-symbols-mode 1))
 
 (map! :leader
       :desc "Org babel tangle" "m B" #'org-babel-tangle)
@@ -86,36 +87,36 @@
         ;; ex. of org-link-abbrev-alist in action
         ;; [[arch-wiki:Name_of_Page][Description]]
         org-link-abbrev-alist    ; This overwrites the default Doom org-link-abbrev-list
-          '(("google" . "http://www.google.com/search?q=")
-            ("arch-wiki" . "https://wiki.archlinux.org/index.php/")
-            ("ddg" . "https://duckduckgo.com/?q=")
-            ("wiki" . "https://en.wikipedia.org/wiki/"))
+        '(("google" . "http://www.google.com/search?q=")
+          ("arch-wiki" . "https://wiki.archlinux.org/index.php/")
+          ("ddg" . "https://duckduckgo.com/?q=")
+          ("wiki" . "https://en.wikipedia.org/wiki/"))
         org-todo-keywords        ; This overwrites the default Doom org-todo-keywords
-          '((sequence
-             "TODO(t)"           ; A task that is ready to be tackled
-             "BLOG(b)"           ; Blog writing assignments
-             "GYM(g)"            ; Things to accomplish at the gym
-             "PROJ(p)"           ; A project that contains other tasks
-             "VIDEO(v)"          ; Video assignments
-             "WAIT(w)"           ; Something is holding up this task
-             "|"                 ; The pipe necessary to separate "active" states and "inactive" states
-             "DONE(d)"           ; Task has been completed
-             "CANCELLED(c)" )))) ; Task has been cancelled
+        '((sequence
+           "TODO(t)"           ; A task that is ready to be tackled
+           "BLOG(b)"           ; Blog writing assignments
+           "GYM(g)"            ; Things to accomplish at the gym
+           "PROJ(p)"           ; A project that contains other tasks
+           "VIDEO(v)"          ; Video assignments
+           "WAIT(w)"           ; Something is holding up this task
+           "|"                 ; The pipe necessary to separate "active" states and "inactive" states
+           "DONE(d)"           ; Task has been completed
+           "CANCELLED(c)" )))) ; Task has been cancelled
 
 (custom-set-faces
-  '(org-level-1 ((t (:inherit outline-1 :height 1.2))))
-  '(org-level-2 ((t (:inherit outline-2 :height 1.0))))
-  '(org-level-3 ((t (:inherit outline-3 :height 1.0))))
-  '(org-level-4 ((t (:inherit outline-4 :height 1.0))))
-  '(org-level-5 ((t (:inherit outline-5 :height 1.0))))
-)
-
-;; This determines the style of line numbers in effect. If set to `nil', line
-;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type t)
+ '(org-level-1 ((t (:inherit outline-1 :height 1.2))))
+ '(org-level-2 ((t (:inherit outline-2 :height 1.0))))
+ '(org-level-3 ((t (:inherit outline-3 :height 1.0))))
+ '(org-level-4 ((t (:inherit outline-4 :height 1.0))))
+ '(org-level-5 ((t (:inherit outline-5 :height 1.0))))
+ )
 
 (setq
- projectile-project-search-path '("~/dotFiles/" "~/Repos/"))
+ projectile-project-search-path '("~/dotFiles/"))
+
+(use-package wakatime-mode
+  :ensure t)
+(global-wakatime-mode)
 
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;

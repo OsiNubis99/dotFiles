@@ -3,16 +3,19 @@ alias nr="npm run"
 alias ni="npm i"
 # Productivity
 alias cp="cp -i"                                                
-alias cp="mv -i"                                                
+alias mv="mv -i"
 alias df="df -h"
 alias lsl="ls -l"
-alias free="free -m"                                            
-alias edi="doas nvim"
-alias srm="doas rm -r"
+alias rm="rm -r -i"
+alias free="free -m"
+alias srm="doas rm -i -r"
+alias mkdir="mkdir -p"
 alias ls="ls --color=auto -A"
 alias gitu="git add . && git commit && git push"
 # vim and emacs
+alias v="nvim"
 alias vim="nvim"
+alias edi="doas nvim"
 alias em="/usr/bin/emacs -nw"
 alias emacs="emacsclient -c -a 'emacs'"
 alias doomsync="~/.emacs.d/bin/doom sync"
@@ -41,6 +44,6 @@ cdl ()
 }
 paclean()
 {
-	paru -Sc --noconfirm;
-	par --noconfirm $(pald -t);
+  paru -Sc --noconfirm;
+  par --noconfirm $(pald -t);
 }
