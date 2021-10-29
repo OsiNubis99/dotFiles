@@ -70,14 +70,13 @@ windowCount = gets $ Just . show . length . W.integrate' . W.stack . W.workspace
 
 myStartupHook :: X ()
 myStartupHook = do
-  spawnOnce "lxsession -r"
-  spawnOnce "/usr/bin/emacs --daemon &" 
-  spawnOnce "~/dotFiles/scripts/setWallpaper.sh '10'"
-  spawnOnce "dunst -config ~/.config/dunst/dunstrc"
-  spawnOnce "qlipper"
-  spawnOnce "picom -f"
-  spawnOnce "nm-applet"
-  spawnOnce "volumeicon"
+  spawnOnce "picom -f &"
+  spawnOnce "xfce4-session &"
+  spawnOnce "/usr/bin/emacs --daemon &"
+  spawnOnce "connman-gtk --tray &"
+  spawnOnce "dunst -config ~/.config/dunst/dunstrc &"
+  spawnOnce "~/dotFiles/scripts/setWallpaper.sh '20' &"
+  spawnOnce "conky &"
 
 myTabTheme :: Theme
 myTabTheme = def
@@ -101,9 +100,9 @@ tall = renamed [Replace "G"]
   $ spacingRaw False (Border 34 4 4 4) True (Border 4 4 4 4 ) True
   $ ResizableTall 1 (1/100) (1/2) [] 
 gridTall = renamed [Replace "g"]
-  $ drawer 0.05 0.65 (ClassName "Alacritty") accordion `onBottom` tall
+  $ drawer 0.04 0.65 (ClassName "Alacritty") accordion `onBottom` tall
 gridTabs = renamed [Replace "t"]
-  $ drawer 0.05 0.65 (ClassName "Alacritty") accordion `onBottom` tabs
+  $ drawer 0.04 0.65 (ClassName "Alacritty") accordion `onBottom` tabs
 
 defaultLayout = tall ||| gridTabs ||| gridTall ||| tabs
 gridLayout = gridTabs ||| gridTall ||| tabs ||| tall
@@ -111,7 +110,7 @@ tabLayout = tabs ||| tall ||| gridTabs ||| gridTall
 
 myLayoutHook = mkToggle (NBFULL ?? NOBORDERS ?? EOT)
   $ onWorkspace ( head myWorkspaces ) gridLayout
-  $ onWorkspaces [myWorkspaces !! 1 ,myWorkspaces !! 3] tabLayout defaultLayout
+  $ onWorkspaces [myWorkspaces !! 1] tabLayout defaultLayout
 
 myWorkspaces :: [String]
 myWorkspaces = 
@@ -135,7 +134,7 @@ myWorkspaceIndices :: M.Map String Integer
 myWorkspaceIndices = M.fromList $ zip myWorkspaces [1..]
 
 clickable :: String -> String
-clickable wsName = "<action=xdotool key super+"++show i++"><fc=#ffaa00><fn=1>"++wsIcon++" </fn></fc>"++wsName++"</action>"
+clickable wsName = "<action=xdotool key super+"++show i++"><fc=#ffaa00><fn=1>"++wsIcon++"</fn> </fc>"++wsName++"</action>"
   where i = fromJust $ M.lookup wsName myWorkspaceIndices
         wsIcon = fromJust $ M.lookup wsName myWorkspaceIcons
 
@@ -151,19 +150,21 @@ myManageHook :: XMonad.Query (Data.Monoid.Endo WindowSet)
 myManageHook = composeAll
   [ className =? "Code" --> doShift ( head myWorkspaces )
   , className =? "Emacs" --> doShift ( head myWorkspaces )
+  , className =? "libreoffice" --> doShift ( head  myWorkspaces )
   , className =? "firefox" --> doShift ( myWorkspaces !! 1 )
   , className =? "Opera" --> doShift ( myWorkspaces !! 1 )
   , className =? "discord" --> doShift (  myWorkspaces !! 2 )
   , className =? "TelegramDesktop" --> doShift (  myWorkspaces !! 2 )
   , className =? "Thunar" --> doShift (  myWorkspaces !! 3 )
-  , className =? "libreoffice" --> doShift (  myWorkspaces !! 3 )
   , className =? "zoom"  --> doFloat <+> doShift  ( myWorkspaces !! 4 )
   , className =? "Free Download Manager" --> doShift  ( myWorkspaces !! 4 )
   , className =? "vlc" --> doShift ( myWorkspaces !! 5 )
+  , className =? "Steam"  --> doShift  ( myWorkspaces !! 5 )
+  , className =? "dota2"  --> doFullFloat <+> doShift  ( myWorkspaces !! 5 )
   , className =? "Nm-connection-editor"  --> doFloat
   , title =? "Oracle VM VirtualBox Manager"  --> doFloat
-  , title =? "File Operation Progress"  --> doFullFloat
-  , resource =? "Dialog" --> doFullFloat
+  , title =? "File Operation Progress"  --> doFloat
+  , resource =? "Dialog" --> doFloat
   , isFullscreen --> doFullFloat
   ]
 
@@ -173,18 +174,16 @@ myLogHook = fadeInactiveLogHook fadeAmount
 
 myKeys :: [(String, X ())]
 myKeys =
-  [ ("M-j", kill1)
-  , ("M-z", spawn "lxsession-logout")
-  , ("M-S-j", killAll)
+  [ ("M-c", kill1)
+  , ("M-q", spawn "lxsession-logout")
+  , ("M-S-c", killAll)
   , ("M-S-r", spawn "xmonad --restart")
     -- Programs
   , ("M-<Return>", spawn myTerminal)
   , ("M-<Space>", spawn "~/dotFiles/scripts/spawnRofi.sh")
-  , ("M-q", spawn "~/dotFiles/scripts/spawnTrayer.sh")
-  , ("M-;", spawn myTerminal)
+  , ("M-x", spawn "~/dotFiles/scripts/spawnTrayer.sh")
+  , ("M-z", spawn myTerminal)
     -- Workspaces
-  , ("M-,", moveTo Prev NonEmptyWS)
-  , ("M-.", moveTo Next NonEmptyWS)
   , ("M-<Left>", moveTo Prev NonEmptyWS)
   , ("M-<Right>", moveTo Next NonEmptyWS)
   , ("M-S-<Left>", moveTo Prev EmptyWS)
@@ -192,28 +191,26 @@ myKeys =
     -- Layouts
   , ("M-<Up>", windows W.focusUp)
   , ("M-<Down>", windows W.focusDown)
-  , ("M-'", sendMessage NextLayout)
+  , ("M-/", sendMessage NextLayout)
+  , ("M-,", sendMessage (IncMasterN 1))
+  , ("M-.", sendMessage (IncMasterN (-1)))
   , ("M-a", sinkAll)
   , ("M-d", decWindowSpacing 2)
   , ("M-f", sendMessage (MT.Toggle NBFULL) >> sendMessage ToggleStruts)
   , ("M-i", incWindowSpacing 2)
   , ("M-m", promote)
-  , ("M-S-<Up>", sendMessage (IncMasterN 1))
-  , ("M-S-<Down>", sendMessage (IncMasterN (-1)))
-  , ("M-S-'", rotSlavesUp)
-  , ("M-S-,", windows W.swapUp)
-  , ("M-S-.", windows W.swapDown)
+  , ("M-C-<Left>", sendMessage Shrink)
+  , ("M-C-<Right>", sendMessage Expand)
+  , ("M-C-<Up>", sendMessage MirrorExpand)
+  , ("M-C-<Down>", sendMessage MirrorShrink)
+  , ("M-S-<Up>", windows W.swapUp)
+  , ("M-S-<Down>", windows W.swapDown)
+  , ("M-S-/", rotSlavesUp)
   , ("M-S-i", incScreenSpacing 2)
   , ("M-S-d", decScreenSpacing 2)
-  , ("M1-,", windows W.focusUp)
-  , ("M1-.", windows W.focusDown)
-  , ("M1-<Left>", sendMessage Shrink)
-  , ("M1-<Right>", sendMessage Expand)
-  , ("M1-<Up>", sendMessage MirrorExpand)
-  , ("M1-<Down>", sendMessage MirrorShrink)
     -- Wallpapers
   , ("M-w o", spawn "nitrogen")
-  , ("M-w a", spawn "~/dotFiles/scripts/setWallpaper.sh '10'")
+  , ("M-w a", spawn "~/dotFiles/scripts/setWallpaper.sh '20'")
   , ("M-w f", spawn "nitrogen --restore")
   , ("M-w l", spawn "~/dotFiles/scripts/listWallpaper.sh")
   , ("M-w 1", spawn "~/dotFiles/scripts/setWallpaper.sh '0'")
@@ -240,8 +237,8 @@ myKeys =
   , ("M-e 8", spawn (myEditor ++ "~/Repos"))
   , ("M-e 9", spawn (myEditor ++ "~/Repos"))
     -- Notifications
-  , ("M-j", spawn "dunstctl close")
   , ("M-o", spawn "dunstctl history-pop")
+  , ("M-S-o", spawn "dunstctl close")
     -- Multimedia Keys
   , ("<XF86AudioLowerVolume>", spawn "~/dotFiles/scripts/volume.sh down 5")
   , ("<XF86AudioRaiseVolume>", spawn "~/dotFiles/scripts/volume.sh up 5")
@@ -249,13 +246,14 @@ myKeys =
   , ("<XF86MonBrightnessUp>", spawn "~/dotFiles/scripts/backlight.sh up 10")
   , ("<XF86MonBrightnessDown>", spawn "~/dotFiles/scripts/backlight.sh down 10")
   , ("<XF86HomePage>", spawn myBrowser)
-  , ("<Print>", spawn "flameshot gui")
+  , ("<Print>", spawn "flameshot full -c")
+  , ("M-<Print>", spawn "flameshot gui")
   ]
 
 main :: IO ()
 main = do
   xmproc <- spawnPipe "xmobar"
-  xmonad $ def
+  xmonad $ ewmh def
     { manageHook = manageDocks <+> myManageHook
     , handleEventHook    = docksEventHook <+> fullscreenEventHook
     , modMask = myModMask
@@ -268,12 +266,12 @@ main = do
     , focusedBorderColor = myFocusColor
     , logHook = myLogHook <+> dynamicLogWithPP xmobarPP
       { ppOutput = hPutStrLn xmproc
-      , ppCurrent = xmobarColor "#ffaa00" "" . clickable
+      , ppCurrent = xmobarColor "#00d1ff" "" . clickable
       , ppVisible = xmobarColor "#c792ea" "" . clickable
       , ppHidden = xmobarColor "#3fd12e" "" . clickable
       , ppHiddenNoWindows = clickable 
       , ppUrgent = xmobarColor "#C45500" "" . wrap "!" "!" . clickable
-      , ppSep =  "<fc=#ffffff><fn=1> | </fn></fc>"
+      , ppSep =  "<fc=#ffffff> <fn=1>|</fn> </fc>"
       , ppWsSep = " "
       , ppExtras  = [windowCount]
       , ppOrder  = \(ws:l:t:ex) -> [l,ws]++ex
