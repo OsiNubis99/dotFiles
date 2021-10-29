@@ -72,6 +72,7 @@ myStartupHook :: X ()
 myStartupHook = do
   spawnOnce "picom -f &"
   spawnOnce "xfce4-session &"
+  spawnOnce "qlipper &"
   spawnOnce "/usr/bin/emacs --daemon &"
   spawnOnce "connman-gtk --tray &"
   spawnOnce "dunst -config ~/.config/dunst/dunstrc &"

@@ -1,5 +1,5 @@
 configuration {
-  font:                   "Arimo Nerd Font 10";
+  font:                   "Arimo Nerd Font 12";
   show-icons:             true;
   icon-theme:             "Papirus";
   display-drun:           "";
@@ -17,7 +17,7 @@ configuration {
   foreground-bar:         #152429;
   background-selected:    #ffaa00;
   foreground-selected:    #152429;
-	background-list:        #1524295f;
+  background-list:        #1524295f;
   accent:                 #ffaa00;
 }
 
@@ -30,10 +30,10 @@ window {
   border-radius:          4px;
   width:                  20%;
   location:               west;
-  x-offset:               0;
+  x-offset:               8;
   y-offset:               0;
- a: 1;
- b: 2;
+  a:                      1;
+  b:                      2;
 }
 
 entry {
@@ -61,7 +61,7 @@ inputbar {
 
 listview {
   background-color:       @background;
-	fixed-columns:          true;
+	fixed-columns:        true;
   columns:                1;
   lines:                  10;
   spacing:                0%;
@@ -75,25 +75,25 @@ mainbox {
   border:                 0% 0% 0% 0%;
   border-radius:          0% 0% 0% 0%;
   border-color:           @accent;
-    a: 1;
-    b: 2;
-    c: 3;
+  a:                      1;
+  b:                      2;
+  c:                      3;
   children:               [ inputbar, listview ];
   spacing:                1%;
   padding:                1% 1% 1% 1%;
 }
 
 element {
-  background-color:               @background;
-  text-color:                     @foreground;
-  orientation:                    horizontal;
-  border-radius:                  0%;
-  padding:                        1%;
+  background-color:       @background;
+  text-color:             @foreground;
+  orientation:            horizontal;
+  border-radius:          0%;
+  padding:                1%;
 }
 
 element-icon {
-  size:                           48px;
-  border:                         0px;
+  size:                   68px;
+  border:                 0px;
 }
 
 element-text {
