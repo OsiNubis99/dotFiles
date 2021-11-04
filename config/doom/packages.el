@@ -72,4 +72,5 @@
 (package! dashboard)
 (package! evil-tutor)
 (package! smart-tabs-mode)
+(package! vue-mode)
 (package! wakatime-mode)
