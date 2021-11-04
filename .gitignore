@@ -5,3 +5,4 @@ config/xmonad/xmonad.errors
 config/xmonad/xmonad.hi
 config/xmonad/xmonad.o
 config/zsh/.zhistory
+config/zsh/.zcompdump
