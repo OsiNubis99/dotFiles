@@ -3,12 +3,15 @@
 (setq-default user-full-name "Andrés David Hurtado Fernández"
               user-mail-address "OsiNubis99@PM.me")
 
-                                        ;               PERSONAL KEY BINDING
+;PERSONAL KEY BINDING
 (global-set-key (kbd "M-d") 'evil-multiedit-match-and-next)
 (global-set-key (kbd "M-u") 'evil-multiedit-match-and-prev)
+(global-set-key (kbd "C-;") 'save-buffer)
 (global-set-key (kbd "C-/") 'comment-line)
+(global-set-key [M-left] 'previous-buffer)
+(global-set-key [M-right] 'next-buffer)
 
-                                        ;               INTERFACE
+;INTERFACE
 ;; Doom exposes five (optional) variables for controlling fonts in Doom. Here
 ;; are the three important ones:
 ;;
@@ -31,7 +34,7 @@
 
 (setq-default display-line-numbers-type 'relative)
 
-                                        ;               TABS CONFIG
+;TABS CONFIG
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 2)
 (setq-default electric-indent-mode 1)
