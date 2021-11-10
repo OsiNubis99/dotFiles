@@ -11,7 +11,7 @@
 (global-set-key [M-left] 'previous-buffer)
 (global-set-key [M-right] 'next-buffer)
 (map! :leader
-      :desc "Open Ranger" "." 'ranger)
+      :desc "Open Dired" "." 'dired-jump)
 
 ;INTERFACE
 ;; Doom exposes five (optional) variables for controlling fonts in Doom. Here
@@ -35,15 +35,6 @@
   :hook (after-init . global-emojify-mode))
 
 (setq-default display-line-numbers-type 'relative)
-
-;RANGER
-(setq ranger-show-hidden t)
-(setq ranger-width-preview 0.35)
-(setq ranger-width-parents 0.25)
-(setq ranger-excluded-extensions '("mkv" "iso" "mp4"))
-(setq ranger-max-preview-size 5)
-(setq ranger-cleanup-eagerly t)
-(setq ranger-dont-show-binary t)
 
 ;TABS CONFIG
 (setq-default indent-tabs-mode nil)
