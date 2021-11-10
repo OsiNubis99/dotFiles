@@ -182,6 +182,8 @@ myKeys =
     -- Programs
   , ("M-<Return>", spawn myTerminal)
   , ("M-<Space>", spawn "~/dotFiles/scripts/spawnRofi.sh")
+  , ("M-f", spawn "firefox --browser")
+  , ("M-t", spawn "telegram-desktop")
   , ("M-x", spawn "~/dotFiles/scripts/spawnTrayer.sh")
   , ("M-z", spawn myTerminal)
     -- Workspaces
@@ -197,7 +199,7 @@ myKeys =
   , ("M-.", sendMessage (IncMasterN (-1)))
   , ("M-a", sinkAll)
   , ("M-d", decWindowSpacing 2)
-  , ("M-f", sendMessage (MT.Toggle NBFULL) >> sendMessage ToggleStruts)
+  , ("M-b", sendMessage (MT.Toggle NBFULL) >> sendMessage ToggleStruts)
   , ("M-i", incWindowSpacing 2)
   , ("M-m", promote)
   , ("M-C-<Left>", sendMessage Shrink)
