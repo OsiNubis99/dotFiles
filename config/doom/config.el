@@ -3,7 +3,7 @@
 (setq-default user-full-name "Andrés David Hurtado Fernández"
               user-mail-address "OsiNubis99@PM.me")
 
-;PERSONAL KEY BINDING
+;; PERSONAL KEY BINDING
 (global-set-key (kbd "M-d") 'evil-multiedit-match-and-next)
 (global-set-key (kbd "M-u") 'evil-multiedit-match-and-prev)
 (global-set-key (kbd "C-;") 'save-buffer)
@@ -12,8 +12,9 @@
 (global-set-key [M-right] 'next-buffer)
 (map! :leader
       :desc "Open Dired" "." 'dired-jump)
+(map! :leader
+      :desc "Format Buffer" "/" '+format/buffer)
 
-;INTERFACE
 ;; Doom exposes five (optional) variables for controlling fonts in Doom. Here
 ;; are the three important ones:
 ;;
@@ -27,16 +28,15 @@
 ;; (setq doom-font (font-spec :family "monospace" :size 12 :weight 'semi-light)
 ;;       doom-variable-pitch-font (font-spec :family "sans" :size 13))
 
+;; INTERFACE
 (setq-default doom-theme 'doom-old-hope)
 (map! :leader
       :desc "Load new theme" "h t" #'counsel-load-theme)
-
 (use-package emojify
   :hook (after-init . global-emojify-mode))
-
 (setq-default display-line-numbers-type 'relative)
 
-;TABS CONFIG
+;; TABS CONFIG
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 2)
 (setq-default electric-indent-mode 1)
@@ -139,3 +139,4 @@
 ;;
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
+;;
