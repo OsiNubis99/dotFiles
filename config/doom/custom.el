@@ -16,7 +16,8 @@
  '(jdee-db-requested-breakpoint-face-colors (cons "#1B2229" "#A3BE8C"))
  '(jdee-db-spec-breakpoint-face-colors (cons "#1B2229" "#4f5b66"))
  '(objed-cursor-color "#BF616A")
- '(package-selected-packages '(wakatime-mode smart-tabs-mode multiple-cursors vue-mode))
+ '(package-selected-packages
+   '(ranger wakatime-mode smart-tabs-mode multiple-cursors vue-mode))
  '(pdf-view-midnight-colors (cons "#c0c5ce" "#2b303b"))
  '(rustic-ansi-faces
    ["#2b303b" "#BF616A" "#A3BE8C" "#ECBE7B" "#8FA1B3" "#c678dd" "#46D9FF" "#c0c5ce"])
