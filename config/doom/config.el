@@ -25,7 +25,7 @@
 ;; (setq doom-font (font-spec :family "monospace" :size 12 :weight 'semi-light)
 ;;       doom-variable-pitch-font (font-spec :family "sans" :size 13))
 
-(setq-default doom-theme 'doom-acario-dark)
+(setq-default doom-theme 'doom-old-hope)
 (map! :leader
       :desc "Load new theme" "h t" #'counsel-load-theme)
 
