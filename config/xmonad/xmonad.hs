@@ -35,7 +35,7 @@ myFont :: String
 myFont = "xft:Arimo Nerd Font:weight=bold:pixelsize=11:antialias=true:hinting=true"
 
 myBigFont :: String
-myBigFont = "xft:Arimo Nerd Font:regular:size=73:antialias=true:hinting=true"
+myBigFont = "xft:Arimo Nerd Font:regular:size=75:antialias=true:hinting=true"
 
 myModMask :: KeyMask
 myModMask = mod4Mask
