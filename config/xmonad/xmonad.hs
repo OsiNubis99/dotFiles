@@ -71,6 +71,7 @@ myStartupHook = do
   spawnOnce "dunst -config ~/.config/dunst/dunstrc &"
   spawnOnce "~/dotFiles/scripts/setWallpaper.sh '20' &"
   spawnOnce "conky &"
+  spawnOnce "conky -c .config/conky/conky2.conf &"
 
 myTabTheme :: Theme
 myTabTheme =
