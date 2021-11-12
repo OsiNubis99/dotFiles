@@ -63,15 +63,15 @@ windowCount = gets $ Just . show . length . W.integrate' . W.stack . W.workspace
 
 myStartupHook :: X ()
 myStartupHook = do
-  spawnOnce "picom -f &"
-  spawnOnce "xfce4-session &"
-  spawnOnce "qlipper &"
-  spawnOnce "/usr/bin/emacs --daemon &"
-  spawnOnce "connman-gtk --tray &"
-  spawnOnce "dunst -config ~/.config/dunst/dunstrc &"
-  spawnOnce "~/dotFiles/scripts/setWallpaper.sh '20' &"
   spawnOnce "conky &"
   spawnOnce "conky -c .config/conky/conky2.conf &"
+  spawnOnce "picom -f &"
+  spawnOnce "qlipper &"
+  spawnOnce "connman-gtk --tray &"
+  spawnOnce "xfce4-session &"
+  spawnOnce "/usr/bin/emacs --daemon &"
+  spawnOnce "dunst -config ~/.config/dunst/dunstrc &"
+  spawnOnce "~/dotFiles/scripts/setWallpaper.sh '20' &"
 
 myTabTheme :: Theme
 myTabTheme =
@@ -191,7 +191,8 @@ myLogHook = fadeInactiveLogHook fadeAmount
 
 myKeys :: [(String, X ())]
 myKeys =
-  [ ("M-c", kill1),
+  [ -- Control
+    ("M-c", kill1),
     ("M-q", spawn "lxsession-logout"),
     ("M-S-c", killAll),
     ("M-S-r", spawn "xmonad --restart"),
@@ -244,7 +245,9 @@ myKeys =
     ("M-w 0", spawn "~/dotFiles/scripts/setWallpaper.sh '9'"),
     -- Editor
     ("M-e o", spawn myEditor),
-    ("M-e e", spawn (myEditor ++ "--eval '(dashboard-refresh-buffer)'")),
+    ("M-e c", spawn (myEditor ++ "--eval '(doom/restart)'")),
+    ("M-e k", spawn (myEditor ++ "--eval '(kill-emacs)'")),
+    ("M-e r", spawn (myEditor ++ "--eval '(doom/reload)'")),
     ("M-e 0", spawn (myEditor ++ "~/Repos/OsiNubis99")),
     ("M-e 1", spawn (myEditor ++ "~/dotFiles")),
     ("M-e 2", spawn (myEditor ++ "~/Repos/Bots/CaidaVZLABot")),
@@ -256,8 +259,8 @@ myKeys =
     ("M-e 8", spawn (myEditor ++ "~/Repos")),
     ("M-e 9", spawn (myEditor ++ "~/Repos")),
     -- Notifications
-    ("M-o", spawn "dunstctl history-pop"),
-    ("M-S-o", spawn "dunstctl close"),
+    ("M-n", spawn "dunstctl history-pop"),
+    ("M-S-n", spawn "dunstctl close"),
     -- Multimedia Keys
     ("<XF86AudioLowerVolume>", spawn "~/dotFiles/scripts/volume.sh down 5"),
     ("<XF86AudioRaiseVolume>", spawn "~/dotFiles/scripts/volume.sh up 5"),
