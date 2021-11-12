@@ -16,7 +16,7 @@ mkdir -p ~/Pictures
 mkdir -p ~/Public
 mkdir -p ~/Videos
 ## ETC configs
-sudo cp -r ~/dotFiles/config/etc/ /etc/
+sudo cp -r ~/dotFiles/config/etc /
 ## Fontconfig
 rm -r -f ~/.local/share/fonts
 ln -s ~/dotFiles/config/fonts ~/.local/share/fonts
@@ -56,23 +56,25 @@ then
 	echo "artix-archlinux-support" >> ~/dotFiles/app.temp
 	echo -n "Are you runnit on OpenRC? [Y/n]" && read
 	echo "Root is needed to write on /etc/pacman.conf"
-	sudo cp ~/dotFiles/config/etc/pacman.conf /etc/pacman.conf
+	sudo mv /etc/pacman-artix.conf /etc/pacman.conf
 	if [[ ! $REPLY =~ ^[Nn]$ ]]
 	then
 		 cat ~/dotFiles/apps/openrc >> ~/dotFiles/app.temp
 		echo " * remember to add all needed services ;)"
 	fi
-fi
-## Games
-echo -n "Do you need all gaiming software? [Y/n]" && read
-if [[ ! $REPLY =~ ^[Nn]$ ]]
-then
-	cat ~/dotFiles/apps/game/amd >> ~/dotFiles/app.temp
+else
+	sudo rm /etc/pacman-artix.conf
 fi
 ## Games
 echo "Run"
 echo "	cat ~/dotFiles/apps/game/amd"
 echo "for information about what other apps will be installed"
+echo -n "Do you need all gaiming software? [Y/n]" && read
+if [[ ! $REPLY =~ ^[Nn]$ ]]
+then
+	cat ~/dotFiles/apps/game/amd >> ~/dotFiles/app.temp
+fi
+## Others
 echo -n "Do you this other apps? [Y/n]" && read
 if [[ ! $REPLY =~ ^[Nn]$ ]]
 then
