@@ -7,7 +7,7 @@ configuration {
   disable-history:        false;
   fullscreen:             false;
   hide-scrollbar:         true;
-  sidebar-mode:           false;
+  sidebar-mode:           true;
 }
 
 * {
@@ -61,7 +61,7 @@ inputbar {
 
 listview {
   background-color:       @background;
-	fixed-columns:        true;
+  fixed-columns:          true;
   columns:                1;
   lines:                  10;
   spacing:                0%;
@@ -92,11 +92,14 @@ element {
 }
 
 element-icon {
+  background-color:       @background;
   size:                   68px;
   border:                 0px;
 }
 
 element-text {
+  background-color:       @background;
+  text-color:             @foreground;
   expand:                 true;
   horizontal-align:       0.5;
   vertical-align:         0.5;
@@ -109,4 +112,19 @@ element selected {
   border:                 0% 0% 0% 0%;
   border-radius:          12px;
   border-color:           @accent;
+}
+
+element-icon selected {
+  background-color:       @background-selected;
+  size:                   68px;
+  border:                 0px;
+}
+
+element-text selected {
+  background-color:       @background-selected;
+  text-color:             @foreground-selected;
+  expand:                 true;
+  horizontal-align:       0.5;
+  vertical-align:         0.5;
+  margin:                 0%;
 }
