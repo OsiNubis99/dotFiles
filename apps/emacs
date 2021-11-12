@@ -1,0 +1,12 @@
+aspell-en
+aspell-es
+cabal-install
+fd
+haskell-language-server
+hoogle
+jdk-openjdk
+python-isort
+python-pipenv
+python-pyflakes
+ripgrep
+shellcheck
