@@ -39,7 +39,7 @@ alias doompurge="~/.emacs.d/bin/doom purge"
 cdl ()
 {
   if [ -d $1 ] ; then
-    cd $1;
+    cd $@;
     ls;
   else
     echo "$1 is not a folder";
