@@ -17,21 +17,32 @@
     # will be ignored.
     follow = mouse
 
-    # The geometry of the window:
-    #   [{width}]x{height}[+/-{x}+/-{y}]
-    # The geometry of the message window.
-    # The height is measured in number of notifications everything else
-    # in pixels.  If the width is omitted but the height is given
-    # ("-geometry x2"), the message window expands over the whole screen
-    # (dmenu-like).  If width is 0, the window expands to the longest
-    # message displayed.  A positive x is measured from the left, a
-    # negative from the right side of the screen.  Y is measured from
-    # the top and down respectively.
-    # The width can be negative.  In this case the actual width is the
-    # screen width minus the width defined in within the geometry option.
-    geometry = "300x60-15+46"
+    ### Geometry ###
 
-    # Turn on the progess bar
+    # dynamic width from 0 to 300
+    # width = (0, 300)
+    # constant width of 300
+    width = 250
+
+    # The maximum height of a single notification, excluding the frame.
+    height = 60
+
+    # Position the notification in the top right corner
+    origin = top-right
+
+    # Offset from the origin
+    offset = 15x46
+
+    # Scale factor. It is auto-detected if value is 0.
+    scale = 0
+
+    # Maximum number of notification (0 means no limit)
+    notification_limit = 0
+
+    ### Progress bar ###
+
+    # Turn on the progess bar. It appears when a progress hint is passed with
+    # for example dunstify -h int:value:12
     progress_bar = true
 
     # Set the progress bar height. This includes the frame, so make sure
@@ -47,7 +58,8 @@
     # Set the maximum width for the progress bar
     progress_bar_max_width = 300
 
-    # Show how many messages are currently hidden (because of geometry).
+    # Show how many messages are currently hidden (because of
+    # notification_limit).
     indicate_hidden = yes
 
     # Shrink window if it's smaller than the width.  Will be ignored if
@@ -58,11 +70,6 @@
     # This option will only work if a compositing window manager is
     # present (e.g. xcompmgr, compiz, etc.).
     transparency = 5
-
-    # The height of the entire notification.  If the height is smaller
-    # than the font height and padding combined, it will be raised
-    # to the font height and padding.
-    notification_height = 0
 
     # Draw a line of "separator_height" pixel height between two
     # notifications.
@@ -105,7 +112,7 @@
 
     ### Text ###
 
-    font = Arimo Nerd Font 10
+    font = Arimo Nerd Font 8
 
     # The spacing between lines.  If the height is smaller than the
     # font height, it will get raised to the font height.
@@ -188,13 +195,13 @@
     # Scale small icons up to this size, set to 0 to disable. Helpful
     # for e.g. small files or high-dpi screens. In case of conflict,
     # max_icon_size takes precedence over this.
-    min_icon_size = 0
+    min_icon_size = 12
 
     # Scale larger icons down to this size, set to 0 to disable
-    max_icon_size = 32
+    max_icon_size = 24
 
     # Paths to default icons.
-    icon_path = /usr/share/icons/candy-icons/apps/scalable:/usr/share/icons/candy-icons/devices/scalable/
+    icon_path = ~/dotFiles/config/dunst/images/
 
     ### History ###
 
@@ -221,20 +228,6 @@
 
     # Define the class of the windows spawned by dunst
     class = Dunst
-
-    # Print a notification on startup.
-    # This is mainly for error detection, since dbus (re-)starts dunst
-    # automatically after a crash.
-    startup_notification = true
-
-    # Manage dunst's desire for talking
-    # Can be one of the following values:
-    #  crit: Critical features. Dunst aborts
-    #  warn: Only non-fatal warnings
-    #  mesg: Important Messages
-    #  info: all unimportant stuff
-    # debug: all less than unimportant stuff
-    verbosity = mesg
 
     # Define the corner radius of the notification window
     # in pixel size. If the radius is 0, you have no rounded
@@ -302,7 +295,6 @@
     highlight = "#00d1ff"
     frame_color = "#3fd12e"
     timeout = 10
-    icon = ~/.config/dunst/images/notification.png
 
 [urgency_normal]
     background = "#152429"
@@ -310,7 +302,7 @@
     highlight = "#00d1ff"
     frame_color = "#ffaa00"
     timeout = 15
-    icon = ~/.config/dunst/images/notification.png
+    new_icon = ~/.config/dunst/images/notification.png
 
 [urgency_critical]
     background = "#152429"
@@ -318,7 +310,7 @@
     highlight = "#00d1ff"
     frame_color = "#ff3000"
     timeout = 0
-    icon = ~/.config/dunst/images/notification.png
+    new_icon = ~/.config/dunst/images/notification.png
 
 # Every section that isn't one of the above is interpreted as a rules to
 # override settings for certain messages.
@@ -434,5 +426,9 @@
 [stack-volumes]
     appname = "some_volume_notifiers"
     set_stack_tag = "volume"
+[battery]
+    appname = "xfce4-power-manager"
+    new_icon = ~/.config/dunst/images/battery-charging.png
 
 # vim: ft=cfg
+# See dunst(5) for all configuration options
