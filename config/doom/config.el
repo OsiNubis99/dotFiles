@@ -1,5 +1,5 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
-
+;; PERSONAL INFORMATION
 (setq-default user-full-name "Andrés David Hurtado Fernández"
               user-mail-address "OsiNubis99@PM.me")
 
@@ -8,23 +8,14 @@
 (global-set-key (kbd "M-u") 'evil-multiedit-match-and-prev)
 (global-set-key (kbd "C-;") 'save-buffer)
 (global-set-key (kbd "C-/") 'comment-line)
-(global-set-key [M-left] 'previous-buffer)
-(global-set-key [M-right] 'next-buffer)
+(global-set-key [M-left] 'centaur-tabs-backward)
+(global-set-key [M-right] 'centaur-tabs-forward)
 (map! :leader
       :desc "Open Dired" "." 'dired-jump)
 (map! :leader
       :desc "Format Buffer" "/" '+format/buffer)
 
-;; Doom exposes five (optional) variables for controlling fonts in Doom. Here
-;; are the three important ones:
-;;
-;; + `doom-font'
-;; + `doom-variable-pitch-font'
-;; + `doom-big-font' -- used for `doom-big-font-mode'; use this for
-;;   presentations or streaming.
-;;
-;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
-;; font string. You generally only need these two:
+;; FONTS CONFIG
 (setq doom-font (font-spec :family "monospace" :size 13)
       doom-big-font (font-spec :family "monospace" :size 16))
 
@@ -37,15 +28,17 @@
 (setq-default display-line-numbers-type 'relative)
 
 ;; TABS CONFIG
+(setq centaur-tabs-style "wave")
+(setq centaur-tabs-set-bar 'over)
+(setq centaur-tabs-show-new-tab-button nil)
+
+;; INDENT CONFIG
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 2)
 (setq-default electric-indent-mode 1)
 (setq backward-delete-char-untabify-method 'hungry)
 
-;; If you use `org' and don't want your org files in the default location below,
-;; change `org-directory'. It must be set before org loads!
-(setq org-directory "~/dotFiles/Org/")
-
+;; FAST FILES
 (map! :leader
       (:prefix ("-" . "open file")
        :desc "Edit agenda file" "a" #'(lambda () (interactive) (find-file "~/dotFiles/Org/agenda.org"))
@@ -55,6 +48,8 @@
        :desc "Edit doom packages.el" "p" #'(lambda () (interactive) (find-file "~/dotFiles/config/doom/packages.el"))
        :desc "Edit xmonad config file" "x" #'(lambda () (interactive) (find-file "~/dotFiles/config/xmonad/xmonad.hs"))))
 
+;; ORG
+(setq org-directory "~/dotFiles/Org/")
 (defun my/org-mode/load-prettify-symbols () "Prettify org mode keywords"
        (interactive)
        (setq prettify-symbols-alist
@@ -76,39 +71,30 @@
                        (":properties:" . ?)
                        (":logbook:" . ?))))
        (prettify-symbols-mode 1))
-
 (map! :leader
       :desc "Org babel tangle" "m B" #'org-babel-tangle)
 (after! org
-  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+  (setq org-superstar-headline-bullets-list
+        '("⁖" "◉" "○" "✸" "✿"))
   (setq org-directory "~/dotFiles/Org/"
         org-agenda-files '("~/dotFiles/Org/agenda.org")
         org-default-notes-file (expand-file-name "notes.org" org-directory)
-        org-ellipsis " ▼ "
-        org-log-done 'time
         org-journal-dir "~/dotFiles/Org/journal/"
         org-journal-date-format "%B %d, %Y (%A) "
         org-journal-file-format "%Y-%m-%d.org"
+        org-ellipsis " ▼ "
+        org-log-done 'time
         org-hide-emphasis-markers t
-        ;; ex. of org-link-abbrev-alist in action
-        ;; [[arch-wiki:Name_of_Page][Description]]
-        org-link-abbrev-alist    ; This overwrites the default Doom org-link-abbrev-list
-        '(("google" . "http://www.google.com/search?q=")
-          ("arch-wiki" . "https://wiki.archlinux.org/index.php/")
-          ("ddg" . "https://duckduckgo.com/?q=")
-          ("wiki" . "https://en.wikipedia.org/wiki/"))
-        org-todo-keywords        ; This overwrites the default Doom org-todo-keywords
+        org-todo-keywords
         '((sequence
-           "TODO(t)"           ; A task that is ready to be tackled
-           "BLOG(b)"           ; Blog writing assignments
-           "GYM(g)"            ; Things to accomplish at the gym
-           "PROJ(p)"           ; A project that contains other tasks
-           "VIDEO(v)"          ; Video assignments
-           "WAIT(w)"           ; Something is holding up this task
-           "|"                 ; The pipe necessary to separate "active" states and "inactive" states
-           "DONE(d)"           ; Task has been completed
-           "CANCELLED(c)" )))) ; Task has been cancelled
-
+           "TODO(t)"
+           "BLOG(b)"
+           "GYM(g)"
+           "PROJ(p)"
+           "WAIT(w)"
+           "|"
+           "DONE(d)"
+           "CANCELLED(c)"))))
 (custom-set-faces
  '(org-level-1 ((t (:inherit outline-1 :height 1.2))))
  '(org-level-2 ((t (:inherit outline-2 :height 1.0))))
@@ -117,9 +103,11 @@
  '(org-level-5 ((t (:inherit outline-5 :height 1.0))))
  )
 
+;; PROJECTILE
 (setq
  projectile-project-search-path '("~/dotFiles/"))
 
+;; WAKATIME
 (use-package wakatime-mode
   :ensure t)
 (global-wakatime-mode)
