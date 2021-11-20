@@ -6,10 +6,11 @@ export ZDOTDIR="/home/${MY_USER}/dotFiles/config/zsh"
 # export HISTORY_IGNORE="(clear|cdl|ls|cd|pwd|exit|sudo reboot|history|cd -|cd ..)"
 #      Alias
 source "${ZDOTDIR}/alias.zsh"
-#      Imports  
+#      Imports 
+source "${ZDOTDIR}/zsh-autosuggestions.zsh"
+source "${ZDOTDIR}/zsh-history-substring-search.zsh"
+#      Plugins  
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-source /usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
 #      Settings
 source "${ZDOTDIR}/settings.zsh"
 #      Theme
