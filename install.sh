@@ -53,10 +53,10 @@ ln -s ~/dotFiles/config/zsh/.zshrc ~/.zshrc
 echo -n "Are you running Artix? [Y/n]" && read
 if [[ ! $REPLY =~ ^[Nn]$ ]]
 then
-	echo "artix-archlinux-support" >> ~/dotFiles/app.temp
-	echo -n "Are you runnit on OpenRC? [Y/n]" && read
-	echo "Root is needed to write on /etc/pacman.conf"
+	echo "Root is needed to write on /etc/pacman.conf and download arch support"
+	sudo pacman -S --needed --noconfirm artix-archlinux-support
 	sudo mv /etc/pacman-artix.conf /etc/pacman.conf
+	echo -n "Are you runnit on OpenRC? [Y/n]" && read
 	if [[ ! $REPLY =~ ^[Nn]$ ]]
 	then
 		 cat ~/dotFiles/apps/openrc >> ~/dotFiles/app.temp
@@ -66,15 +66,15 @@ else
 	sudo rm /etc/pacman-artix.conf
 fi
 ## Games
-echo "Run"
-echo "	cat ~/dotFiles/apps/game/amd"
-echo "for information about what other apps will be installed"
 echo -n "Do you need all gaiming software? [Y/n]" && read
 if [[ ! $REPLY =~ ^[Nn]$ ]]
 then
 	cat ~/dotFiles/apps/game/amd >> ~/dotFiles/app.temp
 fi
 ## Others
+echo "Run"
+echo "	cat ~/dotFiles/apps/others"
+echo "for information about what other apps will be installed"
 echo -n "Do you this other apps? [Y/n]" && read
 if [[ ! $REPLY =~ ^[Nn]$ ]]
 then
@@ -84,31 +84,32 @@ fi
 echo -n "Do you want Xmonad? [Y/n]" && read
 if [[ ! $REPLY =~ ^[Nn]$ ]]
 then
-### Alacritty
+	echo "Copying all desktop settings..."
+	echo "--- Alacritty"
 	rm -r -f ~/.config/alacritty
 	ln -s ~/dotFiles/config/alacritty ~/.config/alacritty
-### Conky
+	echo "--- Conky"
 	rm -r -f ~/.config/conky
 	ln -s ~/dotFiles/config/conky ~/.config/conky
-### Doom Emacs
+	echo "--- Doom Emacs"
 	rm -r -f ~/.config/doom
 	ln -s ~/dotFiles/config/doom ~/.config/doom
-### Dunts
+	echo "--- Dunts"
 	rm -r -f ~/.config/dunst
 	ln -s ~/dotFiles/config/dunst ~/.config/dunst
-### Nitrogen
+	echo "--- Nitrogen"
 	rm -r -f ~/.config/nitrogen
 	ln -s ~/dotFiles/config/nitrogen ~/.config/nitrogen
-### Picom
+	echo "--- Picom"
 	rm -r -f ~/.config/picom
 	ln -s ~/dotFiles/config/picom ~/.config/picom
-### Rofi
+	echo "--- Rofi"
 	rm -r -f ~/.config/rofi
 	ln -s ~/dotFiles/config/rofi ~/.config/rofi
-### Xmobar
+	echo "--- Xmobar"
 	rm -r -f ~/.config/xmobar
 	ln -s ~/dotFiles/config/xmobar ~/.config/xmobar
-### Xmonad
+	echo "--- Xmonad"
 	rm -r -f ~/.xmonad
 	ln -s ~/dotFiles/config/xmonad ~/.xmonad
 ### Add programs
@@ -122,8 +123,7 @@ echo -n "Do you need Paru and all Paru software? [Y/n]" && read
 if [[ ! $REPLY =~ ^[Nn]$ ]]
 then
 	git clone https://aur.archlinux.org/paru.git ~/.cache/paru
-	cd ~/.cache/paru
-	makepkg -si
+	~/.cache/paru/makepkg -si
 	paru -S --needed --noconfirm $( cat ~/dotFiles/apps/aur )
 fi
 ## Doom
