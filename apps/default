@@ -6,6 +6,7 @@ dhcpcd
 git
 gnome-keyring
 htop
+iwd
 light
 lightdm
 lightdm-slick-greeter
@@ -21,6 +22,7 @@ pulseaudio-bluetooth
 pulseaudio-jack
 rust
 wakatime
+wpa_supplicant
 xorg
 zsh
 zsh-autosuggestions
