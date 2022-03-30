@@ -2,7 +2,7 @@
 	defaultBranch = main
 [user]
 	name = Andrés David Hurtado Fernández
-	email = OsiNubis99@PM.me
+	email = AHurtado.WC@gmail.com
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
