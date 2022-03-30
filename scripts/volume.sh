@@ -20,19 +20,19 @@ function send_notification {
 
 case $1 in
   up)
-	  pamixer -i $2
-	  send_notification
-	  ;;
+    pamixer -i $2
+    send_notification
+    ;;
   down)
-	  pamixer -d $2
-	  send_notification
-	  ;;
+    pamixer -d $2
+    send_notification
+    ;;
   mute)
-	  pamixer -t
-	  if is_mute ; then
-	      dunstify -t 5000 -r 1 -u normal "Mute"
-	  else
-	      send_notification
-	  fi
-	  ;;
+    pamixer -t
+    if is_mute ; then
+      dunstify -t 5000 -r 1 -u normal "Mute"
+    else
+      send_notification
+    fi
+    ;;
 esac
