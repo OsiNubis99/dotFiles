@@ -205,6 +205,8 @@ myKeys =
     ("M-x", spawn "~/dotFiles/scripts/spawnTrayer.sh"),
     ("M-z", spawn myTerminal),
     -- Workspaces
+    ("M-h", moveTo Prev NonEmptyWS),
+    ("M-l", moveTo Next NonEmptyWS),
     ("M-<Left>", moveTo Prev NonEmptyWS),
     ("M-<Right>", moveTo Next NonEmptyWS),
     ("M-S-<Left>", moveTo Prev EmptyWS),
