@@ -6,17 +6,17 @@
 ;; PERSONAL KEY BINDING
 (global-set-key (kbd "M-d") 'evil-multiedit-match-and-next)
 (global-set-key (kbd "M-u") 'evil-multiedit-match-and-prev)
-(global-set-key (kbd "C-;") 'save-buffer)
+(global-set-key (kbd "C-,") 'save-buffer)
 (global-set-key (kbd "C-/") 'comment-line)
-(global-set-key [M-left] 'centaur-tabs-backward)
-(global-set-key [M-right] 'centaur-tabs-forward)
 (map! :leader
       :desc "Open Dired" "." 'dired-jump)
+(map! :leader
+      :desc "Open Dired" "SPC" 'projectile-dired)
 (map! :leader
       :desc "Format Buffer" "/" '+format/buffer)
 
 ;; FONTS CONFIG
-(setq doom-font (font-spec :family "monospace" :size 13)
+(setq doom-font (font-spec :family "monospace" :size 14)
       doom-big-font (font-spec :family "monospace" :size 16))
 
 ;; INTERFACE
@@ -26,11 +26,6 @@
 (use-package emojify
   :hook (after-init . global-emojify-mode))
 (setq-default display-line-numbers-type 'relative)
-
-;; TABS CONFIG
-(setq centaur-tabs-style "wave")
-(setq centaur-tabs-set-bar 'over)
-(setq centaur-tabs-show-new-tab-button nil)
 
 ;; INDENT CONFIG
 (setq-default indent-tabs-mode nil)
@@ -100,12 +95,10 @@
  '(org-level-2 ((t (:inherit outline-2 :height 1.0))))
  '(org-level-3 ((t (:inherit outline-3 :height 1.0))))
  '(org-level-4 ((t (:inherit outline-4 :height 1.0))))
- '(org-level-5 ((t (:inherit outline-5 :height 1.0))))
- )
+ '(org-level-5 ((t (:inherit outline-5 :height 1.0)))))
 
 ;; PROJECTILE
-(setq
- projectile-project-search-path '("~/dotFiles/"))
+(setq! projectile-project-search-path '("~/dotFiles/"))
 
 ;; WAKATIME
 (use-package wakatime-mode
