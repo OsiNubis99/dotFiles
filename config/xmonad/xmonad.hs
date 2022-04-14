@@ -19,6 +19,7 @@ import XMonad.Layout.LimitWindows (limitWindows)
 import XMonad.Layout.MultiToggle (EOT (EOT), mkToggle, (??))
 import qualified XMonad.Layout.MultiToggle as MT (Toggle (..))
 import XMonad.Layout.MultiToggle.Instances (StdTransformers (NBFULL, NOBORDERS))
+import XMonad.Layout.NoBorders
 import XMonad.Layout.PerWorkspace
 import XMonad.Layout.Reflect
 import XMonad.Layout.Renamed
