@@ -200,6 +200,7 @@ myKeys =
     -- Programs
     ("M-<Return>", spawn myTerminal),
     ("M-<Space>", spawn "~/dotFiles/scripts/spawnRofi.sh"),
+    ("M-o", spawn "~/dotFiles/scripts/spawnRofi.sh"),
     ("M-f", spawn "firefox --browser"),
     ("M-t", spawn "telegram-desktop"),
     ("M-x", spawn "~/dotFiles/scripts/spawnTrayer.sh"),
@@ -270,6 +271,8 @@ myKeys =
     ("<XF86AudioMute>", spawn "~/dotFiles/scripts/volume.sh mute"),
     ("<XF86MonBrightnessUp>", spawn "~/dotFiles/scripts/backlight.sh up 10"),
     ("<XF86MonBrightnessDown>", spawn "~/dotFiles/scripts/backlight.sh down 10"),
+    ("C-<XF86MonBrightnessUp>", spawn "blugon --setcurrent='+600'"),
+    ("C-<XF86MonBrightnessDown>", spawn "blugon --setcurrent='-600'"),
     ("<XF86HomePage>", spawn myBrowser),
     ("<Print>", spawn "flameshot full -c"),
     ("M-<Print>", spawn "flameshot gui")
