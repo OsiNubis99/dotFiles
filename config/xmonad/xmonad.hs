@@ -95,30 +95,31 @@ tabs =
     spacingRaw False (Border 38 8 8 8) True (Border 0 0 0 0) True $
       tabbed shrinkText myTabTheme
 
-tall =
-  renamed [Replace "G"] $
-    limitWindows 12 $
-      spacingRaw False (Border 34 4 4 4) True (Border 4 4 4 4) True $
-        ResizableTall 1 (1 / 100) (1 / 2) []
+split =
+  renamed [Replace "S"] $
+  limitWindows 12 $
+  spacingRaw False (Border 34 4 4 4) True (Border 4 4 4 4) True $
+  ResizableTall 1 (1 / 100) (1 / 2) []
 
-gridTall =
-  renamed [Replace "g"] $
-    drawer 0.04 0.65 (ClassName "Alacritty") accordion `onBottom` tall
+editor =
+  renamed [Replace "E"] $
+  spacingRaw False (Border 30 0 0 0) True (Border 0 0 0 0) True $
+  noBorders (Full)
 
-gridTabs =
-  renamed [Replace "t"] $
+terminalTabs =
+  renamed [Replace "A"] $
     drawer 0.04 0.65 (ClassName "Alacritty") accordion `onBottom` tabs
 
-defaultLayout = tall ||| gridTabs ||| gridTall ||| tabs
+defaultLayout = split ||| terminalTabs ||| tabs
 
-gridLayout = gridTabs ||| gridTall ||| tabs ||| tall
+editorDefault = editor ||| terminalTabs ||| tabs
 
-tabLayout = tabs ||| tall ||| gridTabs ||| gridTall
+tabsDefault = tabs ||| split ||| terminalTabs
 
 myLayoutHook =
   mkToggle (NBFULL ?? NOBORDERS ?? EOT) $
-    onWorkspace (head myWorkspaces) gridLayout $
-      onWorkspaces [myWorkspaces !! 1] tabLayout defaultLayout
+    onWorkspace (head myWorkspaces) editorDefault $
+      onWorkspaces [myWorkspaces !! 1] tabsDefault defaultLayout
 
 myWorkspaces :: [String]
 myWorkspaces =
