@@ -1,32 +1,109 @@
 import qualified Data.Map as M
 import Data.Maybe (fromJust)
-import Data.Monoid
+import Data.Monoid (Endo)
 import System.IO (hPutStrLn)
 import XMonad
+  ( ChangeLayout (NextLayout),
+    Default (def),
+    Dimension,
+    Full (Full),
+    IncMasterN (IncMasterN),
+    KeyMask,
+    Mirror (Mirror),
+    Query,
+    Resize (Expand, Shrink),
+    WindowSet,
+    X,
+    XConfig
+      ( borderWidth,
+        focusedBorderColor,
+        handleEventHook,
+        layoutHook,
+        logHook,
+        manageHook,
+        modMask,
+        normalBorderColor,
+        startupHook,
+        terminal,
+        workspaces
+      ),
+    XState (windowset),
+    className,
+    composeAll,
+    doFloat,
+    doShift,
+    gets,
+    mod4Mask,
+    resource,
+    sendMessage,
+    spawn,
+    title,
+    windows,
+    xmonad,
+    (-->),
+    (<+>),
+    (=?),
+    (|||),
+  )
 import XMonad.Actions.CopyWindow (kill1)
 import XMonad.Actions.CycleWS (WSType (..), moveTo)
-import XMonad.Actions.Promote
+import XMonad.Actions.Promote (promote)
 import XMonad.Actions.RotSlaves (rotSlavesUp)
 import XMonad.Actions.WithAll (killAll, sinkAll)
 import XMonad.Hooks.DynamicLog (PP (..), dynamicLogWithPP, wrap, xmobarColor, xmobarPP)
-import XMonad.Hooks.EwmhDesktops
-import XMonad.Hooks.FadeInactive
+import XMonad.Hooks.EwmhDesktops (ewmh, fullscreenEventHook)
+import XMonad.Hooks.FadeInactive (fadeInactiveLogHook)
 import XMonad.Hooks.ManageDocks
+  ( Direction1D (Next, Prev),
+    ToggleStruts (ToggleStruts),
+    docksEventHook,
+    manageDocks,
+  )
 import XMonad.Hooks.ManageHelpers (doFullFloat, isFullscreen)
-import XMonad.Layout.Accordion
+import XMonad.Layout.Accordion (Accordion (Accordion))
 import XMonad.Layout.Drawer
+  ( Property (ClassName),
+    drawer,
+    onBottom,
+  )
 import XMonad.Layout.LimitWindows (limitWindows)
 import XMonad.Layout.MultiToggle (EOT (EOT), mkToggle, (??))
 import qualified XMonad.Layout.MultiToggle as MT (Toggle (..))
 import XMonad.Layout.MultiToggle.Instances (StdTransformers (NBFULL, NOBORDERS))
-import XMonad.Layout.NoBorders
-import XMonad.Layout.PerWorkspace
-import XMonad.Layout.Reflect
-import XMonad.Layout.Renamed
+import XMonad.Layout.NoBorders (noBorders)
+import XMonad.Layout.PerWorkspace (onWorkspace, onWorkspaces)
+import XMonad.Layout.Reflect (reflectVert)
+import XMonad.Layout.Renamed (Rename (Replace), renamed)
 import XMonad.Layout.ResizableTile
+  ( MirrorResize (MirrorExpand, MirrorShrink),
+    ResizableTall (ResizableTall),
+  )
 import XMonad.Layout.ShowWName
+  ( SWNConfig (swn_bgcolor, swn_color, swn_fade, swn_font),
+    def,
+    showWName',
+  )
 import XMonad.Layout.Spacing
+  ( Border (Border),
+    decScreenSpacing,
+    decWindowSpacing,
+    incScreenSpacing,
+    incWindowSpacing,
+    spacingRaw,
+  )
 import XMonad.Layout.Tabbed
+  ( Theme
+      ( activeBorderColor,
+        activeColor,
+        activeTextColor,
+        fontName,
+        inactiveBorderColor,
+        inactiveColor,
+        inactiveTextColor
+      ),
+    shrinkText,
+    tabbed,
+  )
 import qualified XMonad.StackSet as W
 import XMonad.Util.EZConfig (additionalKeysP)
 import XMonad.Util.Run (spawnPipe)
@@ -66,6 +143,7 @@ myStartupHook :: X ()
 myStartupHook = do
   spawnOnce "conky &"
   spawnOnce "conky -c .config/conky/conky2.conf &"
+  spawnOnce "blugon &"
   spawnOnce "picom -f &"
   spawnOnce "qlipper &"
   spawnOnce "connman-gtk --tray &"
@@ -98,14 +176,14 @@ tabs =
 
 split =
   renamed [Replace "S"] $
-  limitWindows 12 $
-  spacingRaw False (Border 34 4 4 4) True (Border 4 4 4 4) True $
-  ResizableTall 1 (1 / 100) (1 / 2) []
+    limitWindows 12 $
+      spacingRaw False (Border 34 4 4 4) True (Border 4 4 4 4) True $
+        ResizableTall 1 (1 / 100) (1 / 2) []
 
 editor =
   renamed [Replace "E"] $
-  spacingRaw False (Border 30 0 0 0) True (Border 0 0 0 0) True $
-  noBorders (Full)
+    spacingRaw False (Border 30 0 0 0) True (Border 0 0 0 0) True $
+      noBorders (Full)
 
 terminalTabs =
   renamed [Replace "A"] $
@@ -195,8 +273,10 @@ myKeys :: [(String, X ())]
 myKeys =
   [ -- Control
     ("M-c", kill1),
+    ("M-<Backspace>", kill1),
     ("M-q", spawn "lxsession-logout"),
     ("M-S-c", killAll),
+    ("M-S-<Backspace>", killAll),
     ("M-S-r", spawn "xmonad --restart"),
     -- Programs
     ("M-<Return>", spawn myTerminal),
