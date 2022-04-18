@@ -3,7 +3,7 @@ export LANG="en_US.UTF-8"
 export MY_USER="andres"
 export PATH="/home/${MY_USER}/.local/bin":$PATH
 export ZDOTDIR="/home/${MY_USER}/dotFiles/config/zsh"
-# export HISTORY_IGNORE="(clear|cdl|ls|cd|pwd|exit|sudo reboot|history|cd -|cd ..)"
+export HISTORY_IGNORE="(clear|cdl|ls|cd|pwd|exit|sudo reboot|history|cd -|cd ..|cdl ..)"
 #      Alias
 source "${ZDOTDIR}/alias.zsh"
 #      Imports 

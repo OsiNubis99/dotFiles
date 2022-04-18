@@ -21,7 +21,7 @@
 
        :completion
        (company +childframe)    ; the ultimate code completion backend
-       (vertico +icons)         ; another completion backend
+       ;; vertico               ; another completion backend
        ;;helm                   ; the *other* search engine for love and life
        ;;ido                    ; the other *other* search engine...
        (ivy +fonts +childframe) ; a search engine for love and life
@@ -32,7 +32,6 @@
        doom-dashboard           ; a nifty splash screen for Emacs
        doom-quit                ; DOOM quit-message prompts when you quit Emacs
        (emoji +unicode)         ; 🙂
-       fill-column              ; a `fill-column' indicator
        hl-todo                  ; highlight TODO/FIXME/NOTE/DEPRECATED/HACK/REVIEW
        ;;hydra
        indent-guides            ; highlighted indent columns
@@ -164,14 +163,14 @@
        ;;(scheme +guile)        ; a fully conniving family of lisps
        (sh +lsp)                ; she sells {ba,z,fi}sh shells on the C xor
        ;;sml
-       ;;solidity               ; do you need a blockchain? No.
-       ;;swift                  ; who asked for emoji variables?
+       solidity                 ; do you need a blockchain? No.
+       swift                    ; who asked for emoji variables?
        ;;terra                  ; Earth and Moon in alignment for performance.
        (web +lsp)               ; the tubes
        yaml                     ; JSON, but readable
        ;;zig                    ; C, but simpler
 
-       ;;:email
+       :email
        ;;(mu4e +gmail)
        ;;notmuch
        ;;(wanderlust +gmail)

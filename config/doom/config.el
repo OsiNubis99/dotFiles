@@ -9,11 +9,11 @@
 (global-set-key (kbd "C-,") 'save-buffer)
 (global-set-key (kbd "C-/") 'comment-line)
 (map! :leader
-      :desc "Open Dired" "." 'dired-jump)
-(map! :leader
-      :desc "Open Dired" "SPC" 'projectile-dired)
-(map! :leader
       :desc "Format Buffer" "/" '+format/buffer)
+(map! :leader
+      :desc "Open File Folder" "SPC" 'dired-jump)
+(map! :leader
+      :desc "Open Project Folder" "." 'projectile-dired)
 
 ;; FONTS CONFIG
 (setq doom-font (font-spec :family "monospace" :size 14)
