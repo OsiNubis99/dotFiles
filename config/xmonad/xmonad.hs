@@ -282,8 +282,6 @@ myKeys =
     ("M-<Return>", spawn myTerminal),
     ("M-<Space>", spawn "~/dotFiles/scripts/spawnRofi.sh"),
     ("M-o", spawn "~/dotFiles/scripts/spawnRofi.sh"),
-    ("M-f", spawn "firefox --browser"),
-    ("M-t", spawn "telegram-desktop"),
     ("M-x", spawn "~/dotFiles/scripts/spawnTrayer.sh"),
     ("M-z", spawn myTerminal),
     -- Workspaces
