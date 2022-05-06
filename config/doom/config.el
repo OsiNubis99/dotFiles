@@ -26,6 +26,12 @@
 (use-package emojify
   :hook (after-init . global-emojify-mode))
 (setq-default display-line-numbers-type 'relative)
+(setq-default rainbow-mode nil)
+
+;; RANGER
+(setq ranger-show-hidden t)
+;; (setq ranger-cleanup-on-disable t)
+(setq ranger-modify-header t)
 
 ;; INDENT CONFIG
 (setq-default indent-tabs-mode nil)

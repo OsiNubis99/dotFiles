@@ -5,6 +5,7 @@ fd
 haskell-language-server
 hoogle
 jdk-openjdk
+js-beautify
 python-isort
 python-pipenv
 python-pyflakes
