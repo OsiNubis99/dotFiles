@@ -2,6 +2,7 @@
 alias nr="npm run"
 alias ni="npm i"
 # Pacman
+alias paii="paru -Qi"
 alias pain="paru -S --removemake --cleanafter --skipreview"
 alias pais="paru -Ss"
 alias paid="pain --asdeps"
@@ -47,4 +48,8 @@ paclean()
 {
   paru -Sc --noconfirm;
   par --noconfirm $(pald -t);
+}
+padeps()
+{
+  paid --noconfirm $(paii $@ | sed -n '/^Optional Deps/,/^Req/p' | sed 's/^Req.*//g'  | sed 's/^Opt.* : //g' | sed '$d' | sed 's/:.*//g' | sed 's/^\s*//g' | sed 's/^None.*//g' | tr '\n' ' ');
 }
