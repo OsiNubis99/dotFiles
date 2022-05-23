@@ -8,8 +8,7 @@ gnome-keyring
 htop
 iwd
 light
-lightdm
-lightdm-slick-greeter
+sddm
 ncdu
 neofetch
 neovim
