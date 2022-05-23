@@ -1,6 +1,9 @@
 # Node
 alias nr="npm run"
 alias ni="npm i"
+# Docker
+alias dk="doas docker"
+alias dki="dk images"
 # Pacman
 alias paii="paru -Qi"
 alias pain="paru -S --removemake --cleanafter --skipreview"
