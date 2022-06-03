@@ -49,22 +49,6 @@ fi
 rm -r -f ~/.zshrc
 ln -s ~/dotFiles/config/zsh/.zshrc ~/.zshrc
 # Opcional
-## Artix
-echo -n "Are you running Artix? [Y/n]" && read
-if [[ ! $REPLY =~ ^[Nn]$ ]]
-then
-	echo "Root is needed to write on /etc/pacman.conf and download arch support"
-	sudo pacman -S --needed --noconfirm artix-archlinux-support
-	sudo mv /etc/pacman-artix.conf /etc/pacman.conf
-	echo -n "Are you runnit on OpenRC? [Y/n]" && read
-	if [[ ! $REPLY =~ ^[Nn]$ ]]
-	then
-		 cat ~/dotFiles/apps/openrc >> ~/dotFiles/app.temp
-		echo " * remember to add all needed services ;)"
-	fi
-else
-	sudo rm /etc/pacman-artix.conf
-fi
 ## Games
 echo -n "Do you need all gaiming software? [Y/n]" && read
 if [[ ! $REPLY =~ ^[Nn]$ ]]

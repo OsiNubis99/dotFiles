@@ -1,7 +1,6 @@
 acpi
 alsa-firmware
 base
-connman
 dhcpcd
 git
 gnome-keyring
@@ -13,6 +12,7 @@ ncdu
 neofetch
 neovim
 net-tools
+networkmanager
 numlockx
 opendoas
 pulseaudio
