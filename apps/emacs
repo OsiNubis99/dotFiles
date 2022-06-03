@@ -1,6 +1,8 @@
 aspell-en
 aspell-es
 cabal-install
+editorconfig-core-c
+direnv
 fd
 haskell-language-server
 hoogle
