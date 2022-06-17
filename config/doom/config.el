@@ -8,6 +8,8 @@
 (global-set-key (kbd "C-,") 'save-buffer)
 (global-set-key (kbd "C-/") 'comment-line)
 (map! :leader
+      :desc "Open ibufer on other window" "v" 'ibuffer-other-window)
+(map! :leader
       :desc "Format Buffer" "/" '+format/buffer)
 (map! :leader
       :desc "Open File Folder" "SPC" 'dired-jump)
@@ -27,7 +29,7 @@
 (setq-default display-line-numbers-type 'relative)
 (define-globalized-minor-mode global-rainbow-mode rainbow-mode
   (lambda () (rainbow-mode 1)))
-(global-rainbow-mode 1 )
+(global-rainbow-mode 1)
 (beacon-mode 1)
 
 ;; RANGER
