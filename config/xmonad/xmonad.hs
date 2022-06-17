@@ -141,16 +141,16 @@ windowCount = gets $ Just . show . length . W.integrate' . W.stack . W.workspace
 
 myStartupHook :: X ()
 myStartupHook = do
+  spawnOnce "~/dotFiles/scripts/setWallpaper.sh '20' &"
+  spawnOnce "xfce4-session &"
+  spawnOnce "picom -f &"
+  spawnOnce "/usr/bin/emacs --daemon &"
+  spawnOnce "nm-applet &"
+  spawnOnce "qlipper &"
+  spawnOnce "dunst -config ~/.config/dunst/dunstrc &"
   spawnOnce "conky &"
   spawnOnce "conky -c .config/conky/conky2.conf &"
   spawnOnce "blugon &"
-  spawnOnce "picom -f &"
-  spawnOnce "qlipper &"
-  spawnOnce "connman-gtk --tray &"
-  spawnOnce "xfce4-session &"
-  spawnOnce "/usr/bin/emacs --daemon &"
-  spawnOnce "dunst -config ~/.config/dunst/dunstrc &"
-  spawnOnce "~/dotFiles/scripts/setWallpaper.sh '20' &"
 
 myTabTheme :: Theme
 myTabTheme =
@@ -181,24 +181,20 @@ split =
         ResizableTall 1 (1 / 100) (1 / 2) []
 
 editor =
-  renamed [Replace "E"] $
+  renamed [Replace "F"] $
     spacingRaw False (Border 30 0 0 0) True (Border 0 0 0 0) True $
       noBorders (Full)
 
-terminalTabs =
-  renamed [Replace "A"] $
-    drawer 0.04 0.65 (ClassName "Alacritty") accordion `onBottom` tabs
+defaultLayout = split ||| tabs ||| editor
 
-defaultLayout = split ||| terminalTabs ||| tabs
+editorDefault = tabs ||| editor ||| split
 
-editorDefault = editor ||| terminalTabs ||| tabs
-
-tabsDefault = tabs ||| split ||| terminalTabs
+tabsDefault = tabs ||| editor ||| split
 
 myLayoutHook =
   mkToggle (NBFULL ?? NOBORDERS ?? EOT) $
     onWorkspace (head myWorkspaces) editorDefault $
-      onWorkspaces [myWorkspaces !! 1] tabsDefault defaultLayout
+      onWorkspaces [myWorkspaces !! 1, myWorkspaces !! 5] tabsDefault defaultLayout
 
 myWorkspaces :: [String]
 myWorkspaces =
