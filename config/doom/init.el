@@ -21,7 +21,7 @@
 
        :completion
        (company +childframe)    ; the ultimate code completion backend
-       ;; vertico               ; another completion backend
+       (vertico +icons)         ; another completion backend
        ;;helm                   ; the *other* search engine for love and life
        ;;ido                    ; the other *other* search engine...
        (ivy +fonts +childframe) ; a search engine for love and life
@@ -38,12 +38,12 @@
        (ligatures +extras)      ; ligatures and symbols to make your code pretty again
        ;;minimap                ; show a map of the code on the side
        modeline                 ; snazzy, Atom-inspired modeline, plus API
-       ;; nav-flash                ; blink cursor line after big motions
+       ;; nav-flash             ; blink cursor line after big motions
        ;; neotree               ; a project drawer, like NERDTree for vim
        ophints                  ; highlight the region an operation acts on
        (popup +defaults)        ; tame sudden yet inevitable temporary windows
-       ;; tabs                     ; a tab bar for Emacs
-       ;; (treemacs +lsp)          ; a project drawer, like neotree but cooler
+       ;; tabs                  ; a tab bar for Emacs
+       ;; (treemacs +lsp)       ; a project drawer, like neotree but cooler
        unicode                  ; extended unicode support for various languages
        vc-gutter                ; vcs diff in the fringe
        vi-tilde-fringe          ; fringe tildes to mark beyond EOB
@@ -60,7 +60,7 @@
        ;;lispy                  ; vim for lisp, for people who don't like vim
        multiple-cursors         ; editing in many places at once
        ;;objed                  ; text object editing for the innocent
-       ;;parinfer               ; turn lisp into python, sort of
+       parinfer                 ; turn lisp into python, sort of
        ;;rotate-text            ; cycle region at point between text candidates
        snippets                 ; my elves. They type so I don't have to
        ;;word-wrap              ; soft wrapping with language-aware indent
@@ -131,7 +131,7 @@
        ;;fstar                  ; (dependent) types and (monadic) effects and Z3
        ;;gdscript               ; the language you waited for
        ;;(go +lsp)              ; the hipster dialect
-       (haskell +lsp)           ; a language that's lazier than I am
+       (haskell +lsp +dante)    ; a language that's lazier than I am
        ;;hy                     ; readability of scheme w/ speed of python
        ;;idris                  ; a language you can depend on
        (java +meghanada +lsp)   ; the poster child for carpal tunnel syndrome
@@ -147,12 +147,11 @@
        ;;nim                    ; python + lisp at the speed of c
        ;;nix                    ; I hereby declare "nix geht mehr!"
        ;;ocaml                  ; an objective camel
-       (org +pretty)            ; organize your plain life in plain text
-       ;; (org
-       ;;  +journal             ; enable org journal
-       ;;  +pretty              ; replace asterisks with pretty org bullets
-       ;;  +publish             ; create static websites with org
-       ;;  +roam2)              ; org roam v2
+       (org
+        +journal                ; enable org journal
+        +pretty                 ; replace asterisks with pretty org bullets
+        +publish                ; create static websites with org
+        +roam2)                 ; org roam v2
        (php +hack +lsp)         ; perl's insecure younger brother
        ;;plantuml               ; diagrams for confusing people more
        ;;purescript             ; javascript, but functional
