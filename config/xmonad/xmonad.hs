@@ -45,6 +45,7 @@ import XMonad
     (=?),
     (|||),
   )
+import qualified XMonad as XMonad.Layout
 import XMonad.Actions.CopyWindow (kill1)
 import XMonad.Actions.CycleWS (WSType (..), moveTo)
 import XMonad.Actions.Promote (promote)
@@ -113,7 +114,7 @@ myFont :: String
 myFont = "xft:Arimo Nerd Font:weight=bold:pixelsize=11:antialias=true:hinting=true"
 
 myBigFont :: String
-myBigFont = "xft:Arimo Nerd Font:regular:size=75:antialias=true:hinting=true"
+myBigFont = "xft:Arimo Nerd Font:regular:size=35:antialias=true:hinting=true"
 
 myModMask :: KeyMask
 myModMask = mod4Mask
@@ -183,7 +184,7 @@ split =
 editor =
   renamed [Replace "F"] $
     spacingRaw False (Border 30 0 0 0) True (Border 0 0 0 0) True $
-      noBorders (Full)
+      noBorders Full
 
 defaultLayout = split ||| tabs ||| editor
 
@@ -234,7 +235,7 @@ myShowWNameTheme =
     { swn_font = myBigFont,
       swn_fade = 1,
       swn_bgcolor = "#152429",
-      swn_color = "#ffaa00"
+      swn_color = myFocusColor
     }
 
 myManageHook :: XMonad.Query (Data.Monoid.Endo WindowSet)
@@ -277,6 +278,7 @@ myKeys =
     -- Programs
     ("M-<Return>", spawn myTerminal),
     ("M-<Space>", spawn "~/dotFiles/scripts/spawnRofi.sh"),
+    ("M-<Tab>", spawn "~/dotFiles/scripts/spawnRofi.sh"),
     ("M-o", spawn "~/dotFiles/scripts/spawnRofi.sh"),
     ("M-x", spawn "~/dotFiles/scripts/spawnTrayer.sh"),
     ("M-z", spawn myTerminal),
