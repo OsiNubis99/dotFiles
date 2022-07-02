@@ -150,8 +150,7 @@
        (org
         +journal                ; enable org journal
         +pretty                 ; replace asterisks with pretty org bullets
-        +publish                ; create static websites with org
-        +roam2)                 ; org roam v2
+        +publish)               ; create static websites with org
        (php +hack +lsp)         ; perl's insecure younger brother
        ;;plantuml               ; diagrams for confusing people more
        ;;purescript             ; javascript, but functional
