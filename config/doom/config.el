@@ -4,9 +4,12 @@
               user-mail-address "OsiNubis99@PM.me")
 
 ;; PERSONAL KEY BINDING
-(global-set-key (kbd "M-d") 'evil-multiedit-match-all)
+(global-unset-key (kbd "M-<down-mouse-1>"))
+(global-set-key (kbd "M-<mouse-1>") 'mc/add-cursor-on-click)
 (global-set-key (kbd "C-,") 'save-buffer)
 (global-set-key (kbd "C-/") 'comment-line)
+(map! :leader
+      :desc "Multi cursor" "m c" 'mc/mark-all-words-like-this)
 (map! :leader
       :desc "Open ibufer on other window" "v" 'ibuffer-other-window)
 (map! :leader
@@ -38,6 +41,7 @@
 (setq ranger-modify-header t)
 
 ;; INDENT CONFIG
+(editorconfig-mode 1)
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 2)
 (setq-default electric-indent-mode 1)
@@ -54,9 +58,23 @@
        :desc "Edit xmonad config file" "x" #'(lambda () (interactive) (find-file "~/dotFiles/config/xmonad/xmonad.hs"))))
 
 ;; PROJECTILE
-(setq! projectile-project-search-path '("~/dotFiles/"))
+(with-eval-after-load 'projectile
+  (add-to-list 'projectile-project-root-files-bottom-up "pubspec.yaml")
+  (add-to-list 'projectile-project-root-files-bottom-up "BUILD"))
+(setq! projectile-project-search-path
+       '("~/dotFiles/",
+         "~/Repos/",
+         "~/Repos/Apps",
+         "~/Repos/Bots",
+         "~/Repos/Software",
+         "~/Repos/Web"))
 
 ;; WAKATIME
 (use-package wakatime-mode
   :ensure t)
 (global-wakatime-mode)
+
+;; DART & FLUTTER
+(add-hook 'dart-mode-hook 'lsp)
+(setq gc-cons-threshold (* 100 1024 1024)
+      read-process-output-max (* 1024 1024))
