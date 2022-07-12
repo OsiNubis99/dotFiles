@@ -1,0 +1,12 @@
+amdvlk
+gamemode
+lib32-mesa
+lib32-vkd3d
+lib32-vulkan-icd-loader
+lib32-vulkan-radeon
+lutris
+steam
+vkd3d
+vulkan-devel
+vulkan-icd-loader
+vulkan-radeon
