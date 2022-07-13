@@ -16,6 +16,7 @@ alias pale="paru -Qqe"
 alias pald="paru -Qqd"
 # Productivity
 alias cp="cp -R"
+alias cls="clear && colorscript -r"
 alias df="df -h"
 alias rm="rm -r"
 alias lsl="ls -l"
