@@ -1,6 +1,7 @@
 # Node
 alias nr="npm run"
 alias ni="npm i"
+alias nig="npm i --location=globa"
 # Docker
 alias dk="doas docker"
 alias dki="dk images"

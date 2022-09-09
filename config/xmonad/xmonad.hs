@@ -47,19 +47,14 @@ import XMonad
   )
 import qualified XMonad as XMonad.Layout
 import XMonad.Actions.CopyWindow (kill1)
-import XMonad.Actions.CycleWS (WSType (..), moveTo)
+import XMonad.Actions.CycleWS
 import XMonad.Actions.Promote (promote)
 import XMonad.Actions.RotSlaves (rotSlavesUp)
 import XMonad.Actions.WithAll (killAll, sinkAll)
 import XMonad.Hooks.DynamicLog (PP (..), dynamicLogWithPP, wrap, xmobarColor, xmobarPP)
-import XMonad.Hooks.EwmhDesktops (ewmh, fullscreenEventHook)
+import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.FadeInactive (fadeInactiveLogHook)
 import XMonad.Hooks.ManageDocks
-  ( Direction1D (Next, Prev),
-    ToggleStruts (ToggleStruts),
-    docksEventHook,
-    manageDocks,
-  )
 import XMonad.Hooks.ManageHelpers (doFullFloat, isFullscreen)
 import XMonad.Layout.Accordion (Accordion (Accordion))
 import XMonad.Layout.Drawer
@@ -283,12 +278,12 @@ myKeys =
     ("M-x", spawn "~/dotFiles/scripts/spawnTrayer.sh"),
     ("M-z", spawn myTerminal),
     -- Workspaces
-    ("M-h", moveTo Prev NonEmptyWS),
-    ("M-l", moveTo Next NonEmptyWS),
-    ("M-<Left>", moveTo Prev NonEmptyWS),
-    ("M-<Right>", moveTo Next NonEmptyWS),
-    ("M-S-<Left>", moveTo Prev EmptyWS),
-    ("M-S-<Right>", moveTo Next EmptyWS),
+--    ("M-h", moveTo Prev not emptyWS),
+--    ("M-l", moveTo Next not emptyWS),
+--    ("M-<Left>", moveTo Prev not emptyWS),
+--    ("M-<Right>", moveTo Next not emptyWS),
+    ("M-S-<Left>", moveTo Prev emptyWS),
+    ("M-S-<Right>", moveTo Next emptyWS),
     -- Layouts
     ("M-<Up>", windows W.focusUp),
     ("M-<Down>", windows W.focusDown),
@@ -362,7 +357,7 @@ main = do
     ewmh
       def
         { manageHook = manageDocks <+> myManageHook,
-          handleEventHook = docksEventHook <+> fullscreenEventHook,
+--          handleEventHook = docks <+> ewmhFullscreen,
           modMask = myModMask,
           terminal = myTerminal,
           startupHook = myStartupHook,
