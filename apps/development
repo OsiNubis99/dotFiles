@@ -1,9 +1,7 @@
 aws-cli
 beekeeper-studio-appimage
-dbeaver
 docker
 firebase-tools
 git
-github-desktop-bin
-nodejs
+nvm
 postman-bin

@@ -12,6 +12,7 @@ hoogle
 jdk-openjdk
 js-beautify
 ncurses5-compat-libs
+prettier
 python-isort
 python-pipenv
 python-pyflakes
@@ -19,4 +20,6 @@ python-virtualenv
 ripgrep
 stack
 shellcheck
+typescript
+typescript-language-server
 wakatime
