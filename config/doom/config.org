@@ -22,8 +22,7 @@
 
 (modify-all-frames-parameters
  '((undecorated . t)
-   (fullscreen . maximized)
-   (alpha . 90)))
+   (fullscreen . maximized)))
 
 (use-package emojify
   :hook (after-init . global-emojify-mode))
@@ -55,8 +54,6 @@
 (global-wakatime-mode)
 
 (add-hook 'dart-mode-hook 'lsp)
-(setq gc-cons-threshold (* 100 1024 1024)
-      read-process-output-max (* 1024 1024))
 (use-package dart-mode
   :custom dart-sdk-path "/opt/flutter/bin/cache/dart-sdk/")
 (use-package hover
