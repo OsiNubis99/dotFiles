@@ -5,7 +5,7 @@
 # backlight.sh down 10
 
 function get_backlight {
-  light -G | cut -d '.' -f 1
+  xbacklight -get | cut -d '.' -f 1
 }
 
 function send_notification {
@@ -15,11 +15,11 @@ function send_notification {
 
 case $1 in
   up)
-    light -A $2
+    xbacklight -inc $2
     send_notification
     ;;
   down)
-    light -U $2
+    xbacklight -dec $2
     send_notification
     ;;
 esac

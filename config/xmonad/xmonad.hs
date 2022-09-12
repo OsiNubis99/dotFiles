@@ -1,109 +1,62 @@
+import Data.Char
 import qualified Data.Map as M
-import Data.Maybe (fromJust)
-import Data.Monoid (Endo)
-import System.IO (hPutStrLn)
+import Data.Maybe
+import Data.Monoid
+import Data.Tree
+import System.Directory
+import System.Exit
+import System.IO
 import XMonad
-  ( ChangeLayout (NextLayout),
-    Default (def),
-    Dimension,
-    Full (Full),
-    IncMasterN (IncMasterN),
-    KeyMask,
-    Mirror (Mirror),
-    Query,
-    Resize (Expand, Shrink),
-    WindowSet,
-    X,
-    XConfig
-      ( borderWidth,
-        focusedBorderColor,
-        handleEventHook,
-        layoutHook,
-        logHook,
-        manageHook,
-        modMask,
-        normalBorderColor,
-        startupHook,
-        terminal,
-        workspaces
-      ),
-    XState (windowset),
-    className,
-    composeAll,
-    doFloat,
-    doShift,
-    gets,
-    mod4Mask,
-    resource,
-    sendMessage,
-    spawn,
-    title,
-    windows,
-    xmonad,
-    (-->),
-    (<+>),
-    (=?),
-    (|||),
-  )
-import qualified XMonad as XMonad.Layout
-import XMonad.Actions.CopyWindow (kill1)
+import XMonad.Actions.CopyWindow
 import XMonad.Actions.CycleWS
-import XMonad.Actions.Promote (promote)
-import XMonad.Actions.RotSlaves (rotSlavesUp)
-import XMonad.Actions.WithAll (killAll, sinkAll)
-import XMonad.Hooks.DynamicLog (PP (..), dynamicLogWithPP, wrap, xmobarColor, xmobarPP)
-import XMonad.Hooks.EwmhDesktops
-import XMonad.Hooks.FadeInactive (fadeInactiveLogHook)
+import XMonad.Actions.GridSelect
+import XMonad.Actions.MouseResize
+import XMonad.Actions.Promote
+import XMonad.Actions.RotSlaves
+import qualified XMonad.Actions.Search as S
+import XMonad.Actions.WindowGo
+import XMonad.Actions.WithAll
+import XMonad.Hooks.DynamicLog
+import XMonad.Hooks.EwmhDesktops -- for some fullscreen events, also for xcomposite in obs.
+import XMonad.Hooks.FadeInactive
 import XMonad.Hooks.ManageDocks
-import XMonad.Hooks.ManageHelpers (doFullFloat, isFullscreen)
-import XMonad.Layout.Accordion (Accordion (Accordion))
-import XMonad.Layout.Drawer
-  ( Property (ClassName),
-    drawer,
-    onBottom,
-  )
-import XMonad.Layout.LimitWindows (limitWindows)
-import XMonad.Layout.MultiToggle (EOT (EOT), mkToggle, (??))
-import qualified XMonad.Layout.MultiToggle as MT (Toggle (..))
-import XMonad.Layout.MultiToggle.Instances (StdTransformers (NBFULL, NOBORDERS))
-import XMonad.Layout.NoBorders (noBorders)
-import XMonad.Layout.PerWorkspace (onWorkspace, onWorkspaces)
-import XMonad.Layout.Reflect (reflectVert)
-import XMonad.Layout.Renamed (Rename (Replace), renamed)
+import XMonad.Hooks.ManageHelpers
+import XMonad.Hooks.ServerMode
+import XMonad.Hooks.SetWMName
+import XMonad.Hooks.StatusBar
+import XMonad.Hooks.StatusBar.PP
+import XMonad.Hooks.WindowSwallowing
+import XMonad.Hooks.WorkspaceHistory
+import XMonad.Layout.Accordion
+import XMonad.Layout.GridVariants
+import XMonad.Layout.LayoutModifier
+import XMonad.Layout.LimitWindows
+import XMonad.Layout.MultiToggle
+import qualified XMonad.Layout.MultiToggle as MT
+import XMonad.Layout.MultiToggle.Instances
+import XMonad.Layout.NoBorders
+import XMonad.Layout.PerWorkspace
+import XMonad.Layout.Reflect
+import XMonad.Layout.Renamed
 import XMonad.Layout.ResizableTile
-  ( MirrorResize (MirrorExpand, MirrorShrink),
-    ResizableTall (ResizableTall),
-  )
 import XMonad.Layout.ShowWName
-  ( SWNConfig (swn_bgcolor, swn_color, swn_fade, swn_font),
-    def,
-    showWName',
-  )
+import XMonad.Layout.Simplest
+import XMonad.Layout.SimplestFloat
 import XMonad.Layout.Spacing
-  ( Border (Border),
-    decScreenSpacing,
-    decWindowSpacing,
-    incScreenSpacing,
-    incWindowSpacing,
-    spacingRaw,
-  )
+import XMonad.Layout.Spiral
+import XMonad.Layout.SubLayouts
 import XMonad.Layout.Tabbed
-  ( Theme
-      ( activeBorderColor,
-        activeColor,
-        activeTextColor,
-        fontName,
-        inactiveBorderColor,
-        inactiveColor,
-        inactiveTextColor
-      ),
-    shrinkText,
-    tabbed,
-  )
+import XMonad.Layout.ThreeColumns
+import qualified XMonad.Layout.ToggleLayouts as T
+import XMonad.Layout.WindowArranger
+import XMonad.Layout.WindowNavigation
 import qualified XMonad.StackSet as W
-import XMonad.Util.EZConfig (additionalKeysP)
-import XMonad.Util.Run (spawnPipe)
-import XMonad.Util.SpawnOnce (spawnOnce)
+import XMonad.Util.Dmenu
+import XMonad.Util.EZConfig
+import XMonad.Util.NamedActions
+import XMonad.Util.NamedScratchpad
+import XMonad.Util.Run
+import XMonad.Util.SpawnOnce
 
 myFont :: String
 myFont = "xft:Arimo Nerd Font:weight=bold:pixelsize=11:antialias=true:hinting=true"
@@ -147,6 +100,86 @@ myStartupHook = do
   spawnOnce "conky &"
   spawnOnce "conky -c .config/conky/conky2.conf &"
   spawnOnce "blugon &"
+
+myNavigation :: TwoD a (Maybe a)
+myNavigation = makeXEventhandler $ shadowWithKeymap navKeyMap navDefaultHandler
+  where
+    navKeyMap =
+      M.fromList
+        [ ((0, xK_Escape), cancel),
+          ((0, xK_Return), select),
+          ((0, xK_slash), substringSearch myNavigation),
+          ((0, xK_Left), move (-1, 0) >> myNavigation),
+          ((0, xK_h), move (-1, 0) >> myNavigation),
+          ((0, xK_Right), move (1, 0) >> myNavigation),
+          ((0, xK_l), move (1, 0) >> myNavigation),
+          ((0, xK_Down), move (0, 1) >> myNavigation),
+          ((0, xK_j), move (0, 1) >> myNavigation),
+          ((0, xK_Up), move (0, -1) >> myNavigation),
+          ((0, xK_k), move (0, -1) >> myNavigation),
+          ((0, xK_space), setPos (0, 0) >> myNavigation)
+        ]
+    navDefaultHandler = const myNavigation
+
+myColorizer :: Window -> Bool -> X (String, String)
+myColorizer =
+  colorRangeFromClassName
+    (0x28, 0x2c, 0x34) -- lowest inactive bg
+    (0x28, 0x2c, 0x34) -- highest inactive bg
+    (0xc7, 0x92, 0xea) -- active bg
+    (0xc0, 0xa7, 0x9a) -- inactive fg
+    (0x28, 0x2c, 0x34) -- active fg
+
+-- gridSelect menu layout
+mygridConfig :: p -> GSConfig Window
+mygridConfig colorizer =
+  (buildDefaultGSConfig myColorizer)
+    { gs_cellheight = 40,
+      gs_cellwidth = 200,
+      gs_cellpadding = 6,
+      gs_navigate = myNavigation,
+      gs_originFractX = 0.5,
+      gs_originFractY = 0.5,
+      gs_font = myFont
+    }
+
+spawnSelected' :: [(String, String)] -> X ()
+spawnSelected' lst = gridselect conf lst >>= flip whenJust spawn
+  where
+    conf =
+      def
+        { gs_cellheight = 40,
+          gs_cellwidth = 180,
+          gs_cellpadding = 6,
+          gs_originFractX = 0.5,
+          gs_originFractY = 0.5,
+          gs_font = myFont
+        }
+
+runSelectedAction' :: GSConfig (X ()) -> [(String, X ())] -> X ()
+runSelectedAction' conf actions = do
+  selectedActionM <- gridselect conf actions
+  case selectedActionM of
+    Just selectedAction -> selectedAction
+    Nothing -> return ()
+
+gsApps =
+  [ ("0 A.D.", "0ad"),
+    ("Steam", "steam"),
+    ("Firefox", "firefox"),
+    ("Discord", "discord"),
+    ("Telegram", "telegram-desktop"),
+    ("VLC", "vlc"),
+    ("Terminal", myTerminal),
+    ("Htop", myTerminal ++ " -e htop"),
+    ("Files", "thunar"),
+    ("VirtualBox", "virtualbox"),
+    ("Virt-Manager", "virt-manager"),
+    ("Zsh", myTerminal ++ " -e zsh"),
+    ("Emacs", "emacsclient -c -a 'emacs'"),
+    ("Nitrogen", "nitrogen"),
+    ("Vim", myTerminal ++ " -e vim")
+  ]
 
 myTabTheme :: Theme
 myTabTheme =
@@ -250,9 +283,20 @@ myManageHook =
       className =? "Steam" --> doShift (myWorkspaces !! 5),
       className =? "dota2" --> doFullFloat <+> doShift (myWorkspaces !! 5),
       className =? "Nm-connection-editor" --> doFloat,
+      resource =? "Dialog" --> doFloat,
       title =? "Oracle VM VirtualBox Manager" --> doFloat,
       title =? "File Operation Progress" --> doFloat,
-      resource =? "Dialog" --> doFloat,
+      className =? "confirm" --> doFloat,
+      className =? "file_progress" --> doFloat,
+      className =? "dialog" --> doFloat,
+      className =? "download" --> doFloat,
+      className =? "error" --> doFloat,
+      className =? "Gimp" --> doFloat,
+      className =? "notification" --> doFloat,
+      className =? "pinentry-gtk-2" --> doFloat,
+      className =? "splash" --> doFloat,
+      className =? "toolbar" --> doFloat,
+      className =? "Yad" --> doCenterFloat,
       isFullscreen --> doFullFloat
     ]
 
@@ -273,17 +317,12 @@ myKeys =
     -- Programs
     ("M-<Return>", spawn myTerminal),
     ("M-<Space>", spawn "~/dotFiles/scripts/spawnRofi.sh"),
-    ("M-<Tab>", spawn "~/dotFiles/scripts/spawnRofi.sh"),
     ("M-o", spawn "~/dotFiles/scripts/spawnRofi.sh"),
     ("M-x", spawn "~/dotFiles/scripts/spawnTrayer.sh"),
     ("M-z", spawn myTerminal),
     -- Workspaces
---    ("M-h", moveTo Prev not emptyWS),
---    ("M-l", moveTo Next not emptyWS),
---    ("M-<Left>", moveTo Prev not emptyWS),
---    ("M-<Right>", moveTo Next not emptyWS),
-    ("M-S-<Left>", moveTo Prev emptyWS),
-    ("M-S-<Right>", moveTo Next emptyWS),
+    ("M-S-h", prevScreen),
+    ("M-S-l", nextScreen),
     -- Layouts
     ("M-<Up>", windows W.focusUp),
     ("M-<Down>", windows W.focusDown),
@@ -304,6 +343,10 @@ myKeys =
     ("M-S-/", rotSlavesUp),
     ("M-S-i", incScreenSpacing 2),
     ("M-S-d", decScreenSpacing 2),
+    -- Grid Select
+    ("M-<Tab>", spawnSelected' $ gsApps),
+    ("M-t", goToSelected $ mygridConfig myColorizer),
+    ("M-g", bringSelected $ mygridConfig myColorizer),
     -- Wallpapers
     ("M-w o", spawn "nitrogen"),
     ("M-w a", spawn "~/dotFiles/scripts/setWallpaper.sh '20'"),
@@ -352,34 +395,38 @@ myKeys =
 
 main :: IO ()
 main = do
-  xmproc <- spawnPipe "xmobar"
+  xmproc0 <- spawnPipe "xmobar -x 0 ~/.config/xmobar/xmobarrc -p 'Static { xpos = 0 , ypos = 0, width = 1920, height = 30 }'"
+  xmproc1 <- spawnPipe "xmobar -x 1 ~/.config/xmobar/xmobarrc -p 'Static { xpos = 1920 , ypos = 0, width = 1920, height = 30 }'"
   xmonad $
-    ewmh
-      def
-        { manageHook = manageDocks <+> myManageHook,
---          handleEventHook = docks <+> ewmhFullscreen,
-          modMask = myModMask,
-          terminal = myTerminal,
-          startupHook = myStartupHook,
-          layoutHook = showWName' myShowWNameTheme myLayoutHook,
-          workspaces = myWorkspaces,
-          borderWidth = myBorderWidth,
-          normalBorderColor = myNormColor,
-          focusedBorderColor = myFocusColor,
-          logHook =
-            myLogHook
-              <+> dynamicLogWithPP
-                xmobarPP
-                  { ppOutput = hPutStrLn xmproc,
-                    ppCurrent = xmobarColor "#00d1ff" "" . clickable,
-                    ppVisible = xmobarColor "#c792ea" "" . clickable,
-                    ppHidden = xmobarColor "#3fd12e" "" . clickable,
-                    ppHiddenNoWindows = clickable,
-                    ppUrgent = xmobarColor "#C45500" "" . wrap "!" "!" . clickable,
-                    ppSep = "<fc=#ffffff> <fn=1>|</fn> </fc>",
-                    ppWsSep = " ",
-                    ppExtras = [windowCount],
-                    ppOrder = \(ws : l : t : ex) -> [l, ws] ++ ex
-                  }
-        }
-      `additionalKeysP` myKeys
+    ewmh $
+      docks $
+        def
+          { manageHook = myManageHook <+> manageDocks,
+            handleEventHook = swallowEventHook (className =? "Alacritty") (return True),
+            modMask = myModMask,
+            terminal = myTerminal,
+            startupHook = myStartupHook,
+            layoutHook = showWName' myShowWNameTheme myLayoutHook,
+            workspaces = myWorkspaces,
+            borderWidth = myBorderWidth,
+            normalBorderColor = myNormColor,
+            focusedBorderColor = myFocusColor,
+            logHook =
+              myLogHook
+                <+> dynamicLogWithPP
+                  xmobarPP
+                    { ppOutput = \x ->
+                        hPutStrLn xmproc0 x
+                          >> hPutStrLn xmproc1 x,
+                      ppCurrent = xmobarColor "#00d1ff" "" . clickable,
+                      ppVisible = xmobarColor "#c792ea" "" . clickable,
+                      ppHidden = xmobarColor "#3fd12e" "" . clickable,
+                      ppHiddenNoWindows = clickable,
+                      ppUrgent = xmobarColor "#C45500" "" . wrap "!" "!" . clickable,
+                      ppSep = "<fc=#ffffff> <fn=1>|</fn> </fc>",
+                      ppWsSep = " ",
+                      ppExtras = [windowCount],
+                      ppOrder = \(ws : l : t : ex) -> [l, ws] ++ ex
+                    }
+          }
+          `additionalKeysP` myKeys
