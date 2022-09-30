@@ -17,7 +17,7 @@ import qualified XMonad.Actions.Search as S
 import XMonad.Actions.WindowGo
 import XMonad.Actions.WithAll
 import XMonad.Hooks.DynamicLog
-import XMonad.Hooks.EwmhDesktops -- for some fullscreen events, also for xcomposite in obs.
+import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.FadeInactive
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
@@ -55,7 +55,7 @@ import XMonad.Util.Dmenu
 import XMonad.Util.EZConfig
 import XMonad.Util.NamedActions
 import XMonad.Util.NamedScratchpad
-import XMonad.Util.Run
+import XMonad.Util.Run (spawnPipe)
 import XMonad.Util.SpawnOnce
 
 myFont :: String
@@ -94,7 +94,7 @@ myStartupHook = do
   spawnOnce "xfce4-session &"
   spawnOnce "picom -f &"
   spawnOnce "/usr/bin/emacs --daemon &"
-  spawnOnce "nm-applet &"
+  spawnOnce "cmst -m &"
   spawnOnce "qlipper &"
   spawnOnce "dunst -config ~/.config/dunst/dunstrc &"
   spawnOnce "conky &"
@@ -167,18 +167,16 @@ gsApps =
   [ ("0 A.D.", "0ad"),
     ("Steam", "steam"),
     ("Firefox", "firefox"),
-    ("Discord", "discord"),
     ("Telegram", "telegram-desktop"),
-    ("VLC", "vlc"),
-    ("Terminal", myTerminal),
-    ("Htop", myTerminal ++ " -e htop"),
     ("Files", "thunar"),
+    ("VLC", "vlc"),
+    ("Discord", "discord"),
+    ("Htop", myTerminal ++ " -e htop"),
+    ("Postman", "postman"),
     ("VirtualBox", "virtualbox"),
-    ("Virt-Manager", "virt-manager"),
-    ("Zsh", myTerminal ++ " -e zsh"),
-    ("Emacs", "emacsclient -c -a 'emacs'"),
+    ("Settings", "xfce4-settings-manager"),
     ("Nitrogen", "nitrogen"),
-    ("Vim", myTerminal ++ " -e vim")
+    ("Beekeeper", "beekeeper-studio")
   ]
 
 myTabTheme :: Theme
@@ -281,8 +279,7 @@ myManageHook =
       className =? "Free Download Manager" --> doShift (myWorkspaces !! 4),
       className =? "vlc" --> doShift (myWorkspaces !! 5),
       className =? "Steam" --> doShift (myWorkspaces !! 5),
-      className =? "dota2" --> doFullFloat <+> doShift (myWorkspaces !! 5),
-      className =? "Nm-connection-editor" --> doFloat,
+      className =? "steam_app_239140" --> doCenterFloat <+> doShift (myWorkspaces !! 5),
       resource =? "Dialog" --> doFloat,
       title =? "Oracle VM VirtualBox Manager" --> doFloat,
       title =? "File Operation Progress" --> doFloat,
@@ -297,6 +294,7 @@ myManageHook =
       className =? "splash" --> doFloat,
       className =? "toolbar" --> doFloat,
       className =? "Yad" --> doCenterFloat,
+      className =? "Nm-connection-editor" --> doFloat,
       isFullscreen --> doFullFloat
     ]
 
@@ -321,8 +319,10 @@ myKeys =
     ("M-x", spawn "~/dotFiles/scripts/spawnTrayer.sh"),
     ("M-z", spawn myTerminal),
     -- Workspaces
-    ("M-S-h", prevScreen),
-    ("M-S-l", nextScreen),
+    ("M-h", prevScreen),
+    ("M-l", nextScreen),
+    ("M-<Left>", prevScreen),
+    ("M-<Right>", nextScreen),
     -- Layouts
     ("M-<Up>", windows W.focusUp),
     ("M-<Down>", windows W.focusDown),
