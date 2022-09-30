@@ -2,7 +2,8 @@ acpi
 base-devel
 alsa-firmware
 base
-dhcpcd
+bluez
+connman
 efibootmgr
 git
 grub
@@ -13,14 +14,15 @@ linux-headers
 neofetch
 neovim
 net-tools
-networkmanager
 opendoas
+openvpn
 os-prober
 pulseaudio
 pulseaudio-alsa
 pulseaudio-bluetooth
 pulseaudio-jack
 shell-color-scripts
+wpa_supplicant
 xorg
 zsh
 zsh-autosuggestions
