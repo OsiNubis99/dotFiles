@@ -7,3 +7,4 @@ config/xmonad/xmonad.o
 config/zsh/.zhistory
 config/zsh/.zcompdump
 app.temp
+/config/xmonad/build-x86_64-linux/
