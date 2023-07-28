@@ -8,6 +8,11 @@
 (map! :leader
       :desc "Open ibufer" "d" '+ibuffer/open-for-current-workspace
       :desc "Open ibufer on other window" "v" 'ibuffer-other-window
+      ;; :desc "Next Tab" "k" 'centaur-tabs-forward-tab
+      ;; :desc "Prev Tab" "j" 'centaur-tabs-backward-tab
+      ;; :desc "Next Tab Group" "l k" 'centaur-tabs-forward-group
+      ;; :desc "Prev Tab Group" "l j" 'centaur-tabs-backward-group
+      ;; :desc "Sort Tabs Groups by Project" "l l" 'centaur-tabs-group-by-projectile-project
       :desc "Format Buffer" "/" '+format/buffer
       :desc "Multi cursor" "m c" 'mc/mark-all-words-like-this
       :desc "Open File Folder" "SPC" 'dired-jump
