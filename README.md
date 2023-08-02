@@ -48,7 +48,6 @@
 ### Content
 
 - [Alacritty](https://github.com/OsiNubis99/dotFiles/tree/main/config/alacritty)
-- [Conky](https://github.com/brndnmtthws/conky)
 - [Dunst](https://github.com/OsiNubis99/dotFiles/tree/main/config/dunst)
 - [Nitrogen](https://github.com/OsiNubis99/dotFiles/tree/main/config/nitrogen)
 - [Picom](https://github.com/OsiNubis99/dotFiles/tree/main/config/picom)

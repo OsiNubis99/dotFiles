@@ -1,24 +1,26 @@
-export TERM="xterm-256color"
-export LANG="en_US.UTF-8"
 export MY_USER="andres"
-export PATH="/home/${MY_USER}/.local/bin":$PATH
 export ZDOTDIR="/home/${MY_USER}/dotFiles/config/zsh"
-export HISTORY_IGNORE="(clear|cdl|ls|cd|pwd|exit|sudo reboot|history|cd -|cd ..|cdl ..)"
+#      My Env
+source "${ZDOTDIR}/env.zsh"
 #      Alias
 source "${ZDOTDIR}/alias.zsh"
-#      Imports 
-source "${ZDOTDIR}/zsh-autosuggestions.zsh"
-source "${ZDOTDIR}/zsh-history-substring-search.zsh"
-#      Plugins  
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 #      Settings
 source "${ZDOTDIR}/settings.zsh"
 #      Theme
 source "${ZDOTDIR}/theme.zsh"
+#      Plugins
+source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
+source /usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
+# source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /usr/share/zsh/plugins/zsh-hist/zsh-hist.plugin.zsh
+#      Terminal Statup Colors
+colorscript -r
+#      SSH
+eval "$(ssh-agent)" 1>/dev/null
 #      NVM
 source /usr/share/nvm/init-nvm.sh
 autoload -U add-zsh-hook
-load-nvmrc() {
+loadNVMRC() {
   local node_version="$(nvm version)"
   local nvmrc_path="$(nvm_find_nvmrc)"
   if [ -n "$nvmrc_path" ]; then
@@ -31,8 +33,9 @@ load-nvmrc() {
   elif [ "$node_version" != "$(nvm version default)" ]; then
     nvm use default
   fi
+  ls
 }
-add-zsh-hook chpwd load-nvmrc
-
-load-nvmrc
-colorscript -r
+add-zsh-hook chpwd loadNVMRC
+loadNVMRC
+#      FUCK
+eval $(thefuck -r -a mmlo)

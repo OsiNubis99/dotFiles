@@ -2,15 +2,21 @@
 autoload -U compinit colors zcalc
 compinit -d
 colors
-setopt correct                                           
-setopt extendedglob                                      
-setopt nocaseglob                                        
-setopt rcexpandparam                                     
+setopt correct
+setopt extendedglob
+setopt nocaseglob
+setopt rcexpandparam
 setopt nocheckjobs                                       
 setopt numericglobsort                                   
 setopt nobeep                                            
 setopt appendhistory                                     
-setopt histignorealldups                                 
+setopt histignorealldups
+setopt HIST_IGNORE_DUPS
+setopt HIST_EXPIRE_DUPS_FIRST
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_IGNORE_SPACE
+setopt HIST_FIND_NO_DUPS
+setopt HIST_SAVE_NO_DUPS
 setopt autocd                                            
 setopt inc_append_history                                
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
@@ -19,7 +25,7 @@ zstyle ':completion:*' rehash true
 zstyle ':completion:*' accept-exact '*(N)'
 zstyle ':completion:*' use-cache on
 zstyle ':completion:*' cache-path ${ZDOTDIR}/cache
-HISTFILE="${ZDOTDIR}/.zhistory"
+HISTFILE="/home/${MY_USER}/.zhistory"
 HISTSIZE='64000'
 SAVEHIST="${HISTSIZE}"
 WORDCHARS=${WORDCHARS//\/[&.;]}

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 ## Clean temp file
-echo "" > ~/dotFiles/app.temp
+echo "" >~/dotFiles/app.temp
 
 ## Read flags
 ASK=false
@@ -48,23 +48,20 @@ rm -r -f ~/.config/fontconfig
 ln -s ~/dotFiles/config/fontconfig ~/.config/fontconfig
 
 ## Git
-if [[ ! $(which git 2> /dev/null) ]]
-then
+if [[ ! $(which git 2>/dev/null) ]]; then
   sudo pacman -Syu --needed --noconfirm git
 fi
 rm -r -f ~/.gitconfig
 ln -s ~/dotFiles/config/git/gitconfig ~/.gitconfig
+rm-r -f ~/.git-credentials
+ln -s ~/dotFiles/config/git/git-credentials ~/.git-credentials
 
 ## Backup
-$ASK || ( echo -n "Do you have your backup folder? (Wakatime and Wallpapers) [Y/n]" && read )
-if [[ ! $REPLY =~ ^[Nn]$ ]]
-then
+$ASK || (echo -n "Do you have your backup folder? (Wakatime and Wallpapers) [Y/n]" && read)
+if [[ ! $REPLY =~ ^[Nn]$ ]]; then
   ## SSH
-  rm -r -f ~/.ssh
-  mkdir ~/.ssh
   cp ~/dotFiles/backup/ssh/* ~/.ssh/
-  if [[ -e "$HOME/.ssh/id_ed25519" ]]; 
-  then
+  if [[ -e "$HOME/.ssh/id_ed25519" ]]; then
     chmod -R 700 ~/.ssh
     eval "$(ssh-agent -s)"
     ssh-add ~/.ssh/id_ed25519
@@ -81,53 +78,46 @@ fi
 ## ZSH
 rm -r -f ~/.zshrc
 ln -s ~/dotFiles/config/zsh/.zshrc ~/.zshrc
+rm -r -f ~/.zhistory
+ln -s ~/dotFiles/config/zsh/.zhistory ~/.zhistory
 
 ## Develop
-$ASK || ( echo -n "Do you need all develop software? [Y/n]" && read )
-if [[ ! $REPLY =~ ^[Nn]$ ]]
-then
-  cat ~/dotFiles/apps/development >> ~/dotFiles/app.temp
+$ASK || (echo -n "Do you need all develop software? [Y/n]" && read)
+if [[ ! $REPLY =~ ^[Nn]$ ]]; then
+  cat ~/dotFiles/apps/development >>~/dotFiles/app.temp
 fi
 
 ## Doom
-$ASK || ( echo -n "Do you need Doom Emacs? [Y/n]" && read )
-if [[ ! $REPLY =~ ^[Nn]$ ]]
-then
-  if [[ ! $(~/.emacs.d/bin/doom info 2> /dev/null) ]]
-  then
+$ASK || (echo -n "Do you need Doom Emacs? [Y/n]" && read)
+if [[ ! $REPLY =~ ^[Nn]$ ]]; then
+  if [[ ! $(~/.emacs.d/bin/doom info 2>/dev/null) ]]; then
     rm -r -f ~/.config/doom
     ln -s ~/dotFiles/config/doom ~/.config/doom
-    git clone --depth 1 https://github.com/hlissner/doom-emacs ~/.emacs.d 1> /dev/null || exit 1
-    ~/.emacs.d/bin/doom install --install --no-fonts 1> /dev/null || exit 1
+    git clone --depth 1 https://github.com/hlissner/doom-emacs ~/.emacs.d 1>/dev/null || exit 1
+    ~/.emacs.d/bin/doom install --install --no-fonts 1>/dev/null || exit 1
   fi
-  cat ~/dotFiles/apps/emacs >> ~/dotFiles/app.temp
+  cat ~/dotFiles/apps/emacs >>~/dotFiles/app.temp
 fi
 
 ## Files
-$ASK || ( echo -n "Do you need file system software? [Y/n]" && read )
-if [[ ! $REPLY =~ ^[Nn]$ ]]
-then
-  cat ~/dotFiles/apps/files >> ~/dotFiles/app.temp
+$ASK || (echo -n "Do you need file system software? [Y/n]" && read)
+if [[ ! $REPLY =~ ^[Nn]$ ]]; then
+  cat ~/dotFiles/apps/files >>~/dotFiles/app.temp
 fi
 
 ## Games
-$ASK || ( echo -n "Do you need all gaiming software? [Y/n]" && read )
-if [[ ! $REPLY =~ ^[Nn]$ ]]
-then
-  cat ~/dotFiles/apps/games >> ~/dotFiles/app.temp
+$ASK || (echo -n "Do you need all gaiming software? [Y/n]" && read)
+if [[ ! $REPLY =~ ^[Nn]$ ]]; then
+  cat ~/dotFiles/apps/games >>~/dotFiles/app.temp
 fi
 
 ## Xmonad
-$ASK || ( echo -n "Do you want Xmonad? [Y/n]" && read )
-if [[ ! $REPLY =~ ^[Nn]$ ]]
-then
+$ASK || (echo -n "Do you want Xmonad? [Y/n]" && read)
+if [[ ! $REPLY =~ ^[Nn]$ ]]; then
   echo "Copying all desktop settings..."
   echo "--- Alacritty"
   rm -r -f ~/.config/alacritty
   ln -s ~/dotFiles/config/alacritty ~/.config/alacritty
-  echo "--- Conky"
-  rm -r -f ~/.config/conky
-  ln -s ~/dotFiles/config/conky ~/.config/conky
   echo "--- Dunts"
   rm -r -f ~/.config/dunst
   ln -s ~/dotFiles/config/dunst ~/.config/dunst
@@ -147,22 +137,20 @@ then
   rm -r -f ~/.xmonad
   ln -s ~/dotFiles/config/xmonad ~/.xmonad
   ### Add programs
-  cat ~/dotFiles/apps/xmonad >> ~/dotFiles/app.temp
+  cat ~/dotFiles/apps/xmonad >>~/dotFiles/app.temp
 fi
 
 ## Others
 echo "Run"
-echo "	cat ~/dotFiles/apps/others"
+echo "  cat ~/dotFiles/apps/others"
 echo "for information about what other apps will be installed"
-$ASK || ( echo -n "Do you this other apps? [Y/n]" && read )
-if [[ ! $REPLY =~ ^[Nn]$ ]]
-then
-  cat ~/dotFiles/apps/others >> ~/dotFiles/app.temp
+$ASK || (echo -n "Do you this other apps? [Y/n]" && read)
+if [[ ! $REPLY =~ ^[Nn]$ ]]; then
+  cat ~/dotFiles/apps/others >>~/dotFiles/app.temp
 fi
 
 ## Install paru only if it doesn't exist in path
-if [[ ! $(which paru 2> /dev/null) ]]
-then
+if [[ ! $(which paru 2>/dev/null) ]]; then
   sudo rm -r /home/andres/.cache/paru
   git clone https://aur.archlinux.org/paru.git ~/.cache/paru
   cd ~/.cache/paru/ || exit 1
@@ -173,7 +161,7 @@ fi
 
 # Final instalation
 echo "Inastalling all nedeed software..."
-paru -Syu --asexplicit --noconfirm $( cat ~/dotFiles/apps/system ) $( cat ~/dotFiles/app.temp ) 1> /dev/null || exit 1
+paru -Syu --asexplicit --noconfirm $(cat ~/dotFiles/apps/system) $(cat ~/dotFiles/app.temp) 1>/dev/null || exit 1
 
 rm -r ~/dotFiles/app.temp
 echo "Instalation Complete!"
