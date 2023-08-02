@@ -10,3 +10,5 @@
 	required = true
 [credential]
 	helper = store
+[core]
+	editor = nvim

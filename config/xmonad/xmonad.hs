@@ -97,8 +97,6 @@ myStartupHook = do
   spawnOnce "cmst -m &"
   spawnOnce "qlipper &"
   spawnOnce "dunst -config ~/.config/dunst/dunstrc &"
-  spawnOnce "conky &"
-  spawnOnce "conky -c .config/conky/conky2.conf &"
   spawnOnce "blugon &"
 
 myNavigation :: TwoD a (Maybe a)
@@ -163,13 +161,14 @@ runSelectedAction' conf actions = do
     Just selectedAction -> selectedAction
     Nothing -> return ()
 
+gsApps :: [(String, String)]
 gsApps =
   [ ("0 A.D.", "0ad"),
     ("Steam", "steam"),
     ("Firefox", "firefox"),
     ("Telegram", "telegram-desktop"),
     ("Files", "thunar"),
-    ("VLC", "vlc"),
+    ("Cider", "cider"),
     ("Discord", "discord"),
     ("Htop", myTerminal ++ " -e htop"),
     ("Postman", "postman"),
@@ -207,21 +206,21 @@ split =
       spacingRaw False (Border 34 4 4 4) True (Border 4 4 4 4) True $
         ResizableTall 1 (1 / 100) (1 / 2) []
 
-editor =
+full =
   renamed [Replace "F"] $
     spacingRaw False (Border 30 0 0 0) True (Border 0 0 0 0) True $
       noBorders Full
 
-defaultLayout = split ||| tabs ||| editor
+splitDefault = split ||| tabs ||| full
 
-editorDefault = tabs ||| editor ||| split
+fullDefault = full ||| split ||| tabs
 
-tabsDefault = tabs ||| editor ||| split
+tabsDefault = tabs ||| full ||| split
 
 myLayoutHook =
   mkToggle (NBFULL ?? NOBORDERS ?? EOT) $
-    onWorkspace (head myWorkspaces) editorDefault $
-      onWorkspaces [myWorkspaces !! 1, myWorkspaces !! 5] tabsDefault defaultLayout
+    onWorkspace (myWorkspaces !! 4) fullDefault $
+      onWorkspaces [head myWorkspaces, myWorkspaces !! 1, myWorkspaces !! 5] tabsDefault splitDefault
 
 myWorkspaces :: [String]
 myWorkspaces =
@@ -229,7 +228,7 @@ myWorkspaces =
     "Web",
     "Chat",
     "File",
-    "Tool",
+    "Game",
     "Media"
   ]
 
@@ -275,14 +274,14 @@ myManageHook =
       className =? "discord" --> doShift (myWorkspaces !! 2),
       className =? "TelegramDesktop" --> doShift (myWorkspaces !! 2),
       className =? "Thunar" --> doShift (myWorkspaces !! 3),
-      className =? "zoom" --> doFloat <+> doShift (myWorkspaces !! 4),
-      className =? "Free Download Manager" --> doShift (myWorkspaces !! 4),
+      className =? "pyrogenesis" --> doShift (myWorkspaces !! 4),
+      className =? "Steam" --> doShift (myWorkspaces !! 4),
+      className =? "steam_app_239140" --> doCenterFloat <+> doShift (myWorkspaces !! 4),
+      className =? "Cider" --> doShift (myWorkspaces !! 5),
       className =? "vlc" --> doShift (myWorkspaces !! 5),
-      className =? "Steam" --> doShift (myWorkspaces !! 5),
-      className =? "steam_app_239140" --> doCenterFloat <+> doShift (myWorkspaces !! 5),
-      resource =? "Dialog" --> doFloat,
       title =? "Oracle VM VirtualBox Manager" --> doFloat,
       title =? "File Operation Progress" --> doFloat,
+      resource =? "Dialog" --> doFloat,
       className =? "confirm" --> doFloat,
       className =? "file_progress" --> doFloat,
       className =? "dialog" --> doFloat,
@@ -308,7 +307,6 @@ myKeys =
   [ -- Control
     ("M-c", kill1),
     ("M-<Backspace>", kill1),
-    ("M-q", spawn "lxsession-logout"),
     ("M-S-c", killAll),
     ("M-S-<Backspace>", killAll),
     ("M-S-r", spawn "xmonad --restart"),
@@ -321,8 +319,8 @@ myKeys =
     -- Workspaces
     ("M-h", prevScreen),
     ("M-l", nextScreen),
-    ("M-<Left>", prevScreen),
-    ("M-<Right>", nextScreen),
+    ("M-<Left>", prevWS),
+    ("M-<Right>", nextWS),
     -- Layouts
     ("M-<Up>", windows W.focusUp),
     ("M-<Down>", windows W.focusDown),
@@ -344,9 +342,9 @@ myKeys =
     ("M-S-i", incScreenSpacing 2),
     ("M-S-d", decScreenSpacing 2),
     -- Grid Select
-    ("M-<Tab>", spawnSelected' $ gsApps),
+    ("M-<Tab>", spawnSelected' gsApps),
     ("M-t", goToSelected $ mygridConfig myColorizer),
-    ("M-g", bringSelected $ mygridConfig myColorizer),
+    ("M-S-t", bringSelected $ mygridConfig myColorizer),
     -- Wallpapers
     ("M-w o", spawn "nitrogen"),
     ("M-w a", spawn "~/dotFiles/scripts/setWallpaper.sh '20'"),
@@ -415,9 +413,7 @@ main = do
               myLogHook
                 <+> dynamicLogWithPP
                   xmobarPP
-                    { ppOutput = \x ->
-                        hPutStrLn xmproc0 x
-                          >> hPutStrLn xmproc1 x,
+                    { ppOutput = \x -> hPutStrLn xmproc0 x >> hPutStrLn xmproc1 x,
                       ppCurrent = xmobarColor "#00d1ff" "" . clickable,
                       ppVisible = xmobarColor "#c792ea" "" . clickable,
                       ppHidden = xmobarColor "#3fd12e" "" . clickable,

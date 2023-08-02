@@ -1,18 +1,17 @@
-;; [[file:config.org::+BEGIN_SRC emacs-lisp][No heading:1]]
 (setq-default user-full-name "Andrés David Hurtado Fernández"
               user-mail-address "OsiNubis99@PM.me")
 
 (global-unset-key (kbd "M-<down-mouse-1>"))
 (global-set-key (kbd "M-<mouse-1>") 'mc/add-cursor-on-click)
-(global-set-key (kbd "C-,") 'save-buffer)
 (global-set-key (kbd "C-/") 'comment-line)
 
 (map! :leader
+      :desc "Open ibufer" "d" '+ibuffer/open-for-current-workspace
+      :desc "Open ibufer on other window" "v" 'ibuffer-other-window
       :desc "Format Buffer" "/" '+format/buffer
       :desc "Multi cursor" "m c" 'mc/mark-all-words-like-this
-      :desc "Open ibufer on other window" "v" 'ibuffer-other-window
       :desc "Open File Folder" "SPC" 'dired-jump
-      :desc "Open Project Folder" "." 'projectile-dired)
+      :desc "Open File" "." '+ivy/projectile-find-file)
 
 (setq doom-font (font-spec :family "monospace" :size 14)
       doom-big-font (font-spec :family "monospace" :size 16))
@@ -37,13 +36,15 @@
 (setq-default tab-width 2)
 (setq-default electric-indent-mode 1)
 (setq backward-delete-char-untabify-method 'hungry)
+(after! projectile
+  (add-to-list 'projectile-globally-ignored-directories "*node-modules")
+  (add-to-list 'projectile-globally-ignored-directories "*dist"))
 
 (map! :leader
       (:prefix ("-" . "open file")
        :desc "Edit agenda file" "a" #'(lambda () (interactive) (find-file "~/dotFiles/Org/agenda.org"))
-       :desc "Edit doom config.el" "c" #'(lambda () (interactive) (find-file "~/dotFiles/config/doom/config.el"))
        :desc "Edit doom init.el" "i" #'(lambda () (interactive) (find-file "~/dotFiles/config/doom/init.el"))
-       :desc "Edit doom config.org" "o" #'(lambda () (interactive) (find-file "~/dotFiles/config/doom/config.org"))
+       :desc "Edit doom config.org" "c" #'(lambda () (interactive) (find-file "~/dotFiles/config/doom/config.org"))
        :desc "Edit doom packages.el" "p" #'(lambda () (interactive) (find-file "~/dotFiles/config/doom/packages.el"))
        :desc "Edit xmonad config file" "x" #'(lambda () (interactive) (find-file "~/dotFiles/config/xmonad/xmonad.hs"))))
 
@@ -57,11 +58,10 @@
 (use-package hover
   :after dart-mode
   :bind (:map hover-minor-mode-map
-         ("C-M-z" . #'hover-run-or-hot-reload)
-         ("C-M-x" . #'hover-run-or-hot-restart))
+              ("C-M-z" . #'hover-run-or-hot-reload)
+              ("C-M-x" . #'hover-run-or-hot-restart))
   :init
   (setq hover-command-path "/home/andres/go/bin/hover"
         hover-hot-reload-on-save t
         hover-clear-buffer-on-hot-restart t)
   (hover-minor-mode 1))
-;; No heading:1 ends here
