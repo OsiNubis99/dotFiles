@@ -34,9 +34,9 @@ alias ls='exa --group-directories-first --icons --all'
 alias lsi='exa --group-directories-first --icons --all -l'
 alias lsl='exa --group-directories-first --icons --all -T --ignore-glob=".git|node_modules" -L 2'
 # vim and emacs
-alias sv="doas nvim"
-alias v="nvim"
-alias vim="nvim"
+alias sv="doas emacsclient -nw"
+alias v="emacsclient -nw"
+alias vim="emacsclient -nw"
 alias emacs="emacsclient -c -a 'emacs'"
 alias doomsync="~/.emacs.d/bin/doom sync"
 alias doomdoctor="~/.emacs.d/bin/doom doctor"
