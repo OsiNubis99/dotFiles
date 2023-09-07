@@ -29,9 +29,6 @@
 (use-package emojify
   :hook (after-init . global-emojify-mode))
 (setq-default display-line-numbers-type 'relative)
-(define-globalized-minor-mode global-rainbow-mode rainbow-mode
-  (lambda () (rainbow-mode 1)))
-(global-rainbow-mode 1)
 (beacon-mode 1)
 (setq ranger-hide-cursor nil)
 (setq ranger-show-hidden t)
@@ -49,7 +46,7 @@
       (:prefix ("-" . "open file")
        :desc "Edit agenda file" "a" #'(lambda () (interactive) (find-file "~/dotFiles/Org/agenda.org"))
        :desc "Edit doom init.el" "i" #'(lambda () (interactive) (find-file "~/dotFiles/config/doom/init.el"))
-       :desc "Edit doom config.org" "c" #'(lambda () (interactive) (find-file "~/dotFiles/config/doom/config.org"))
+       :desc "Edit doom config.el" "c" #'(lambda () (interactive) (find-file "~/dotFiles/config/doom/config.el"))
        :desc "Edit doom packages.el" "p" #'(lambda () (interactive) (find-file "~/dotFiles/config/doom/packages.el"))
        :desc "Edit xmonad config file" "x" #'(lambda () (interactive) (find-file "~/dotFiles/config/xmonad/xmonad.hs"))))
 
