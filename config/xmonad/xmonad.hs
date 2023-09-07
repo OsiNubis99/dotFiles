@@ -94,7 +94,7 @@ myStartupHook = do
   spawnOnce "xfce4-session &"
   spawnOnce "picom -f &"
   spawnOnce "/usr/bin/emacs --daemon &"
-  spawnOnce "cmst -m &"
+  spawnOnce "nm-applet &"
   spawnOnce "qlipper &"
   spawnOnce "dunst -config ~/.config/dunst/dunstrc &"
   spawnOnce "blugon &"
