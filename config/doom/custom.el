@@ -12,3 +12,4 @@
 ;; If there is more than one, they won't work right.
 
 (put 'projectile-grep 'disabled nil)
+(put 'projectile-ripgrep 'disabled nil)

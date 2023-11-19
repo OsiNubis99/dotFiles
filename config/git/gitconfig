@@ -8,7 +8,12 @@
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
+[core]
+  sshCommand = "ssh -i ~/.ssh/OsiNubis99"
+	editor = nvim
+[includeIf "gitdir:~/Repos/Alfredo/"]
+    path = ~/Repos/Alfredo/.gitconfig
+[includeIf "gitdir:~/Repos/Julio/"]
+    path = ~/Repos/Julio/.gitconfig
 [credential]
 	helper = store
-[core]
-	editor = nvim

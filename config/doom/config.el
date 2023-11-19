@@ -16,7 +16,7 @@
       :desc "Format Buffer" "/" '+format/buffer
       :desc "Multi cursor" "m c" 'mc/mark-all-words-like-this
       :desc "Open File Folder" "SPC" 'dired-jump
-      :desc "Open File" "." '+ivy/projectile-find-file)
+      :desc "Open File" "." 'projectile-find-file)
 
 (setq doom-font (font-spec :family "monospace" :size 14)
       doom-big-font (font-spec :family "monospace" :size 16))

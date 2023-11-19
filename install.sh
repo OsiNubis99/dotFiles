@@ -93,8 +93,8 @@ if [[ ! $REPLY =~ ^[Nn]$ ]]; then
   if [[ ! $(~/.emacs.d/bin/doom info 2>/dev/null) ]]; then
     rm -r -f ~/.config/doom
     ln -s ~/dotFiles/config/doom ~/.config/doom
-    git clone --depth 1 https://github.com/hlissner/doom-emacs ~/.emacs.d 1>/dev/null || exit 1
-    ~/.emacs.d/bin/doom install --install --no-fonts 1>/dev/null || exit 1
+    git clone --depth 1 --single-branch https://github.com/doomemacs/doomemacs ~/.config/emacs
+    ~/.config/emacs/bin/doom install
   fi
   cat ~/dotFiles/apps/emacs >>~/dotFiles/app.temp
 fi
