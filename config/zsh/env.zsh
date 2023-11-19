@@ -6,3 +6,5 @@ export HISTORY_IGNORE="(clear|ls.*|cd|pwd|exit|sudo reboot|history.*)"
 export PATH=$PATH:"/home/${MY_USER}/.local/bin"
 # EB
 export PATH="/home/andres/.ebcli-virtual-env/executables:$PATH"
+# Ruby
+export PATH="/home/andres/.rbenv/shims/:$PATH"

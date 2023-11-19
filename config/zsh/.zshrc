@@ -16,9 +16,13 @@ source /usr/share/zsh/plugins/zsh-hist/zsh-hist.plugin.zsh
 #      Terminal Statup Colors
 colorscript -r
 #      SSH
-eval "$(ssh-agent)" 1>/dev/null
+eval "$(ssh-agent)" 1> /dev/null
 #      NVM
 source /usr/share/nvm/init-nvm.sh
+#      RVM
+eval "$(rbenv init -)"
+#      FUCK
+eval $(thefuck -r -a fuck)
 autoload -U add-zsh-hook
 loadNVMRC() {
   local node_version="$(nvm version)"
@@ -37,5 +41,3 @@ loadNVMRC() {
 }
 add-zsh-hook chpwd loadNVMRC
 loadNVMRC
-#      FUCK
-eval $(thefuck -r -a mmlo)

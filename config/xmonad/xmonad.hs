@@ -1,4 +1,5 @@
 import Data.Char
+import Data.List (isSubsequenceOf)
 import qualified Data.Map as M
 import Data.Maybe
 import Data.Monoid
@@ -31,6 +32,8 @@ import XMonad.Layout.Accordion
 import XMonad.Layout.GridVariants
 import XMonad.Layout.LayoutModifier
 import XMonad.Layout.LimitWindows
+import XMonad.Layout.MagicFocus
+import XMonad.Layout.Master
 import XMonad.Layout.MultiToggle
 import qualified XMonad.Layout.MultiToggle as MT
 import XMonad.Layout.MultiToggle.Instances
@@ -42,6 +45,7 @@ import XMonad.Layout.ResizableTile
 import XMonad.Layout.ShowWName
 import XMonad.Layout.Simplest
 import XMonad.Layout.SimplestFloat
+import XMonad.Layout.SortedLayout
 import XMonad.Layout.Spacing
 import XMonad.Layout.Spiral
 import XMonad.Layout.SubLayouts
@@ -50,6 +54,7 @@ import XMonad.Layout.ThreeColumns
 import qualified XMonad.Layout.ToggleLayouts as T
 import XMonad.Layout.WindowArranger
 import XMonad.Layout.WindowNavigation
+import XMonad.Layout.ZoomRow
 import qualified XMonad.StackSet as W
 import XMonad.Util.Dmenu
 import XMonad.Util.EZConfig
@@ -163,18 +168,18 @@ runSelectedAction' conf actions = do
 
 gsApps :: [(String, String)]
 gsApps =
-  [ ("0 A.D.", "0ad"),
-    ("Steam", "steam"),
-    ("Firefox", "firefox"),
-    ("Telegram", "telegram-desktop"),
-    ("Files", "thunar"),
-    ("Cider", "cider"),
+  [ ("Firefox", "firefox"),
+    ("Tick Tick", "ticktick"),
     ("Discord", "discord"),
+    ("Telegram", "telegram-desktop"),
+    ("VS Code", "code"),
+    ("Steam", "steam"),
+    ("0 A.D.", "0ad"),
     ("Htop", myTerminal ++ " -e htop"),
+    ("Settings", "xfce4-settings-manager"),
+    ("Files", "thunar"),
     ("Postman", "postman"),
     ("VirtualBox", "virtualbox"),
-    ("Settings", "xfce4-settings-manager"),
-    ("Nitrogen", "nitrogen"),
     ("Beekeeper", "beekeeper-studio")
   ]
 
@@ -271,13 +276,13 @@ myManageHook =
       className =? "libreoffice" --> doShift (head myWorkspaces),
       className =? "firefox" --> doShift (myWorkspaces !! 1),
       className =? "Opera" --> doShift (myWorkspaces !! 1),
+      className =? "ticktick" --> doShift (myWorkspaces !! 1),
       className =? "discord" --> doShift (myWorkspaces !! 2),
       className =? "TelegramDesktop" --> doShift (myWorkspaces !! 2),
       className =? "Thunar" --> doShift (myWorkspaces !! 3),
       className =? "pyrogenesis" --> doShift (myWorkspaces !! 4),
-      className =? "Steam" --> doShift (myWorkspaces !! 4),
-      className =? "steam_app_239140" --> doCenterFloat <+> doShift (myWorkspaces !! 4),
-      className =? "Cider" --> doShift (myWorkspaces !! 5),
+      className =? "steam" --> doShift (myWorkspaces !! 4),
+      stringProperty "WM_CLASS" =? "steam_app" --> doCenterFloat <+> doShift (myWorkspaces !! 4),
       className =? "vlc" --> doShift (myWorkspaces !! 5),
       title =? "Oracle VM VirtualBox Manager" --> doFloat,
       title =? "File Operation Progress" --> doFloat,
@@ -315,7 +320,7 @@ myKeys =
     ("M-<Space>", spawn "~/dotFiles/scripts/spawnRofi.sh"),
     ("M-o", spawn "~/dotFiles/scripts/spawnRofi.sh"),
     ("M-x", spawn "~/dotFiles/scripts/spawnTrayer.sh"),
-    ("M-z", spawn myTerminal),
+    ("M-;", spawn myTerminal),
     -- Workspaces
     ("M-h", prevScreen),
     ("M-l", nextScreen),
@@ -324,7 +329,7 @@ myKeys =
     -- Layouts
     ("M-<Up>", windows W.focusUp),
     ("M-<Down>", windows W.focusDown),
-    ("M-/", sendMessage NextLayout),
+    ("M-z", sendMessage NextLayout),
     ("M-,", sendMessage (IncMasterN 1)),
     ("M-.", sendMessage (IncMasterN (-1))),
     ("M-a", sinkAll),
@@ -338,7 +343,7 @@ myKeys =
     ("M-C-<Down>", sendMessage MirrorShrink),
     ("M-S-<Up>", windows W.swapUp),
     ("M-S-<Down>", windows W.swapDown),
-    ("M-S-/", rotSlavesUp),
+    ("M-S-z", rotSlavesUp),
     ("M-S-i", incScreenSpacing 2),
     ("M-S-d", decScreenSpacing 2),
     -- Grid Select
@@ -367,14 +372,14 @@ myKeys =
     ("M-e r", spawn (myEditor ++ "--eval '(doom/reload)'")),
     ("M-e 0", spawn (myEditor ++ "~/Repos/OsiNubis99")),
     ("M-e 1", spawn (myEditor ++ "~/dotFiles")),
-    ("M-e 2", spawn (myEditor ++ "~/Repos/Bots/CaidaVZLABot")),
-    ("M-e 3", spawn (myEditor ++ "~/Repos/Web/Ofimania")),
+    ("M-e 2", spawn (myEditor ++ "~/Repos/Web/shareity")),
+    ("M-e 3", spawn (myEditor ++ "~/Repos")),
     ("M-e 4", spawn (myEditor ++ "~/Repos")),
     ("M-e 5", spawn (myEditor ++ "~/Repos")),
     ("M-e 6", spawn (myEditor ++ "~/Repos")),
     ("M-e 7", spawn (myEditor ++ "~/Repos")),
     ("M-e 8", spawn (myEditor ++ "~/Repos")),
-    ("M-e 9", spawn (myEditor ++ "~/Repos")),
+    ("M-e 9", spawn (myEditor ++ "~/Repos/Software/zmk-config")),
     -- Notifications
     ("M-n", spawn "dunstctl history-pop"),
     ("M-S-n", spawn "dunstctl close"),
