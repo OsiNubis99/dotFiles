@@ -3,7 +3,7 @@
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
 [![MIT License][license-shield]][license-url]
-[![wakatime][wakatime-shield]][wakatime-url]\
+[![wakatime][wakatime-shield]][wakatime-url]
 
 <!-- PROJECT DESCRIPTION -->
 <p align="center">
