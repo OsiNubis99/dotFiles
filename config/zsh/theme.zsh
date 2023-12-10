@@ -42,7 +42,7 @@ prompt_end() {
 prompt_context() {
   local user=`whoami`
 
-  if [[ "$user" != "$MY_USER" || -n "$SSH_CONNECTION" ]]; then
+  if [[ "$user" != "$USER" || -n "$SSH_CONNECTION" ]]; then
     prompt_segment $PRIMARY_FG default " %(!.%{%F{yellow}%}.)$user@%m "
   fi
 }

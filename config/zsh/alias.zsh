@@ -1,7 +1,7 @@
 # Node
-alias nr='yarn run --emoji'
+alias nr='yarn --emoji run'
 alias ns='yarn --emoji'
-alias ni='yarn add --emoji'
+alias ni='yarn --emoji add'
 alias nid='yarn add -D --emoji'
 # Docker
 alias dk='doas docker'
