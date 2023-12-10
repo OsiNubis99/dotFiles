@@ -16,10 +16,16 @@
       :desc "Format Buffer" "/" '+format/buffer
       :desc "Multi cursor" "m c" 'mc/mark-all-words-like-this
       :desc "Open File Folder" "SPC" 'dired-jump
-      :desc "Open File" "." 'projectile-find-file)
+      :desc "Open File" "." 'projectile-find-file
+      (:prefix ("-" . "open file")
+       :desc "Edit agenda file" "a" #'(lambda () (interactive) (find-file "~/dotFiles/Org/agenda.org"))
+       :desc "Edit doom init.el" "i" #'(lambda () (interactive) (find-file "~/dotFiles/config/doom/init.el"))
+       :desc "Edit doom config.el" "c" #'(lambda () (interactive) (find-file "~/dotFiles/config/doom/config.el"))
+       :desc "Edit doom packages.el" "p" #'(lambda () (interactive) (find-file "~/dotFiles/config/doom/packages.el"))
+       :desc "Edit xmonad config file" "x" #'(lambda () (interactive) (find-file "~/dotFiles/config/xmonad/xmonad.hs"))))
 
-(setq doom-font (font-spec :family "monospace" :size 14)
-      doom-big-font (font-spec :family "monospace" :size 16))
+(setq doom-font (font-spec :family "monospace" :size 15)
+      doom-big-font (font-spec :family "monospace" :size 18))
 (setq-default doom-theme 'doom-badger)
 
 (modify-all-frames-parameters
@@ -41,14 +47,6 @@
 (after! projectile
   (add-to-list 'projectile-globally-ignored-directories "*node-modules")
   (add-to-list 'projectile-globally-ignored-directories "*dist"))
-
-(map! :leader
-      (:prefix ("-" . "open file")
-       :desc "Edit agenda file" "a" #'(lambda () (interactive) (find-file "~/dotFiles/Org/agenda.org"))
-       :desc "Edit doom init.el" "i" #'(lambda () (interactive) (find-file "~/dotFiles/config/doom/init.el"))
-       :desc "Edit doom config.el" "c" #'(lambda () (interactive) (find-file "~/dotFiles/config/doom/config.el"))
-       :desc "Edit doom packages.el" "p" #'(lambda () (interactive) (find-file "~/dotFiles/config/doom/packages.el"))
-       :desc "Edit xmonad config file" "x" #'(lambda () (interactive) (find-file "~/dotFiles/config/xmonad/xmonad.hs"))))
 
 (use-package wakatime-mode
   :ensure t)

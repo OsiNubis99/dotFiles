@@ -1,5 +1,5 @@
 export MY_USER="andres"
-export ZDOTDIR="/home/${MY_USER}/dotFiles/config/zsh"
+export ZDOTDIR="/home/${USER}/dotFiles/config/zsh"
 #      My Env
 source "${ZDOTDIR}/env.zsh"
 #      Alias

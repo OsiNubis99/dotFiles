@@ -25,7 +25,7 @@ zstyle ':completion:*' rehash true
 zstyle ':completion:*' accept-exact '*(N)'
 zstyle ':completion:*' use-cache on
 zstyle ':completion:*' cache-path ${ZDOTDIR}/cache
-HISTFILE="/home/${MY_USER}/.zhistory"
+HISTFILE="/home/${USER}/.zhistory"
 HISTSIZE='64000'
 SAVEHIST="${HISTSIZE}"
 WORDCHARS=${WORDCHARS//\/[&.;]}
