@@ -1,11 +1,6 @@
-app.temp
 backup
-config/alacritty/alacritty.yml.save
-config/git/.git-credentials
-config/xmonad/build-x86_64-linux/
-config/xmonad/xmonad-x86_64-linux
-config/xmonad/xmonad.errors
-config/xmonad/xmonad.hi
-config/xmonad/xmonad.o
-config/zsh/.zhistory
-config/zsh/.zcompdump
+home/.config/xmonad/build-x86_64-linux/
+home/.config/xmonad/xmonad-x86_64-linux
+home/.config/xmonad/xmonad.errors
+home/.config/xmonad/xmonad.hi
+home/.config/xmonad/xmonad.o
