@@ -1,34 +1,17 @@
 #!/usr/bin/env bash
 
-## Clean temp file
-echo "" >~/dotFiles/app.temp
-
-## Read flags
-ASK=false
-while getopts 'yh' OPTION; do
-  case "$OPTION" in
-    h)
-      echo "Fast install script"
-      printf "\n\t-y Avoid confirm every step"
-      printf "\n\t-h Print this message\n"
-      exit 0
-      ;;
-    y)
-      ASK=true
-      REPLY="Y"
-      ;;
-    ?)
-      echo "Use with -y to avoid confirm every step"
-      exit 1
-      ;;
-  esac
-done
+sudo pacman -Syu --needed --noconfirm git stow base linux linux-headers linux-firmware
 
 # Welcome
 echo "Welcome to the Instalation Script"
-echo "Create folders and copy globals settings"
 
-## Creating Folders
+if [[ ! -d "$HOME/dotFiles" ]]; then
+  echo "$HOME/dotFiles folder is required, cloning it"
+  cd "$HOME" || exit
+  git clone https://github.com/OsiNubis99/dotFiles.git ~/dotFiles
+fi
+
+echo "Creating base Folders"
 mkdir -p ~/.config
 mkdir -p ~/.local/share
 mkdir -p ~/Documents
@@ -38,42 +21,23 @@ mkdir -p ~/Pictures
 mkdir -p ~/Public
 mkdir -p ~/Videos
 
-## ETC configs
-sudo cp -r ~/dotFiles/config/etc /
-
-## Fontconfig
-rm -r -f ~/.local/share/fonts
-ln -s ~/dotFiles/config/fonts ~/.local/share/fonts
-rm -r -f ~/.config/fontconfig
-ln -s ~/dotFiles/config/fontconfig ~/.config/fontconfig
-
-## Git
-if [[ ! $(which git 2>/dev/null) ]]; then
-  sudo pacman -Syu --needed --noconfirm git
-fi
-rm -r -f ~/.gitconfig
-ln -s ~/dotFiles/config/git/gitconfig ~/.gitconfig
-rm-r -f ~/.git-credentials
-ln -s ~/dotFiles/config/git/git-credentials ~/.git-credentials
+echo "Copy /etc configs"
+sudo cp -r ~/dotFiles/etc /
 
 ## Backup
-$ASK || (echo -n "Do you have your backup folder? (Wakatime and Wallpapers) [Y/n]" && read)
-if [[ ! $REPLY =~ ^[Nn]$ ]]; then
-  ## SSH
-  cp ~/dotFiles/backup/ssh/* ~/.ssh/
-  if [[ -e "$HOME/.ssh/id_ed25519" ]]; then
+if [[ -d "$HOME/dotFiles/backup" ]]; then
+  echo "Stow backup folder"
+  stow -d "$HOME/dotFiles/backup/" -t "$HOME/" .
+  if [[ -e "$HOME/.ssh/personal_key" ]]; then
     chmod -R 700 ~/.ssh
     eval "$(ssh-agent -s)"
-    ssh-add ~/.ssh/id_ed25519
-    echo "ssh key added"
+    ssh-add ~/.ssh/personal_key
+    echo "Personal ssh key added"
   fi
-  ## Wakatime
-  rm -r -f ~/.wakatime.cfg
-  ln -s ~/dotFiles/backup/wakatime.cfg ~/.wakatime.cfg
-  ## Wallpapers
-  rm -r -f ~/Pictures/wallpapers
-  ln -s ~/dotFiles/backup/wallpapers ~/Pictures/wallpapers
 fi
+
+echo "Stow home folder"
+stow -d "$HOME/dotFiles/home/" -t "$HOME/" .
 
 ## ZSH
 rm -r -f ~/.zshrc
@@ -81,75 +45,15 @@ ln -s ~/dotFiles/config/zsh/.zshrc ~/.zshrc
 rm -r -f ~/.zhistory
 ln -s ~/dotFiles/config/zsh/.zhistory ~/.zhistory
 
-## Develop
-$ASK || (echo -n "Do you need all develop software? [Y/n]" && read)
-if [[ ! $REPLY =~ ^[Nn]$ ]]; then
-  cat ~/dotFiles/apps/development >>~/dotFiles/app.temp
-fi
-
 ## Doom
-$ASK || (echo -n "Do you need Doom Emacs? [Y/n]" && read)
-if [[ ! $REPLY =~ ^[Nn]$ ]]; then
-  if [[ ! $(~/.emacs.d/bin/doom info 2>/dev/null) ]]; then
-    rm -r -f ~/.config/doom
-    ln -s ~/dotFiles/config/doom ~/.config/doom
-    git clone --depth 1 --single-branch https://github.com/doomemacs/doomemacs ~/.config/emacs
-    ~/.config/emacs/bin/doom install
-  fi
-  cat ~/dotFiles/apps/emacs >>~/dotFiles/app.temp
+if [[ ! $(~/.emacs.d/bin/doom info 2>/dev/null) ]]; then
+  rm -r -f ~/.config/doom
+  ln -s ~/dotFiles/config/doom ~/.config/doom
+  git clone --depth 1 --single-branch https://github.com/doomemacs/doomemacs ~/.config/emacs
+  ~/.config/emacs/bin/doom install
 fi
 
-## Files
-$ASK || (echo -n "Do you need file system software? [Y/n]" && read)
-if [[ ! $REPLY =~ ^[Nn]$ ]]; then
-  cat ~/dotFiles/apps/files >>~/dotFiles/app.temp
-fi
-
-## Games
-$ASK || (echo -n "Do you need all gaiming software? [Y/n]" && read)
-if [[ ! $REPLY =~ ^[Nn]$ ]]; then
-  cat ~/dotFiles/apps/games >>~/dotFiles/app.temp
-fi
-
-## Xmonad
-$ASK || (echo -n "Do you want Xmonad? [Y/n]" && read)
-if [[ ! $REPLY =~ ^[Nn]$ ]]; then
-  echo "Copying all desktop settings..."
-  echo "--- Alacritty"
-  rm -r -f ~/.config/alacritty
-  ln -s ~/dotFiles/config/alacritty ~/.config/alacritty
-  echo "--- Dunts"
-  rm -r -f ~/.config/dunst
-  ln -s ~/dotFiles/config/dunst ~/.config/dunst
-  echo "--- Nitrogen"
-  rm -r -f ~/.config/nitrogen
-  ln -s ~/dotFiles/config/nitrogen ~/.config/nitrogen
-  echo "--- Picom"
-  rm -r -f ~/.config/picom
-  ln -s ~/dotFiles/config/picom ~/.config/picom
-  echo "--- Rofi"
-  rm -r -f ~/.config/rofi
-  ln -s ~/dotFiles/config/rofi ~/.config/rofi
-  echo "--- Taffybar"
-  rm -r -f ~/.config/taffybar
-  ln -s ~/dotFiles/config/taffybar ~/.config/taffybar
-  echo "--- Xmonad"
-  rm -r -f ~/.xmonad
-  ln -s ~/dotFiles/config/xmonad ~/.xmonad
-  ### Add programs
-  cat ~/dotFiles/apps/xmonad >>~/dotFiles/app.temp
-fi
-
-## Others
-echo "Run"
-echo "  cat ~/dotFiles/apps/others"
-echo "for information about what other apps will be installed"
-$ASK || (echo -n "Do you this other apps? [Y/n]" && read)
-if [[ ! $REPLY =~ ^[Nn]$ ]]; then
-  cat ~/dotFiles/apps/others >>~/dotFiles/app.temp
-fi
-
-## Install paru only if it doesn't exist in path
+## Install paru only if it doesn't already exist
 if [[ ! $(which paru 2>/dev/null) ]]; then
   sudo rm -r /home/andres/.cache/paru
   git clone https://aur.archlinux.org/paru.git ~/.cache/paru
@@ -161,7 +65,5 @@ fi
 
 # Final instalation
 echo "Inastalling all nedeed software..."
-paru -Syu --asexplicit --noconfirm $(cat ~/dotFiles/apps/system) $(cat ~/dotFiles/app.temp) 1>/dev/null || exit 1
-
-rm -r ~/dotFiles/app.temp
+cat ~/dotFiles/apps/* | paru -Syu --asexplicit --noconfirm - 1>/dev/null || exit 1
 echo "Instalation Complete!"
