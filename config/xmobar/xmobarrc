@@ -1,5 +1,5 @@
-Config { font = "xft:Hack Nerd Font:pixelsize=12"
-       , additionalFonts = [ "xft:Arimo Nerd Font:pixelsize=16"]
+Config { font = "xft:Hack Nerd Font:pixelsize=16"
+       , additionalFonts = [ "xft:Arimo Nerd Font:pixelsize=20"]
        , bgColor = "#000000"
        , fgColor = "#ffaa00"
        , alpha = 165

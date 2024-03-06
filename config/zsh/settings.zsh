@@ -26,8 +26,8 @@ zstyle ':completion:*' accept-exact '*(N)'
 zstyle ':completion:*' use-cache on
 zstyle ':completion:*' cache-path ${ZDOTDIR}/cache
 HISTFILE="/home/${USER}/.zhistory"
+SAVEHIST="50000"
 HISTSIZE='64000'
-SAVEHIST="${HISTSIZE}"
 WORDCHARS=${WORDCHARS//\/[&.;]}
 #      Keybindings
 bindkey -e
