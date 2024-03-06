@@ -3,6 +3,7 @@
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
 [![MIT License][license-shield]][license-url]
+[![wakatime][wakatime-shield]][wakatime-url]
 
 <!-- PROJECT DESCRIPTION -->
 <p align="center">
@@ -141,3 +142,5 @@ My email address OsiNubis99@PM.me
 [issues-url]: https://github.com/OsiNubis99/dotFiles/issues
 [license-shield]: https://img.shields.io/github/license/OsiNubis99/dotFiles.svg?style=for-the-badge
 [license-url]: https://github.com/OsiNubis99/dotFiles/blob/main/LICENSE
+[wakatime-shield]: https://wakatime.com/badge/github/OsiNubis99/dotFiles.svg
+[wakatime-url]: https://wakatime.com/badge/github/OsiNubis99/dotFiles
