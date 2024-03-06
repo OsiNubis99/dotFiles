@@ -1,8 +1,12 @@
 alacritty
 blugon
 cmst
+conky
 dunst
+eww
 flameshot
+greenclip
+jgmenu
 light
 network-manager-applet
 nitrogen
@@ -11,7 +15,15 @@ picom
 qlipper
 rofi
 sddm
+sddm-theme-astronaut
+starship
 trayer
+ttf-arimo-nerd
+ttf-firacode-nerd
+ttf-hack-nerd
+touche
+polybar
+warp-terminal
 xdotool
 xfce4-power-manager
 xfce4-session
@@ -19,3 +31,4 @@ xfce4-settings
 xmobar
 xmonad
 xmonad-contrib
+yad

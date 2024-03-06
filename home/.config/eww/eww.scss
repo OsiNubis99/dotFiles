@@ -1,0 +1,558 @@
+// Author: github.com/NeshHari
+* {
+  all: unset;
+}
+
+$fujiWhite: #dcd7ba;
+$oldWhite: #c8c093;
+$sumiInk0: #16161d;
+$sumiInk1: #1f1f28;
+$sumiInk2: #2a2a37;
+$sumiInk3: #363646;
+$sumiInk4: #54546d;
+$waveBlue1: #223249;
+$waveBlue2: #2d4f67;
+$winterGreen: #2b3328;
+$winterYellow: #49443c;
+$winterRed: #43242b;
+$winterBlue: #252535;
+$autumnGreen: #76946a;
+$autumnRed: #c34043;
+$autumnYellow: #dca561;
+$samuraiRed: #e82424;
+$roninYellow: #ff9e3b;
+$waveAqua1: #6a9589;
+$dragonBlue: #658594;
+$fujiGray: #727169;
+$springViolet1: #938aa9;
+$oniViolet: #957fb8;
+$crystalBlue: #7e9cd8;
+$springViolet2: #9cabca;
+$springBlue: #7fb4ca;
+$lightBlue: #a3d4d5;
+$waveAqua2: #7aa89f;
+$springGreen: #98bb6c;
+$boatYellow1: #938056;
+$boatYellow2: #c0a36e;
+$carpYellow: #e6c384;
+$sakuraPink: #d27e99;
+$waveRed: #e46876;
+$peachRed: #ff5d62;
+$surimiOrange: #ffa066;
+$katanaGray: #717c7c;
+
+.cal-inner-container,
+.cal-outer-container {
+  font-family: Vanilla Caramel;
+  font-size: 1em;
+  font-weight: bold;
+  color: $fujiWhite;
+  background-color: $sumiInk0;
+  border-radius: 0.5em;
+  padding: 0.4em;
+}
+
+.cal-inner-elems {
+  padding: 0.7em;
+}
+
+.cal-date {
+  font-family: Cream Cake;
+  font-size: 2em;
+  color: $sumiInk0;
+  background-color: $springViolet1;
+  border-radius: 0.1em;
+  padding: 0.2em;
+  margin: 0.5em;
+}
+
+calendar.button {
+  color: $fujiWhite;
+}
+
+calendar.header,
+calendar.highlight {
+  color: $oniViolet;
+}
+
+calendar:selected {
+  color: $sumiInk0;
+  background-color: $oniViolet;
+  border-radius: 10em;
+}
+
+calendar:indeterminate {
+  color: $winterGreen;
+}
+
+.quote-container {
+  background-color: $sumiInk0;
+  padding: 1em;
+}
+
+.quote-img {
+  background-repeat: no-repeat;
+  background-size: 30px;
+  min-height: 30px;
+  min-width: 30px;
+  border-radius: 2em;
+  margin-bottom: 1em;
+}
+
+.quote {
+  font-family: Vanilla Caramel;
+  font-size: 1em;
+  font-weight: bold;
+  color: $fujiWhite;
+}
+
+.bar {
+  background-color: $sumiInk0;
+  padding: 0.3em;
+}
+
+.left-of-bar,
+.middle-of-bar,
+.right-of-bar {
+  margin-left: 0.3em;
+  margin-right: 0.3em;
+}
+
+.btn-launcher,
+.btn-notifications,
+.btn-quote,
+.btn-mail,
+.btn-layout,
+.btn-wmclass,
+.btn-bluetooth,
+.btn-update,
+.btn-update-num,
+.btn-time,
+.btn-search,
+.btn-sysdata,
+.btn-spotify,
+.btn-power {
+  font-family: "Font Awesome 6 Free Solid";
+  font-size: 1em;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+  margin-top: 0.1em;
+  margin-bottom: 0.1em;
+  margin-left: 0.6em;
+  margin-right: 0.6em;
+}
+
+.btn-mail {
+  color: $boatYellow2;
+  margin-right: 0em;
+}
+
+.label-mail {
+  font-family: "FiraCode Nerd Font";
+  color: $boatYellow2;
+  padding-right: 0.5em;
+  margin-top: 0.1em;
+  margin-bottom: 0.1em;
+  margin-right: 0.6em;
+}
+
+.btn-search {
+  color: $autumnGreen;
+}
+
+.btn-notifications {
+  color: $carpYellow;
+}
+
+.btn-bluetooth {
+  color: $springViolet2;
+  margin-right: -1em;
+}
+
+.label-bluetooth {
+  font-family: "FiraCode Nerd Font";
+  font-weight: bold;
+  color: $springViolet2;
+  padding-right: 0.5em;
+  margin-top: 0.1em;
+  margin-bottom: 0.1em;
+  margin-right: 0.6em;
+}
+
+.btn-power {
+  color: $peachRed;
+}
+
+.btn-update {
+  color: $springBlue;
+  margin-right: 0em;
+}
+
+.label-update {
+  color: $springBlue;
+  font-family: "FiraCode Nerd Font";
+  font-size: 1em;
+  font-weight: bold;
+  padding-right: 0.5em;
+  margin-top: 0.1em;
+  margin-bottom: 0.1em;
+  margin-right: 0.6em;
+}
+
+.bar-spotify {
+  margin-right: 12em;
+}
+
+.btn-spotify {
+  font-family: Vanilla Caramel;
+  font-size: 1.2em;
+  color: $peachRed;
+  background-color: $sumiInk0;
+  border-radius: 0.6em;
+}
+
+.btn-spotify:hover {
+  color: $sumiInk0;
+  background-color: $peachRed;
+  transition: ease 0.5s;
+}
+
+.btn-sysdata {
+  color: $surimiOrange;
+}
+
+.btn-sysdata:hover {
+  color: $surimiOrange;
+  background-color: $sumiInk0;
+  transition: ease 0.5s;
+}
+
+.btn-launcher {
+  color: $sakuraPink;
+}
+
+.btn-quote {
+  color: $oldWhite;
+}
+
+.btn-layout {
+  color: $crystalBlue;
+}
+
+.btn-wmclass {
+  font-family: FiraCode Nerd Font;
+  font-weight: bold;
+  font-size: 1em;
+  color: $sumiInk4;
+}
+
+.spotify-container {
+  background-color: $sumiInk0;
+  padding: 1em;
+}
+
+.spotify-img {
+  background-repeat: no-repeat;
+  background-size: contain;
+  min-height: 220px;
+  min-width: 220px;
+  border-radius: 8em;
+  border: 5px solid $waveRed;
+  margin-left: 1em;
+  margin-right: 1em;
+}
+
+.spotify-inner-right-container {
+  margin: 0.3em;
+  background-color: $winterRed;
+  border-radius: 1em;
+  padding: 2em;
+}
+
+.spotify-title {
+  font-family: Vanilla Caramel;
+  font-size: 1.5em;
+  font-weight: bold;
+  color: $peachRed;
+}
+
+.spotify-singer {
+  font-size: 1.1em;
+  font-weight: bold;
+  color: $waveRed;
+}
+
+.spotify-album {
+  font-size: 1em;
+  color: $autumnRed;
+  font-style: italic;
+  margin-bottom: 1em;
+}
+
+.spotify-controls {
+  margin-top: 1.5em;
+  background-color: $sumiInk0;
+  color: $sakuraPink;
+  border-radius: 0.6em;
+}
+
+.spotify-controls button {
+  font-family: FiraCode Nerd Font;
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+.spotify-controls button:hover {
+  color: $peachRed;
+  transition: ease 0.5s;
+}
+
+.powermenu-container {
+  font-family: "Font Awesome 6 Free Solid";
+  font-size: 3em;
+  color: $peachRed;
+  background-color: $sumiInk0;
+  padding: 0.3em;
+  border: 5px solid $peachRed;
+}
+
+.powermenu-container > * {
+  padding: 1em;
+}
+
+.powermenu-container > *:hover {
+  color: $sumiInk0;
+  background-color: $peachRed;
+  border-radius: 0.5em;
+  transition: ease 0.5s;
+}
+
+.btn-time {
+  font-family: FiraCode Nerd Font;
+  font-weight: bold;
+  font-size: 1em;
+  color: $oniViolet;
+}
+
+tooltip {
+  font-family: Vanilla Caramel;
+  font-size: 1em;
+  color: $sumiInk0;
+  background-color: $carpYellow;
+  border-radius: 0.3em;
+  border: 0.2em solid $surimiOrange;
+}
+
+.bar-sysdata {
+  margin-left: -1em;
+}
+
+.metric {
+  font-family: "Font Awesome 6 Free Solid";
+  font-size: 1em;
+  background-color: $sumiInk0;
+  color: $surimiOrange;
+  padding: 0.4em;
+}
+
+.metric scale trough highlight {
+  all: unset;
+  background-color: $surimiOrange;
+  border-radius: 2em;
+}
+
+.metric scale trough {
+  all: unset;
+  background-color: $sumiInk3;
+  min-height: 0.4em;
+  min-width: 3em;
+  margin-left: 0.2em;
+  margin-right: 0.2em;
+}
+
+.app-outer-container {
+  background-color: $sumiInk0;
+}
+
+.app-inner-container {
+  padding: 1.5em;
+}
+
+.app-inner-container-top > * {
+  padding: 0.2em;
+  background-repeat: no-repeat;
+  background-size: 30px;
+  min-height: 30px;
+  min-width: 30px;
+  margin: 0 3 0 3;
+}
+.app-inner-container-bottom > * {
+  padding: 0.2em;
+  background-repeat: no-repeat;
+  background-size: 30px;
+  min-height: 30px;
+  min-width: 30px;
+  margin: 0 3 0 3;
+}
+
+.app-inner-container-top > *:hover {
+  background-size: 42px;
+  transition: ease 0.3s;
+}
+
+.app-inner-container-bottom > *:hover {
+  background-size: 40px;
+  transition: ease 0.3s;
+}
+
+.notifications-container {
+  background-color: $sumiInk0;
+  padding: 1.8em;
+}
+
+.notifications-header-container {
+  font-family: Vanilla Caramel;
+  font-size: 1em;
+  margin-bottom: 0.5em;
+  color: $sumiInk0;
+}
+
+.notifications-header {
+  font-size: 2.5em;
+  font-weight: bold;
+  background-color: $autumnYellow;
+  border-radius: 5em;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+  margin-bottom: 0.2em;
+}
+
+.notifications-scroll {
+  background-color: $carpYellow;
+  padding: 1em 1.5em 1em 1.5em;
+  border-radius: 0.4em;
+}
+
+.notifications-footer {
+  font-family: Vanilla Caramel;
+  font-size: 1.3em;
+  background-color: $sumiInk0;
+  color: $sumiInk0;
+  padding: 1em;
+}
+
+.notifications-close-container {
+  background-color: $peachRed;
+  border: 0.1em solid $peachRed;
+  border-radius: 0.3em;
+  padding: 0.2em 0.6em 0.2em 0.6em;
+  margin-left: 1em;
+  margin-right: 1em;
+}
+
+.notifications-close-container:hover {
+  background-color: $sumiInk0;
+  color: $peachRed;
+  transition: ease 0.5s;
+}
+
+.notifications-clear-container {
+  background-color: $surimiOrange;
+  border: 0.1em solid $surimiOrange;
+  border-radius: 0.3em;
+  padding: 0.2em 0.6em 0.2em 0.6em;
+  margin-left: 1em;
+  margin-right: 1em;
+}
+
+.notifications-clear-container:hover {
+  background-color: $sumiInk0;
+  color: $surimiOrange;
+  transition: ease 0.5s;
+}
+
+.notifications-cards {
+  background-color: $boatYellow2;
+  color: $sumiInk0;
+  font-family: FiraCode Nerd Font;
+  font-size: 1em;
+  border-radius: 0.3em;
+}
+
+.notifications-cards-header {
+  font-family: Vanilla Caramel;
+  font-size: 1.3em;
+  background-color: $sumiInk0;
+  color: $autumnYellow;
+  padding: 0.8em;
+  border-radius: 0.3em 0.3em 0 0;
+}
+
+.notifications-card-appname {
+  font-weight: bold;
+  padding-left: 2em;
+}
+
+.btn-card-close {
+  font-family: "Font Awesome 6 Free Solid";
+  font-size: 0.8em;
+  color: $sumiInk0;
+  background-color: $peachRed;
+  border-radius: 0.3em;
+  padding-left: 0.8em;
+  padding-right: 0.8em;
+  border: 0.1em solid $peachRed;
+}
+
+.btn-card-close:hover {
+  color: $peachRed;
+  background-color: $sumiInk0;
+  transition: ease 0.5s;
+}
+
+.notifications-card-body {
+  border-radius: 0.3em;
+}
+
+.notifications-card-image {
+  background-repeat: no-repeat;
+  background-size: contain;
+  min-height: 100px;
+  min-width: 100px;
+  border-radius: 0.3em;
+  padding: 0.5em;
+  margin-right: 0.8em;
+}
+
+.summary-header {
+  font-family: Cream Cake;
+  font-size: 1.6em;
+  background-color: $boatYellow1;
+  color: $sumiInk0;
+  padding: 0.5em;
+  margin-bottom: 0.2em;
+}
+
+.notifications-card-timestamp {
+  font-family: FiraCode Nerd Font;
+  font-size: 0.8em;
+  background-color: $boatYellow1;
+  color: $sumiInk0;
+  margin-top: 0.5em;
+  padding: 0.5em 1em 0.5em 1em;
+  border-radius: 1em;
+  margin-bottom: 0.5em;
+}
+
+.notifications-body-fujiWhite {
+  color: $sumiInk0;
+  border-radius: 1em;
+  padding: 0.5em;
+}
+
+.notifications-card-body-content {
+  font-family: Fira Code Nerd Font;
+  font-size: 0.8em;
+  color: $sumiInk0;
+  padding: 0.8em;
+}

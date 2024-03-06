@@ -1,3 +1,4 @@
+barrier
 corectrl
 discord
 firefox
@@ -5,7 +6,9 @@ freedownloadmanager
 gparted
 nomacs
 opera
+opera-ffmpeg-codecs
 pavucontrol
+slack
 telegram-desktop
 virtualbox
 vlc

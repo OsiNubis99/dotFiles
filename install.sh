@@ -130,9 +130,9 @@ if [[ ! $REPLY =~ ^[Nn]$ ]]; then
   echo "--- Rofi"
   rm -r -f ~/.config/rofi
   ln -s ~/dotFiles/config/rofi ~/.config/rofi
-  echo "--- Xmobar"
-  rm -r -f ~/.config/xmobar
-  ln -s ~/dotFiles/config/xmobar ~/.config/xmobar
+  echo "--- Taffybar"
+  rm -r -f ~/.config/taffybar
+  ln -s ~/dotFiles/config/taffybar ~/.config/taffybar
   echo "--- Xmonad"
   rm -r -f ~/.xmonad
   ln -s ~/dotFiles/config/xmonad ~/.xmonad
