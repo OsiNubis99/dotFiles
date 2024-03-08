@@ -25,5 +25,5 @@ Config { font = "xft:Hack Nerd Font:pixelsize=16"
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = " %battery%%SEP%%time%%SEP%%date%}<fc=#ffaa00>%UnsafeStdinReader%</fc>{<action=alacritty -e 'htop'>%multicpu% %multicoretemp%%SEP%%memory%%SEP%%swap%</action>%SEP%%dynnetwork% "
+       , template = " %time%%SEP%%date%}<fc=#ffaa00>%UnsafeStdinReader%</fc>{<action=alacritty -e 'htop'>%multicpu% %multicoretemp%%SEP%%memory%</action>%SEP%%dynnetwork% "
        }

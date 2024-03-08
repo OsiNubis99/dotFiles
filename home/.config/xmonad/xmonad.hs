@@ -159,7 +159,7 @@ gsApps =
   , ("Steam"     , "steam")
   , ("0 A.D."    , "0ad")
   , ("Settings"  , "xfce4-settings-manager")
-  , ("Files"     , "")
+  , ("Files"     , "thunar")
   , ("Postman"   , "postman")
   , ("VirtualBox", "virtualbox")
   , ("Beekeeper" , "beekeeper-studio")
@@ -210,7 +210,7 @@ myLayoutHook
        Window
 myLayoutHook =
   mkToggle (NBFULL ?? NOBORDERS ?? EOT)
-    $ onWorkspace (myWorkspaces !! 3) fullDefault
+    $ onWorkspace (myWorkspaces !! 2) fullDefault
     $ onWorkspaces [head myWorkspaces, myWorkspaces !! 1]
                    tabsDefault
                    splitDefault
@@ -233,7 +233,7 @@ myLayoutHook =
       $ noBorders Full
 
 myWorkspaces :: [String]
-myWorkspaces = ["Editor", "Web", "File", "Game", "NSP"]
+myWorkspaces = ["Editor", "Web", "Game", "File", "NSP"]
 
 myWorkspaceIcons :: M.Map String String
 myWorkspaceIcons = M.fromList $ zip
