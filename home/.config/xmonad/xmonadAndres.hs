@@ -84,18 +84,15 @@ windowCount =
 
 myStartupHook :: X ()
 myStartupHook = do
-  spawnOnce "mkdir -p ~/.cache/xmonad &"
-  -- Defaults
-  spawnOnce
-    "~/dotFiles/scripts/setWallpaper.sh '20' 2>> ~/.cache/xmonad/wallpaper.log &"
-  spawnOnce "/usr/bin/emacs --daemon 2> ~/.cache/xmonad/emacs.log &"
-  -- DE
-  spawnOnce "picom -f 2>> ~/.cache/xmonad/picom.log &"
-  spawnOnce "qlipper 2>> ~/.cache/xmonad/qliper.log &"
-  spawnOnce "dunst 2>> ~/.cache/xmonad/dunst.log &"
-  -- spawnOnce "dunst -config ~/.config/dunst/dunstrc "
-  spawnOnce "blugon 2>> ~/.cache/xmonad/blugon.log &"
-  spawnOnce "nm-applet 2>> ~/.cache/xmonad/network.log &"
+  spawnOnce "nm-applet &"
+  spawnOnce "~/scripts/setWallpaper.sh &"
+  spawnOnce "xfce4-session &"
+  spawnOnce "dunst &"
+  spawnOnce "picom -f &"
+  spawnOnce "eww daemon &"
+  spawnOnce "greenclip daemon &"
+  spawnOnce "/usr/bin/emacs --daemon &"
+  spawnOnce "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &"
 
 myNavigation :: TwoD a (Maybe a)
 myNavigation = makeXEventhandler $ shadowWithKeymap navKeyMap navDefaultHandler
@@ -161,8 +158,8 @@ gsApps =
   , ("VS Code"   , "code")
   , ("Steam"     , "steam")
   , ("0 A.D."    , "0ad")
-  , ("Settings"  , "")
-  , ("Files"     , "")
+  , ("Settings"  , "xfce4-settings-manager")
+  , ("Files"     , "thunar")
   , ("Postman"   , "postman")
   , ("VirtualBox", "virtualbox")
   , ("Beekeeper" , "beekeeper-studio")
@@ -213,7 +210,7 @@ myLayoutHook
        Window
 myLayoutHook =
   mkToggle (NBFULL ?? NOBORDERS ?? EOT)
-    $ onWorkspace (myWorkspaces !! 3) fullDefault
+    $ onWorkspace (myWorkspaces !! 2) fullDefault
     $ onWorkspaces [head myWorkspaces, myWorkspaces !! 1]
                    tabsDefault
                    splitDefault
@@ -235,10 +232,8 @@ myLayoutHook =
       $ spacingRaw False (Border 45 0 0 0) True (Border 0 0 0 0) True
       $ noBorders Full
 
-
-
 myWorkspaces :: [String]
-myWorkspaces = ["Editor", "Web", "File", "Game", "NSP"]
+myWorkspaces = ["Editor", "Web", "Game", "File", "NSP"]
 
 myWorkspaceIcons :: M.Map String String
 myWorkspaceIcons = M.fromList $ zip
@@ -368,7 +363,6 @@ myKeys c =
   subKeys str namedAction = subtitle str : mkNamedKeymap c namedAction
   essentialsKeys =
     [ ("M-q"            , addName "Restart XMonad" $ spawn "xmonad --restart")
-    , ("M-S-q"          , addName "Quit XMonad" $ spawn "dm-logout")
     , ("M-c"            , addName "Kill focused window" kill1)
     , ("M-<Backspace>"  , addName "Kill focused window" kill1)
     , ("M-S-c"          , addName "Kill all windows on WS" killAll)
@@ -429,48 +423,40 @@ myKeys c =
       , addName "Open floating terminal"
         $ namedScratchpadAction myScratchpads "telegram"
       )
-    , ("M-z", addName "Open terminal" $ spawn myTerminal)
-    , ( "M-<Space>"
-      , addName "Open Rofi" $ spawn "~/dotFiles/scripts/spawnRofi.sh"
-      )
-    , ("M-x", addName "Show trayer" $ spawn "~/dotFiles/scripts/spawnTrayer.sh")
-    , ("M-e", addName "Spawn Emacs" $ spawn myEditor)
+    , ("M-z"      , addName "Open terminal" $ spawn myTerminal)
+    , ("M-<Space>", addName "Open Rofi" $ spawn "~/scripts/spawnRofi.sh")
+    , ("M-x"      , addName "Show trayer" $ spawn "~/scripts/spawnTrayer.sh")
+    , ("M-e"      , addName "Spawn Emacs" $ spawn myEditor)
     ]
   otherKeys =
-    [ ("M-<Tab>", noName $ spawnSelected' gsApps)
-    , ("M-s"    , noName $ goToSelected $ mygridConfig myColorizer)
-    , ("M-S-s"  , noName $ bringSelected $ mygridConfig myColorizer)
+    [ ("M-<Tab>"               , noName $ spawnSelected' gsApps)
+    , ("M-s", noName $ goToSelected $ mygridConfig myColorizer)
+    , ("M-S-s", noName $ bringSelected $ mygridConfig myColorizer)
     -- Wallpapers
-    , ("M-w o"  , noName $ spawn "nitrogen")
-    , ("M-w a", noName $ spawn "~/dotFiles/scripts/setWallpaper.sh '20'")
-    , ("M-w f"  , noName $ spawn "nitrogen --restore")
-    , ("M-w l"  , noName $ spawn "~/dotFiles/scripts/listWallpaper.sh")
-    , ("M-w 1"  , noName $ spawn "~/dotFiles/scripts/setWallpaper.sh '0'")
-    , ("M-w 2"  , noName $ spawn "~/dotFiles/scripts/setWallpaper.sh '1'")
-    , ("M-w 3"  , noName $ spawn "~/dotFiles/scripts/setWallpaper.sh '2'")
-    , ("M-w 4"  , noName $ spawn "~/dotFiles/scripts/setWallpaper.sh '3'")
-    , ("M-w 5"  , noName $ spawn "~/dotFiles/scripts/setWallpaper.sh '4'")
-    , ("M-w 6"  , noName $ spawn "~/dotFiles/scripts/setWallpaper.sh '5'")
-    , ("M-w 7"  , noName $ spawn "~/dotFiles/scripts/setWallpaper.sh '6'")
-    , ("M-w 8"  , noName $ spawn "~/dotFiles/scripts/setWallpaper.sh '7'")
-    , ("M-w 9"  , noName $ spawn "~/dotFiles/scripts/setWallpaper.sh '8'")
-    , ("M-w 0"  , noName $ spawn "~/dotFiles/scripts/setWallpaper.sh '9'")
+    , ("M-w o"                 , noName $ spawn "nitrogen")
+    , ("M-w f"                 , noName $ spawn "nitrogen --restore")
+    , ("M-w l"                 , noName $ spawn "~/scripts/listWallpaper.sh")
+    , ("M-w a"                 , noName $ spawn "~/scripts/setWallpaper.sh")
+    , ("M-w 1"                 , noName $ spawn "~/scripts/setWallpaper.sh '0'")
+    , ("M-w 2"                 , noName $ spawn "~/scripts/setWallpaper.sh '1'")
+    , ("M-w 3"                 , noName $ spawn "~/scripts/setWallpaper.sh '2'")
+    , ("M-w 4"                 , noName $ spawn "~/scripts/setWallpaper.sh '3'")
+    , ("M-w 5"                 , noName $ spawn "~/scripts/setWallpaper.sh '4'")
+    , ("M-w 6"                 , noName $ spawn "~/scripts/setWallpaper.sh '5'")
+    , ("M-w 7"                 , noName $ spawn "~/scripts/setWallpaper.sh '6'")
+    , ("M-w 8"                 , noName $ spawn "~/scripts/setWallpaper.sh '7'")
+    , ("M-w 9"                 , noName $ spawn "~/scripts/setWallpaper.sh '8'")
+    , ("M-w 0"                 , noName $ spawn "~/scripts/setWallpaper.sh '9'")
     -- Notifications
-    , ("M-n"    , noName $ spawn "dunstctl history-pop")
-    , ("M-S-n"  , noName $ spawn "dunstctl close")
+    , ("M-n"                   , noName $ spawn "dunstctl history-pop")
+    , ("M-S-n"                 , noName $ spawn "dunstctl close")
     -- Multimedia Keys
-    , ( "<XF86AudioLowerVolume>"
-      , noName $ spawn "~/dotFiles/scripts/volume.sh down 5"
-      )
-    , ( "<XF86AudioRaiseVolume>"
-      , noName $ spawn "~/dotFiles/scripts/volume.sh up 5"
-      )
-    , ("<XF86AudioMute>", noName $ spawn "~/dotFiles/scripts/volume.sh mute")
-    , ( "<XF86MonBrightnessUp>"
-      , noName $ spawn "~/dotFiles/scripts/backlight.sh up 10"
-      )
+    , ("<XF86AudioLowerVolume>", noName $ spawn "~/scripts/volume.sh down 5")
+    , ("<XF86AudioRaiseVolume>", noName $ spawn "~/scripts/volume.sh up 5")
+    , ("<XF86AudioMute>"       , noName $ spawn "~/scripts/volume.sh mute")
+    , ("<XF86MonBrightnessUp>" , noName $ spawn "~/scripts/backlight.sh up 10")
     , ( "<XF86MonBrightnessDown>"
-      , noName $ spawn "~/dotFiles/scripts/backlight.sh down 10"
+      , noName $ spawn "~/scripts/backlight.sh down 10"
       )
     , ("C-<XF86MonBrightnessUp>"  , noName $ spawn "blugon --setcurrent='+600'")
     , ("C-<XF86MonBrightnessDown>", noName $ spawn "blugon --setcurrent='-600'")
@@ -481,238 +467,6 @@ myKeys c =
   nonNSP = WSIs (return (\ws -> W.tag ws /= scratchpadWorkspaceTag))
   nonEmptyNonNSP =
     WSIs (return (\ws -> isJust (W.stack ws) && W.tag ws /= "NSP"))
-
- --  -- Dmenu scripts (dmscripts)
- --  -- In Xmonad and many tiling window managers, M-p is the default keybinding to
- --  -- launch dmenu_run, so I've decided to use M-p plus KEY for these dmenu scripts.
- --    ^++^ subKeys
- --           "Dmenu scripts"
- --           [ ("M-p h", addName "List all dmscripts" $ spawn "dm-hub")
- --           , ("M-p a", addName "Choose ambient sound" $ spawn "dm-sounds")
- --           , ("M-p b", addName "Set background" $ spawn "dm-setbg")
- --           , ( "M-p c"
- --             , addName "Choose color scheme"
- --               $ spawn "~/.local/bin/dtos-colorscheme"
- --             )
- --           , ("M-p C", addName "Pick color from scheme" $ spawn "dm-colpick")
- --           , ("M-p e", addName "Edit config files" $ spawn "dm-confedit")
- --           , ("M-p i", addName "Take a screenshot" $ spawn "dm-maim")
- --           , ("M-p k", addName "Kill processes" $ spawn "dm-kill")
- --           , ("M-p m", addName "View manpages" $ spawn "dm-man")
- --           , ("M-p n", addName "Store and copy notes" $ spawn "dm-note")
- --           , ("M-p o", addName "Browser bookmarks" $ spawn "dm-bookman")
- --           , ("M-p p", addName "Passmenu" $ spawn "passmenu -p \"Pass: \"")
- --           , ("M-p q", addName "Logout Menu" $ spawn "dm-logout")
- --           , ("M-p r", addName "Listen to online radio" $ spawn "dm-radio")
- --           , ("M-p s", addName "Search various engines" $ spawn "dm-websearch")
- --           , ("M-p t", addName "Translate text" $ spawn "dm-translate")
- --           ]
-
- --    ^++^ subKeys
- --           "Favorite programs"
- --           [ ("M-<Return>", addName "Launch terminal" $ spawn myTerminal)
- --           , ("M-b"       , addName "Launch web browser" $ spawn myBrowser)
- --           , ( "M-M1-h"
- --             , addName "Launch htop" $ spawn (myTerminal ++ " -e htop")
- --             )
- --           ]
-
- --    ^++^ subKeys
- --           "Monitors"
- --           [ ("M-.", addName "Switch focus to next monitor" nextScreen)
- --           , ("M-,", addName "Switch focus to prev monitor" prevScreen)
- --           ]
-
- --  -- Switch layouts
- --    ^++^ subKeys
- --           "Switch layouts"
- --           [ ( "M-<Tab>"
- --             , addName "Switch to next layout" $ sendMessage NextLayout
- --             )
- --           , ( "M-<Space>"
- --             , addName "Toggle noborders/full"
- --             $  sendMessage (MT.Toggle NBFULL)
- --             >> sendMessage ToggleStruts
- --             )
- --           ]
-
- --  -- Window resizing
- --    ^++^ subKeys
- --           "Window resizing"
- --           [ ("M-h", addName "Shrink window" $ sendMessage Shrink)
- --           , ("M-l", addName "Expand window" $ sendMessage Expand)
- --           , ( "M-M1-j"
- --             , addName "Shrink window vertically" $ sendMessage MirrorShrink
- --             )
- --           , ( "M-M1-k"
- --             , addName "Expand window vertically" $ sendMessage MirrorExpand
- --             )
- --           ]
-
- --  -- Floating windows
- --    ^++^ subKeys
- --           "Floating windows"
- --           [ ( "M-f"
- --             , addName "Toggle float layout" $ sendMessage (T.Toggle "floats")
- --             )
- --           , ( "M-t"
- --             , addName "Sink a floating window" $ withFocused $ windows . W.sink
- --             )
- --           , ("M-S-t", addName "Sink all floated windows" sinkAll)
- --           ]
-
- --  -- Increase/decrease spacing (gaps)
- --    ^++^ subKeys
- --           "Window spacing (gaps)"
- --           [ ("C-M1-j", addName "Decrease window spacing" $ decWindowSpacing 4)
- --           , ("C-M1-k", addName "Increase window spacing" $ incWindowSpacing 4)
- --           , ("C-M1-h", addName "Decrease screen spacing" $ decScreenSpacing 4)
- --           , ("C-M1-l", addName "Increase screen spacing" $ incScreenSpacing 4)
- --           ]
-
- --  -- Increase/decrease windows in the master pane or the stack
- --    ^++^ subKeys
- --           "Increase/decrease windows in master pane or the stack"
- --           [ ( "M-S-<Up>"
- --             , addName "Increase clients in master pane"
- --               $ sendMessage (IncMasterN 1)
- --             )
- --           , ( "M-S-<Down>"
- --             , addName "Decrease clients in master pane"
- --               $ sendMessage (IncMasterN (-1))
- --             )
- --           , ( "M-="
- --             , addName "Increase max # of windows for layout" increaseLimit
- --             )
- --           , ( "M--"
- --             , addName "Decrease max # of windows for layout" decreaseLimit
- --             )
- --           ]
-
- --    ^++^ subKeys
- --           "Sublayouts"
- --           [ ("M-C-h", addName "pullGroup L" $ sendMessage $ pullGroup L)
- --           , ("M-C-l", addName "pullGroup R" $ sendMessage $ pullGroup R)
- --           , ("M-C-k", addName "pullGroup U" $ sendMessage $ pullGroup U)
- --           , ("M-C-j", addName "pullGroup D" $ sendMessage $ pullGroup D)
- --           , ( "M-C-m"
- --             , addName "MergeAll" $ withFocused (sendMessage . MergeAll)
- --             )
- --  -- , ("M-C-u", addName "UnMerge"               $ withFocused (sendMessage . UnMerge))
- --           , ( "M-C-/"
- --             , addName "UnMergeAll" $ withFocused (sendMessage . UnMergeAll)
- --             )
- --           , ("M-C-.", addName "Switch focus next tab" $ onGroup W.focusUp')
- --           , ("M-C-,", addName "Switch focus prev tab" $ onGroup W.focusDown')
- --           ]
-
- --  -- Scratchpads
- --  -- Toggle show/hide these programs. They run on a hidden workspace.
- --  -- When you toggle them to show, it brings them to current workspace.
- --  -- Toggle them to hide and it sends them back to hidden workspace (NSP).
- --    ^++^ subKeys
- --           "Scratchpads"
- --           [ ( "M-s t"
- --             , addName "Toggle scratchpad terminal"
- --               $ namedScratchpadAction myScratchPads "terminal"
- --             )
- --           , ( "M-s m"
- --             , addName "Toggle scratchpad mocp"
- --               $ namedScratchpadAction myScratchPads "mocp"
- --             )
- --           , ( "M-<Escape>"
- --             , addName "Toggle scratchpad calculator"
- --               $ namedScratchpadAction myScratchPads "calculator"
- --             )
- --           ]
-
- --  -- Controls for mocp music player (SUPER-u followed by a key)
- --    ^++^ subKeys
- --           "Mocp music player"
- --           [ ("M-u p", addName "mocp play" $ spawn "mocp --play")
- --           , ("M-u l", addName "mocp next" $ spawn "mocp --next")
- --           , ("M-u h", addName "mocp prev" $ spawn "mocp --previous")
- --           , ( "M-u <Space>"
- --             , addName "mocp toggle pause" $ spawn "mocp --toggle-pause"
- --             )
- --           ]
- --    ^++^ subKeys
- --           "Emacs"
- --           [ ("M-e e", addName "Emacsclient" $ spawn myEmacs)
- --           , ( "M-e a"
- --             , addName "Emacsclient EMMS (music)" $ spawn
- --               (myEmacs
- --               ++ "--eval '(emms)' --eval '(emms-play-directory-tree \"~/Music/\")'"
- --               )
- --             )
- --           , ( "M-e b"
- --             , addName "Emacsclient Ibuffer"
- --               $ spawn (myEmacs ++ "--eval '(ibuffer)'")
- --             )
- --           , ( "M-e d"
- --             , addName "Emacsclient Dired"
- --               $ spawn (myEmacs ++ "--eval '(dired nil)'")
- --             )
- --           , ( "M-e i"
- --             , addName "Emacsclient ERC (IRC)"
- --               $ spawn (myEmacs ++ "--eval '(erc)'")
- --             )
- --           , ( "M-e n"
- --             , addName "Emacsclient Elfeed (RSS)"
- --               $ spawn (myEmacs ++ "--eval '(elfeed)'")
- --             )
- --           , ( "M-e s"
- --             , addName "Emacsclient Eshell"
- --               $ spawn (myEmacs ++ "--eval '(eshell)'")
- --             )
- --           , ( "M-e v"
- --             , addName "Emacsclient Vterm"
- --               $ spawn (myEmacs ++ "--eval '(+vterm/here nil)'")
- --             )
- --           , ( "M-e w"
- --             , addName "Emacsclient EWW Browser"
- --               $ spawn
- --                   (myEmacs
- --                   ++ "--eval '(doom/window-maximize-buffer(eww \"distro.tube\"))'"
- --                   )
- --             )
- --           ]
- --    ^++^ subKeys
- --           "Multimedia keys"
- --           [ ("<XF86AudioPlay>", addName "mocp play" $ spawn "mocp --play")
- --           , ("<XF86AudioPrev>", addName "mocp next" $ spawn "mocp --previous")
- --           , ("<XF86AudioNext>", addName "mocp prev" $ spawn "mocp --next")
- --           , ( "<XF86AudioMute>"
- --             , addName "Toggle audio mute" $ spawn "amixer set Master toggle"
- --             )
- --           , ( "<XF86AudioLowerVolume>"
- --             , addName "Lower vol" $ spawn "amixer set Master 5%- unmute"
- --             )
- --           , ( "<XF86AudioRaiseVolume>"
- --             , addName "Raise vol" $ spawn "amixer set Master 5%+ unmute"
- --             )
- --           , ( "<XF86HomePage>"
- --             , addName "Open home page"
- --               $ spawn (myBrowser ++ " https://www.youtube.com/c/DistroTube")
- --             )
- --           , ( "<XF86Search>"
- --             , addName "Web search (dmscripts)" $ spawn "dm-websearch"
- --             )
- --           , ( "<XF86Mail>"
- --             , addName "Email client"
- --               $ runOrRaise "thunderbird" (resource =? "thunderbird")
- --             )
- --           , ( "<XF86Calculator>"
- --             , addName "Calculator"
- --               $ runOrRaise "qalculate-gtk" (resource =? "qalculate-gtk")
- --             )
- --           , ( "<XF86Eject>"
- --             , addName "Eject /dev/cdrom" $ spawn "eject /dev/cdrom"
- --             )
- --           , ( "<Print>"
- --             , addName "Take screenshot (dmscripts)" $ spawn "dm-maim"
- --             )
- --           ]
 
 main :: IO ()
 main = do
