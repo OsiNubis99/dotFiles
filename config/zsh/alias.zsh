@@ -63,5 +63,5 @@ padeps() {
 }
 
 nvms() {
-  echo $@ >./.nvmrc
+  echo $@ > ./.nvmrc
 }
