@@ -5,7 +5,6 @@ conky
 dunst
 eww
 flameshot
-greenclip
 jgmenu
 light
 network-manager-applet
@@ -23,6 +22,7 @@ ttf-firacode-nerd
 ttf-hack-nerd
 touche
 polybar
+rofi-greenclip
 warp-terminal
 xdotool
 xfce4-power-manager

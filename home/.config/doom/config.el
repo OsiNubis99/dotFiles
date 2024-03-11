@@ -27,6 +27,7 @@
 (setq doom-font (font-spec :family "monospace" :size 16)
       doom-big-font (font-spec :family "monospace" :size 18))
 (setq-default doom-theme 'doom-badger)
+(setq shell-file-name (executable-find "bash"))
 
 (modify-all-frames-parameters
  '((undecorated . t)

@@ -3,22 +3,18 @@ module Custom.MyStartupApps where
 import           XMonad
 import           XMonad.Util.SpawnOnce
 
-myWallpaperPath :: String
-myWallpaperPath = "~/wallpapers/kanagawa_custom.png"
-
 myStartupHook :: X ()
 myStartupHook = do
-  let wallpaperCmd   = "feh --bg-scale " ++ myWallpaperPath
-      lauchPolybar   = "~/.config/polybar/launch.sh"
-      blurCmd        = "~/scripts/feh-blur.sh -s; ~/scripts/feh-blur.sh -d"
-      picomCmd       = "killall -9 picom; sleep 2 && picom -b &"
-      easyeffectsCmd = "easyeffects --gapplication-service &"
-      ewwCmd         = "~/.config/eww/scripts/startup.sh"
-  sequence_
-    [ spawn wallpaperCmd
-    , spawn blurCmd
-    , spawn picomCmd
-    , spawnOnce easyeffectsCmd
-    , spawnOnce lauchPolybar
-    , spawn ewwCmd
-    ]
+  spawnOnce "nm-applet &"
+  spawnOnce "~/scripts/setWallpaper.sh &"
+  spawnOnce "xfce4-session &"
+  spawnOnce "dunst &"
+  spawnOnce "killall -9 picom; sleep 2 && picom -b &"
+  spawnOnce "eww daemon &"
+  spawnOnce "greenclip daemon &"
+  spawnOnce "motrix &"
+  spawnOnce "/usr/bin/emacs --daemon &"
+  spawnOnce "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &"
+  spawnOnce "~/.config/polybar/launch.sh"
+  spawnOnce "~/.config/eww/scripts/startup.sh"
+      -- easyeffectsCmd = "easyeffects --gapplication-service &"

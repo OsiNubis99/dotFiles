@@ -1,83 +1,105 @@
-{-# OPTIONS_GHC -Wno-missing-signatures #-}
-
 module Custom.MyLayouts where
 
 import Custom.MyDecorations
+import Custom.MyWorkspaces
+import Data.Char
+import Data.List
+import qualified Data.Map as M
+import Data.Maybe
+import Data.Monoid
+import System.IO
 import XMonad
+import XMonad.Actions.CopyWindow
+import XMonad.Actions.CycleWS
+import XMonad.Actions.GridSelect
+import XMonad.Actions.RotSlaves
+import qualified XMonad.Actions.Search as S
+import XMonad.Actions.SwapWorkspaces
+import XMonad.Actions.WithAll
+import XMonad.Config.Desktop
+import XMonad.Hooks.DynamicLog
+import XMonad.Hooks.EwmhDesktops
+import XMonad.Hooks.FadeInactive
 import XMonad.Hooks.ManageDocks
-import XMonad.Layout.Accordion
-import XMonad.Layout.BinarySpacePartition
-import XMonad.Layout.BoringWindows
-import XMonad.Layout.Column
+import XMonad.Hooks.ManageHelpers
+import XMonad.Hooks.RefocusLast
+import XMonad.Layout.Decoration
+import XMonad.Layout.LayoutModifier
+import XMonad.Layout.LimitWindows
 import XMonad.Layout.MultiToggle
+import qualified XMonad.Layout.MultiToggle as MT
 import XMonad.Layout.MultiToggle.Instances
 import XMonad.Layout.NoBorders
 import XMonad.Layout.PerScreen
-import XMonad.Layout.Renamed as XLR
+import XMonad.Layout.PerWorkspace
+import XMonad.Layout.Renamed
 import XMonad.Layout.ResizableTile
 import XMonad.Layout.ShowWName
-import XMonad.Layout.SimplestFloat
+import XMonad.Layout.Simplest
 import XMonad.Layout.Spacing
-import XMonad.Layout.SubLayouts
 import XMonad.Layout.Tabbed
-import XMonad.Layout.WindowNavigation
+import qualified XMonad.Layout.ToggleLayouts as T
+import XMonad.Layout.TwoPanePersistent
+import qualified XMonad.StackSet as W
+import XMonad.Util.EZConfig
+import XMonad.Util.NamedActions
+import XMonad.Util.NamedScratchpad
+import XMonad.Util.Run
+import XMonad.Util.SpawnOnce
 
-mySpacing i = spacingRaw False (Border 10 10 30 30) True (Border i i i i) True
+type MyFull =
+  ModifiedLayout
+    Rename
+    (ModifiedLayout Spacing (ModifiedLayout WithBorder Full))
 
-tabs =
-  renamed [XLR.Replace "Tabs"] $
-    avoidStruts $
-      tabbed
-        shrinkText
-        myTabConfig
+type MySplit =
+  ModifiedLayout
+    Rename
+    (ModifiedLayout LimitWindows (ModifiedLayout Spacing ResizableTall))
 
-tall =
-  renamed [XLR.Replace "Tall"] $
-    avoidStruts $
-      windowNavigation $
-        addTabs shrinkText myTabConfig $
-          subLayout [] tabs $
-            mySpacing 7 $
-              ResizableTall nmaster delta ratio []
-  where
-    nmaster = 1
-    ratio = 1 / 2
-    delta = 3 / 100
+type MyTabs =
+  ModifiedLayout
+    Rename
+    ( ModifiedLayout
+        Spacing
+        ( ModifiedLayout
+            (Decoration TabbedDecoration DefaultShrinker)
+            Simplest
+        )
+    )
 
-column =
-  renamed [XLR.Replace "Column"] $
-    avoidStruts $
-      windowNavigation $
-        addTabs shrinkText myTabConfig $
-          subLayout [] tabs $
-            mySpacing 7 $
-              Column 1.0
-
-accordion =
-  renamed [XLR.Replace "Accordion"] $
-    avoidStruts $
-      windowNavigation $
-        addTabs shrinkText myTabConfig $
-          subLayout [] tabs $
-            mySpacing 7 Accordion
-
-bsp =
-  renamed [XLR.Replace "BSP"] $
-    avoidStruts $
-      windowNavigation $
-        addTabs shrinkText myTabConfig $
-          subLayout [] tabs $
-            mySpacing 7 emptyBSP
-
-full = renamed [XLR.Replace "Full"] $ noBorders Full
-
-sf = renamed [XLR.Replace "Float"] $ noBorders simplestFloat
-
-myLayout = boringWindows (ifWider 1080 (tall ||| bsp) (column ||| accordion) ||| sf ||| full)
-
+myLayoutHook ::
+  MultiToggle
+    (HCons StdTransformers (HCons StdTransformers EOT))
+    ( PerWorkspace
+        (Choose MyFull (Choose MySplit MyTabs))
+        ( PerWorkspace
+            (Choose MyTabs (Choose MyFull MySplit))
+            (Choose MySplit (Choose MyTabs MyFull))
+        )
+    )
+    Window
 myLayoutHook =
-  showWName' myShowWNameConfig $
-    smartBorders $
-      mkToggle
-        (NOBORDERS ?? FULL ?? EOT)
-        myLayout
+  mkToggle (NBFULL ?? NOBORDERS ?? EOT) $
+    onWorkspace (myWorkspaces !! 2) fullDefault $
+      onWorkspaces
+        [head myWorkspaces, myWorkspaces !! 1]
+        tabsDefault
+        splitDefault
+  where
+    fullDefault = full ||| split ||| tabs
+    tabsDefault = tabs ||| full ||| split
+    splitDefault = split ||| tabs ||| full
+    tabs =
+      renamed [Replace "T"] $
+        spacingRaw False (Border (45 + 8) 8 8 8) True (Border 0 0 0 0) True $
+          tabbed shrinkText myTabConfig
+    split =
+      renamed [Replace "S"] $
+        limitWindows 12 $
+          spacingRaw False (Border (45 + 4) 4 4 4) True (Border 4 4 4 4) True $
+            ResizableTall 1 (1 / 100) (1 / 2) []
+    full =
+      renamed [Replace "F"] $
+        spacingRaw False (Border 45 0 0 0) True (Border 0 0 0 0) True $
+          noBorders Full

@@ -1,6 +1,15 @@
-module Custom.MyKanagawa where
+module Custom.MyTheme where
 
-fujiWhite, oldWhite, sumiInk0, sumiInk1, sumiInk2, sumiInk3, sumiInk4, waveBlue1, waveBlue2, winterGreen, winterYellow, winterRed, winterBlue, autumnGreen, autumnRed, autumnYellow, samuraiRed, roninYellow, waveAqua1, dragonBlue, fujiGray, springViolet1, oniViolet, crystalBlue, springViolet2, springBlue, lightBlue, waveAqua2, springGreen, boatYellow1, boatYellow2, carpYellow, sakuraPink, waveRed, peachRed, surimiOrange, katanaGray :: String
+myFont =
+  "xft:Arimo Nerd Font:weight=bold:pixelsize=12:antialias=true:hinting=true"
+
+myBigFont = "xft:Arimo Nerd Font:regular:size=35:antialias=true:hinting=true"
+
+fgWhite = "#C8C093"
+bgDark = "#152429"
+bgWhite = "#C8C093"
+fgDark = "#16161D"
+focus1 = "#FFAA00"
 
 fujiWhite = "#DCD7BA"
 oldWhite = "#C8C093"
@@ -39,4 +48,3 @@ waveRed = "#E46876"
 peachRed = "#FF5D62"
 surimiOrange = "#FFA066"
 katanaGray = "#717C7C"
-
