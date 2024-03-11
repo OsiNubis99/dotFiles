@@ -1,29 +1,44 @@
 module Custom.MyScratchpads where
 
-import Custom.MyManagementPositioning
-import XMonad (appName)
+import XMonad
 import XMonad.ManageHook ((=?))
+import qualified XMonad.StackSet as W
 import XMonad.Util.NamedScratchpad
 
 myScratchpads :: [NamedScratchpad]
 myScratchpads =
-  [ NS "quick commands" spawnQc findQc myCenter,
-    NS "glava" spawnGl findGl myCenterSmall
+  [ NS
+      "terminal"
+      "warp-terminal"
+      (className =? "dev.warp.Warp")
+      (customFloating cascadeFloating),
+    NS
+      "telegram"
+      "telegram-desktop"
+      (className =? "TelegramDesktop")
+      (customFloating bigCenterFloating),
+    NS
+      "glava"
+      "glava"
+      (appName =? "GLava")
+      (customFloating smallCenterFloating)
   ]
   where
-    spawnQc = "alacritty -e fish"
-    findQc = appName =? "Alacritty"
-
-    spawnGl = "glava"
-    findGl = appName =? "GLava"
-
-{-
-To get WM_CLASS of a visible window, run "xprop | grep 'CLASS'" and select the window.
-appName :: Query String
-Return the application name; i.e., the first string returned by WM_CLASS.
-
-resource :: Query String
-Backwards compatible alias for appName.
-
-className :: Query String
-Return the resource class; i.e., the second string returned by WM_CLASS. -}
+    cascadeFloating = W.RationalRect fromLeft fromTop width height
+      where
+        fromTop = 1 / 24
+        fromLeft = 0
+        width = 1
+        height = 7 / 10
+    bigCenterFloating = W.RationalRect fromLeft fromTop width height
+      where
+        fromTop = (1 - height) / 2
+        fromLeft = (1 - width) / 2
+        height = 5 / 6
+        width = 5 / 6
+    smallCenterFloating = W.RationalRect fromLeft fromTop width height
+      where
+        fromLeft = (1 - width) / 2
+        fromTop = (1 - height) / 2
+        width = 1 / 3
+        height = 1 / 3

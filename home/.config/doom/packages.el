@@ -74,3 +74,5 @@
 (package! ranger)
 (package! vue-mode)
 (package! wakatime-mode)
+(package! haskell-mode)
+(package! lsp-haskell)
