@@ -36,7 +36,7 @@ style = "Block"
 TERM = "xterm-256color"
 
 [font]
-size = 9.5
+size = 13
 
 [font.bold]
 family = "FiraCode Nerd Font"
@@ -130,7 +130,7 @@ save_to_clipboard = true
 semantic_escape_chars = ",│`|:\"' ()[]{}<>\t"
 
 [shell]
-program = "/bin/zsh"
+program = "/usr/bin/fish"
 
 [window]
 opacity = 0.9

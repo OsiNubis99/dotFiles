@@ -54,7 +54,7 @@ myTabConfig =
       inactiveBorderColor = bgDark,
       urgentBorderColor = peachRed,
       activeTextColor = fgDark,
-      inactiveTextColor = fgDark,
+      inactiveTextColor = fgWhite,
       urgentTextColor = fgDark,
       fontName = myFont
     }

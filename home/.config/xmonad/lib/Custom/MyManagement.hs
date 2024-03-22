@@ -57,12 +57,9 @@ myManageHook =
         [className =? c --> doShift (myWorkspaces !! 1) | c <- apps1],
         [className =? c --> doShift (myWorkspaces !! 2) | c <- apps2],
         [className =? c --> doShift (myWorkspaces !! 3) | c <- apps3],
-        [ stringProperty "WM_CLASS"
-            =? "steam_app"
-            --> doShift
-              (myWorkspaces !! 3),
+        [
           resource =? "Dialog" --> doFloat,
-          isFullscreen --> doFullFloat,
+          -- isFullscreen --> doFullFloat,
           namedScratchpadManageHook myScratchpads
         ]
       ]

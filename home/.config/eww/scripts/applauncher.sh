@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-if [[ $1 == "--kitty" ]]; then
+if [[ $1 == "--alacritty" ]]; then
 	cd
-	kitty
+	alacritty
 fi
 
 if [[ $1 == "--spotify" ]]; then

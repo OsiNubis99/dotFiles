@@ -35,7 +35,7 @@ myBrowser = "firefox"
 myKeys :: [(String, X ())]
 myKeys =
   [ -- Terminal
-    ("M-<Return>", spawn "kitty"),
+    ("M-<Return>", spawn "alacritty"),
     -- Browser
     ("M-b", spawn myBrowser),
     -- Rofi
@@ -49,6 +49,7 @@ myKeys =
     ("M-S-m", manPrompt myPromptConfig),
     ("M-S-x", xmonadPrompt myPromptConfig),
     ("M-S-q", confirmPrompt myPromptConfig "exit" $ io exitSuccess),
+    ("M-C-g", namedScratchpadAction myScratchpads "glava"),
     -- Flameshot
     ("<Print>", spawn "flameshot gui"),
     ("S-<Print>", spawn "flameshot full"),

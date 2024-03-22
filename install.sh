@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-sudo pacman -Syu --needed --noconfirm git stow base linux linux-headers linux-firmware
+sudo pacman -Syu --needed --noconfirm git stow base linux linux-headers linux-firmware emacs
 
 # Welcome
 echo "Welcome to the Instalation Script"
@@ -25,9 +25,9 @@ echo "Copy /etc configs"
 sudo cp -r ~/dotFiles/etc /
 
 ## Backup
-if [[ -d "$HOME/dotFiles/backup" ]]; then
+if [[ -d "$HOME/backup" ]]; then
   echo "Stow backup folder"
-  stow -d "$HOME/dotFiles/backup/" -t "$HOME/" .
+  stow -d "$HOME/backup/" -t "$HOME/" .
   if [[ -e "$HOME/.ssh/personal_key" ]]; then
     chmod -R 700 ~/.ssh
     eval "$(ssh-agent -s)"
@@ -47,10 +47,8 @@ ln -s ~/dotFiles/config/zsh/.zhistory ~/.zhistory
 
 ## Doom
 if [[ ! $(~/.emacs.d/bin/doom info 2>/dev/null) ]]; then
-  rm -r -f ~/.config/doom
-  ln -s ~/dotFiles/config/doom ~/.config/doom
   git clone --depth 1 --single-branch https://github.com/doomemacs/doomemacs ~/.config/emacs
-  ~/.config/emacs/bin/doom install
+  ~/.config/emacs/bin/doom install --no-config
 fi
 
 ## Install paru only if it doesn't already exist
