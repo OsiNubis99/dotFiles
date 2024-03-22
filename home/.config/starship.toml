@@ -1,9 +1,9 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
-format = '$character$directory$all'
+format = '$character$directory$all '
 right_format = '$cmd_duration $time'
-scan_timeout = 10
 add_newline = false
+scan_timeout = 10
 
 [character]
 success_symbol = '[󰣇 ](bold #ffaa00)'

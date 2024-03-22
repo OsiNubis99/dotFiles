@@ -7,6 +7,8 @@ eww
 flameshot
 jgmenu
 light
+lxsession
+lxappearance
 network-manager-applet
 nitrogen
 pamixer
@@ -26,7 +28,6 @@ rofi-greenclip
 warp-terminal
 xdotool
 xfce4-power-manager
-xfce4-session
 xfce4-settings
 xmobar
 xmonad

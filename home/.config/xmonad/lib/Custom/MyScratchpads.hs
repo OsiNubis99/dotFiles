@@ -16,12 +16,7 @@ myScratchpads =
       "telegram"
       "telegram-desktop"
       (className =? "TelegramDesktop")
-      (customFloating bigCenterFloating),
-    NS
-      "glava"
-      "glava"
-      (appName =? "GLava")
-      (customFloating smallCenterFloating)
+      (customFloating bigCenterFloating)
   ]
   where
     cascadeFloating = W.RationalRect fromLeft fromTop width height
@@ -36,9 +31,3 @@ myScratchpads =
         fromLeft = (1 - width) / 2
         height = 5 / 6
         width = 5 / 6
-    smallCenterFloating = W.RationalRect fromLeft fromTop width height
-      where
-        fromLeft = (1 - width) / 2
-        fromTop = (1 - height) / 2
-        width = 1 / 3
-        height = 1 / 3

@@ -15,6 +15,7 @@ import qualified Data.Map as M
 import Data.Maybe
 import Data.Monoid
 import System.IO
+import System.Exit
 import XMonad
 import XMonad.Actions.CopyWindow
 import XMonad.Actions.CycleWS
@@ -47,6 +48,9 @@ import XMonad.Layout.Spacing
 import XMonad.Layout.Tabbed
 import qualified XMonad.Layout.ToggleLayouts as T
 import XMonad.Layout.TwoPanePersistent
+import XMonad.Prompt.ConfirmPrompt
+import XMonad.Prompt.Man
+import XMonad.Prompt.XMonad
 import qualified XMonad.StackSet as W
 import XMonad.Util.EZConfig
 import XMonad.Util.NamedActions
@@ -77,12 +81,6 @@ windowCount =
       . W.workspace
       . W.current
       . windowset
-
--- subtitle' :: String -> ((KeyMask, KeySym), NamedAction)
--- subtitle' x =
---   ((0, 0), NamedAction $ map toUpper $ sep ++ "\n-- " ++ x ++ " --\n" ++ sep)
---   where
---     sep = replicate (6 + length x) '-'
 
 showKeybindings :: [((KeyMask, KeySym), NamedAction)] -> NamedAction
 showKeybindings x = addName "Show Keybindings" $ io $ do
@@ -118,10 +116,9 @@ myKeys c =
     subKeys str namedAction = subtitle str : mkNamedKeymap c namedAction
     essentialsKeys =
       [ ("M-q", addName "Restart XMonad" $ spawn "xmonad --restart && xmonad --restart"),
-        ("M-S-q", addName "Quit XMonad" $ spawn "dm-logout"),
-        ("M-c", addName "Kill focused window" kill1),
+        ("M-C-q", addName "Quit Xmonad" (confirmPrompt myPromptConfig "exit" $ io exitSuccess)),
+        ("M-S-q", addName "Open Power Menu" $ spawn "~/.config/eww/scripts/customtoggle.sh powermenu"),
         ("M-<Backspace>", addName "Kill focused window" kill1),
-        ("M-S-c", addName "Kill all windows on WS" killAll),
         ("M-S-<Backspace>", addName "Kill all windows on WS" killAll)
       ]
     workspaceKeys =
@@ -237,8 +234,8 @@ main = do
     addDescrKeys ((mod4Mask, xK_F1), showKeybindings) myKeys $
       ewmh $
         docks $
-          desktopConfig
-            { manageHook = myManageHook <+> manageDocks,
+          desktopConfig 
+           { manageHook = myManageHook <+> manageDocks,
               modMask = myModMask,
               mouseBindings = myMouseBindings,
               terminal = myTerminal,

@@ -35,12 +35,7 @@ pulseaudio
 pulseaudio-alsa
 pulseaudio-bluetooth
 pulseaudio-jack
-ranger
 reflector
 stow
 wpa_supplicant
-zsh
-zsh-autosuggestions
-zsh-hist-git
-zsh-history-substring-search
 zoxide

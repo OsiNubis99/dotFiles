@@ -1,3 +1,3 @@
 function rm --wraps=rm --description 'alias rm=rm -R'
-  rm -R $argv;
+  /bin/rm -R $argv;
 end

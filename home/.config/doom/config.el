@@ -4,6 +4,7 @@
 (global-unset-key (kbd "M-<down-mouse-1>"))
 (global-set-key (kbd "M-<mouse-1>") 'mc/add-cursor-on-click)
 (global-set-key (kbd "C-/") 'comment-line)
+(global-set-key (kbd "M-p") 'clipboard-yank)
 
 (map! :leader
       :desc "Open definition other window" "d" 'xref-find-definitions-other-window

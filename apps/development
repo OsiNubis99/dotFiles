@@ -4,6 +4,7 @@ docker
 firebase-tools
 git
 github-desktop-bin
+npm
 nvm
 yarn
 postman-bin
