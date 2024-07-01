@@ -12,7 +12,7 @@
   </a>
   <h3 align="center">DotFiles</h3>
   <p align="center">
-    DotFiles are the customization files that I use to setup my ArchLinux or other Arch-based system.
+    DotFiles are the customization files that I use to setup my environment.
     <br />
     <a href="https://github.com/OsiNubis99/dotFiles/issues">Report Bug</a>
     ·
@@ -43,20 +43,17 @@
 
 ## Built With
 
-- [Arch linux based system](https://archlinux.org/)
-- [Paru](https://github.com/morganamilo/paru)
+- [Fedora Linux based system](https://nobaraproject.org/)
+- [Warp Terminal](https://www.warp.dev/)
 
 ### Content
 
-- [Alacritty](https://github.com/OsiNubis99/dotFiles/tree/main/config/alacritty)
-- [Dunst](https://github.com/OsiNubis99/dotFiles/tree/main/config/dunst)
-- [Nitrogen](https://github.com/OsiNubis99/dotFiles/tree/main/config/nitrogen)
-- [Picom](https://github.com/OsiNubis99/dotFiles/tree/main/config/picom)
-- [Rofi](https://github.com/OsiNubis99/dotFiles/tree/main/config/rofi)
-- [Scripts](https://github.com/OsiNubis99/dotFiles/tree/main/scripts)
-- [Xmobar](https://github.com/OsiNubis99/dotFiles/tree/main/config/xmobar)
-- [Xmonad](https://github.com/OsiNubis99/dotFiles/tree/main/config/xmonad)
-- [ZSH](https://github.com/OsiNubis99/dotFiles/tree/main/config/zsh)
+- [Alacritty](https://github.com/OsiNubis99/dotFiles/tree/main/home/.config/alacritty)
+- [Btop](https://github.com/OsiNubis99/dotFiles/tree/main/home/.config/btop)
+- [Emacs](https://github.com/OsiNubis99/dotFiles/tree/main/home/.config/doom)
+- [NVIM](https://github.com/OsiNubis99/dotFiles/tree/main/home/.config/nvim)
+- [Xmonad(UNMAINTAINED)](https://github.com/OsiNubis99/dotFiles/tree/main/home/.config/xmoand)
+- [Wallpapers](https://github.com/OsiNubis99/dotFiles/tree/main/home/wallpapers)
 
 ### Preview
 
@@ -71,7 +68,7 @@
 
 ### Prerequisites
 
-You need any linux distribution. I recommend an Arch linux based one.
+You need any Fedora Linux distribution.
 
 ### Deployment
 
@@ -118,17 +115,17 @@ Distributed under the MIT License. See `LICENSE` for more information.
 ### Social medias
 
 [![Telegram](https://www.vectorlogo.zone/logos/telegram/telegram-icon.svg)](https://t.me/OsiNubis99)
-[![Twitter](https://www.vectorlogo.zone/logos/twitter/twitter-icon.svg)](https://twitter.com/OsiNubis99)
+[![Twitter](https://www.vectorlogo.zone/logos/twitter/twitter-icon.svg)](https://x.com/OsiNubis99)
 
 ### Email
 
-My email address OsiNubis99@PM.me
+My email address <AHurtado.WC@gmail.com>
 
 <!-- ACKNOWLEDGEMENTS -->
 
 ## Acknowledgements
 
-- [Distro Tube](distrotube.com/)
+- [Distro Tube](https://distro.tube/)
 
 <!-- MARKDOWN LINKS & IMAGES -->
 
