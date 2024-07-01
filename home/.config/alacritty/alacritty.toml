@@ -135,6 +135,8 @@ program = "/usr/bin/fish"
 [window]
 opacity = 0.9
 title = "Alacritty"
+decorations= "none"
+startup_mode= "Maximized"
 
 [window.class]
 general = "Alacritty"

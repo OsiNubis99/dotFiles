@@ -6,3 +6,4 @@ home/.config/xmonad/xmonad.hi
 home/.config/xmonad/xmonad.o
 home/.config/eww/scripts/__pycache__/*
 config/zsh/.zcompdump
+home/.config/btop/btop.log
