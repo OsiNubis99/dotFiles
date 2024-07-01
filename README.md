@@ -8,7 +8,7 @@
 <!-- PROJECT DESCRIPTION -->
 <p align="center">
   <a href="https://github.com/OsiNubis99/dotFiles">
-    <img src="https://github.com/OsiNubis99/dotFiles/blob/main/docs/Base.png?raw=true" alt="Base">
+    <img src="./docs/Base.png" alt="Base">
   </a>
   <h3 align="center">DotFiles</h3>
   <p align="center">
@@ -60,10 +60,10 @@
 
 ### Preview
 
-![grid](https://github.com/OsiNubis99/dotFiles/blob/main/docs/Grid.png?raw=true)
-![terminal](https://github.com/OsiNubis99/dotFiles/blob/main/docs/Terminal.png?raw=true)
-![terminal2](https://github.com/OsiNubis99/dotFiles/blob/main/docs/Terminal2.png?raw=true)
-![terminal3](https://github.com/OsiNubis99/dotFiles/blob/main/docs/Terminal3.png?raw=true)
+![grid](./docs/Grid.png)
+![terminal](./docs/Terminal.png)
+![terminal2](./docs/Terminal2.png)
+![terminal3](./docs/Terminal3.png)
 
 <!-- GETTING STARTED -->
 
