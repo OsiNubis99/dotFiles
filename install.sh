@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-sudo pacman -Syu --needed --noconfirm git stow base linux linux-headers linux-firmware emacs
+sudo dnf install -y git stow
 
 # Welcome
 echo "Welcome to the Instalation Script"
@@ -14,12 +14,6 @@ fi
 echo "Creating base Folders"
 mkdir -p ~/.config
 mkdir -p ~/.local/share
-mkdir -p ~/Documents
-mkdir -p ~/Downloads
-mkdir -p ~/Music
-mkdir -p ~/Pictures
-mkdir -p ~/Public
-mkdir -p ~/Videos
 
 echo "Copy /etc configs"
 sudo cp -r ~/dotFiles/etc /
@@ -45,23 +39,7 @@ ln -s ~/dotFiles/config/zsh/.zshrc ~/.zshrc
 rm -r -f ~/.zhistory
 ln -s ~/dotFiles/config/zsh/.zhistory ~/.zhistory
 
-## Doom
-if [[ ! $(~/.emacs.d/bin/doom info 2>/dev/null) ]]; then
-  git clone --depth 1 --single-branch https://github.com/doomemacs/doomemacs ~/.config/emacs
-  ~/.config/emacs/bin/doom install --no-config
-fi
-
-## Install paru only if it doesn't already exist
-if [[ ! $(which paru 2>/dev/null) ]]; then
-  sudo rm -r /home/andres/.cache/paru
-  git clone https://aur.archlinux.org/paru.git ~/.cache/paru
-  cd ~/.cache/paru/ || exit 1
-  makepkg -si
-  cd ~/ || exit 1
-  sudo rm -r /home/andres/.cache/paru
-fi
-
 # Final instalation
 echo "Inastalling all nedeed software..."
-cat ~/dotFiles/apps/* | paru -Syu --asexplicit --noconfirm - 1>/dev/null || exit 1
+cat ~/dotFiles/apps/* | sudo dnf install -y - 1>/dev/null || exit 1
 echo "Instalation Complete!"
