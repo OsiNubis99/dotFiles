@@ -3,7 +3,7 @@ aspell-es
 cabal-install
 clang
 editorconfig-core-c
-emacs
+emacs-nativecomp
 direnv
 fd
 ghc
