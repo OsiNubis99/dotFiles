@@ -1,3 +1,3 @@
-function ls --wraps=exa --description 'alias ls=exa --group-directories-first --icons --all'
-  exa --group-directories-first --icons --all $argv
+function ls --wraps=lsd --description 'alias ls=lsd --group-directories-first --icons --all'
+  lsd --group-directories-first --all $argv
 end

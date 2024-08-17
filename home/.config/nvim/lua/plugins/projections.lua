@@ -3,10 +3,13 @@ return {
   config = function()
     require("projections").setup({
       workspaces = {
-        { "~/", { ".git", ".svn", ".hg" } },
-        { "~/Repos", { ".git", ".svn", ".hg" } },
-        { "~/Repos/Web", { ".git", ".svn", ".hg" } },
-        { "~/Repos/Julio", { ".git", ".svn", ".hg" } },
+        { "~/" },
+        { "~/Repos" },
+        { "~/Repos/BetConnections/" },
+        { "~/Repos/Jesus" },
+        { "~/Repos/Julio" },
+        { "~/Repos/Web" },
+        { "~/Documents/projects" },
       },
       patterns = { ".git", ".svn", ".hg" },
       store_hooks = { pre = nil, post = nil },
@@ -50,7 +53,7 @@ return {
     vim.api.nvim_create_user_command("WorkspaceStore", function()
       Session.store(vim.loop.cwd())
     end, {})
-    vim.api.nvim_create_user_command("WorkspaceRestoreLates", function()
+    vim.api.nvim_create_user_command("WorkspaceRestoreLatest", function()
       Session.restore_latest(vim.loop.cwd())
     end, {})
   end,
