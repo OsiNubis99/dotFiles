@@ -67,7 +67,7 @@
   program = "/usr/local/bin/fish"
 
 [window]
-  opacity = 0.5
+  opacity = 0.75
   blur = true
   title = "Alacritty"
   decorations = "none"

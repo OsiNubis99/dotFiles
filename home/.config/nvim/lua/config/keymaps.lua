@@ -4,8 +4,8 @@
 local keymap = vim.keymap -- for conciseness
 
 -- Save files
-keymap.set("n", "<C-s>", ":wa<CR>", { noremap = true })
-keymap.set("i", "<C-s>", "<Esc>:wa<CR>a", { noremap = true })
+keymap.set("n", "<D-s>", ":w<CR>", { noremap = true })
+keymap.set("i", "<D-s>", "<Esc>:w<CR>a", { noremap = true })
 keymap.set("n", "<leader>bs", ":w<CR>", { desc = "Save file" })
 keymap.set("n", "<leader>fs", ":w<CR>", { desc = "Save buffer" })
 keymap.set("n", "<leader>ps", ":wa<CR>", { desc = "Save all project files" })

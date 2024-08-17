@@ -1,3 +1,3 @@
-function lsl --wraps=exa --description 'alias lsl=exa --group-directories-first --icons --all -T --ignore-glob=".git|node_modules" -L 2'
-  exa --group-directories-first --icons --all -T --ignore-glob=".git|node_modules" -L 2 $argv
+function lsl --wraps=lsd --description 'alias lsl=lsd --group-directories-first --icons --all -l'
+  ls -l $argv
 end
