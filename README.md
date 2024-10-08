@@ -59,7 +59,7 @@
 
 ![grid1](./docs/Grid1.png)
 ![grid2](./docs/Grid2.png)
-![terminal](./docs/Terminal.png)
+![terminal](./docs/Terminal1.png)
 ![terminal2](./docs/Terminal2.png)
 
 <!-- GETTING STARTED -->
