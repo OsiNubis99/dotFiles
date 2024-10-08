@@ -3,17 +3,14 @@ return {
   config = function()
     require("projections").setup({
       workspaces = {
-        { "~/" },
-        { "~/Repos" },
-        { "~/Repos/BetConnections/" },
-        { "~/Repos/Jesus" },
-        { "~/Repos/Julio" },
-        { "~/Repos/Web" },
-        { "~/Documents/projects" },
+        { "~/", { ".git" } },
+        { "~/Repos", { ".git" } },
+        { "~/Repos/BetConnections/", { ".git" } },
+        { "~/Repos/Jesus", { ".git" } },
+        { "~/Repos/Julio", { ".git" } },
+        { "~/Repos/Web", { ".git" } },
+        { "~/Documents/projects", { ".git" } },
       },
-      patterns = { ".git", ".svn", ".hg" },
-      store_hooks = { pre = nil, post = nil },
-      restore_hooks = { pre = nil, post = function() end },
       workspaces_file = "~/.config/nvim/workspaces.json",
       sessions_directory = "~/.config/nvim/sessions/",
     })

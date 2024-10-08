@@ -22,7 +22,9 @@ keymap.set("n", "<leader>wk", "<C-w>k", { desc = "Switch windows up" })
 keymap.set("n", "<leader>wl", "<C-w>l", { desc = "Switch windows right" })
 
 -- File browser
-keymap.set("n", "<leader>.", ":Oil --float<CR>")
+keymap.set("n", "<leader>.", ":Oil --float<CR>", { desc = "Open File Browser" })
+keymap.set("n", "<leader><space>", LazyVim.pick("files", { root = false }), { desc = "Find Files (cwd)" })
+keymap.set("n", "<leader>/", LazyVim.pick("live_grep", { root = false }), { desc = "Grep (cwd)" })
 keymap.set("n", "<leader>pp", ":Telescope projections<CR>", { desc = "Find Projects" })
 
 -- developer
