@@ -4,8 +4,8 @@
 local keymap = vim.keymap -- for conciseness
 
 -- Save files
-keymap.set("n", "<C-s>", ":wa<CR>", { noremap = true })
-keymap.set("i", "<C-s>", "<Esc>:wa<CR>a", { noremap = true })
+keymap.set("n", "<D-s>", ":w<CR>", { noremap = true })
+keymap.set("i", "<D-s>", "<Esc>:w<CR>a", { noremap = true })
 keymap.set("n", "<leader>bs", ":w<CR>", { desc = "Save file" })
 keymap.set("n", "<leader>fs", ":w<CR>", { desc = "Save buffer" })
 keymap.set("n", "<leader>ps", ":wa<CR>", { desc = "Save all project files" })
@@ -22,7 +22,9 @@ keymap.set("n", "<leader>wk", "<C-w>k", { desc = "Switch windows up" })
 keymap.set("n", "<leader>wl", "<C-w>l", { desc = "Switch windows right" })
 
 -- File browser
-keymap.set("n", "<leader>.", ":Oil --float<CR>")
+keymap.set("n", "<leader>.", ":Oil --float<CR>", { desc = "Open File Browser" })
+keymap.set("n", "<leader><space>", LazyVim.pick("files", { root = false }), { desc = "Find Files (cwd)" })
+keymap.set("n", "<leader>/", LazyVim.pick("live_grep", { root = false }), { desc = "Grep (cwd)" })
 keymap.set("n", "<leader>pp", ":Telescope projections<CR>", { desc = "Find Projects" })
 
 -- developer

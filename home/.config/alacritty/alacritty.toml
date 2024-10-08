@@ -1,151 +1,86 @@
 [colors]
-draw_bold_text_with_bright_colors = true
+  transparent_background_colors = true
+  draw_bold_text_with_bright_colors = true
 
 [colors.bright]
-black = "0xffd832"
-blue = "0xffbe00"
-cyan = "0x00d1ff"
-green = "0x3fd12e"
-magenta = "0xff30cd"
-red = "0xff3000"
-white = "0xffffff"
-yellow = "0xeeff00"
+  black = "0xffd832"
+  blue = "0xffbe00"
+  cyan = "0x00d1ff"
+  green = "0x3fd12e"
+  magenta = "0xff30cd"
+  red = "0xff3000"
+  white = "0xffffff"
+  yellow = "0xeeff00"
 
 [colors.cursor]
-cursor = "0xffd832"
-text = "0x000000"
+  cursor = "0xffd832"
+  text = "0x000000"
 
 [colors.normal]
-black = "0x000000"
-blue = "0xffaa00"
-cyan = "0x007eff"
-green = "0x32a725"
-magenta = "0xee00ff"
-red = "0xfd0807"
-white = "0xdedede"
-yellow = "0xfffc00"
+  black = "0x000000"
+  blue = "0xffaa00"
+  cyan = "0x007eff"
+  green = "0x32a725"
+  magenta = "0xee00ff"
+  red = "0xfd0807"
+  white = "0xdedede"
+  yellow = "0xfffc00"
 
 [colors.primary]
-background = "0x000000"
-foreground = "0xfff1da"
+  background = "0x000000"
+  foreground = "0xfff1da"
 
 [cursor]
-style = "Block"
-
-[env]
-TERM = "xterm-256color"
+  style = "Block"
 
 [font]
-size = 13
+  size = 13
 
 [font.bold]
-family = "FiraCode Nerd Font"
-style = "Bold"
+  family = "FiraCode Nerd Font"
+  style = "Bold"
 
 [font.bold_italic]
-family = "FiraCode Nerd Font"
-style = "Bold Italic"
+  family = "FiraCode Nerd Font"
+  style = "Bold Italic"
 
 [font.italic]
-family = "FiraCode Nerd Font"
-style = "Italic"
+  family = "FiraCode Nerd Font"
+  style = "Italic"
 
 [font.normal]
-family = "FiraCode Nerd Font"
-style = "Regular"
+  family = "FiraCode Nerd Font"
+  style = "Regular"
 
 [font.offset]
-x = 0
-y = 0
-
-[[keyboard.bindings]]
-chars = "\f"
-key = "L"
-mods = "Control"
-
-[[keyboard.bindings]]
-action = "Paste"
-key = "V"
-mods = "Control"
-
-[[keyboard.bindings]]
-action = "ClearLogNotice"
-key = "L"
-mods = "Control"
-
-[[keyboard.bindings]]
-action = "ResetFontSize"
-key = "Key0"
-mods = "Control"
-
-[[keyboard.bindings]]
-action = "PasteSelection"
-key = "Insert"
-mods = "Shift"
-
-[[keyboard.bindings]]
-action = "IncreaseFontSize"
-key = "Plus"
-mods = "Control"
-
-[[keyboard.bindings]]
-action = "DecreaseFontSize"
-key = "Minus"
-mods = "Control"
-
-[[keyboard.bindings]]
-action = "IncreaseFontSize"
-key = "Equals"
-mods = "Control"
-
-[[keyboard.bindings]]
-action = "ScrollToTop"
-key = "Home"
-mode = "~Alt"
-mods = "Shift"
-
-[[keyboard.bindings]]
-action = "ScrollToBottom"
-key = "End"
-mode = "~Alt"
-mods = "Shift"
-
-[[keyboard.bindings]]
-action = "ScrollPageUp"
-key = "PageUp"
-mode = "~Alt"
-mods = "None"
-
-[[keyboard.bindings]]
-action = "ScrollPageDown"
-key = "PageDown"
-mode = "~Alt"
-mods = "None"
+  x = 0
+  y = 0
 
 [scrolling]
-history = 5000
+  history = 5000
 
 [selection]
-save_to_clipboard = true
-semantic_escape_chars = ",│`|:\"' ()[]{}<>\t"
+  save_to_clipboard = true
+  semantic_escape_chars = ",│`|:\"' ()[]{}<>\t"
 
 [shell]
-program = "/usr/bin/fish"
+  program = "/usr/local/bin/fish"
 
 [window]
-opacity = 0.9
-title = "Alacritty"
-decorations= "none"
-startup_mode= "Maximized"
+  opacity = 0.75
+  blur = true
+  title = "Alacritty"
+  decorations = "none"
+  startup_mode = "Maximized"
 
 [window.class]
-general = "Alacritty"
-instance = "Alacritty"
+  general = "Alacritty"
+  instance = "Alacritty"
 
 [window.dimensions]
-columns = 0
-lines = 0
+  columns = 0
+  lines = 0
 
 [window.padding]
-x = 4
-y = 4
+  x = 4
+  y = 4

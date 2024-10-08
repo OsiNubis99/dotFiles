@@ -2,12 +2,12 @@
 
 format = '$character$directory$all '
 right_format = '$cmd_duration $time'
-add_newline = false
+add_newline = true
 scan_timeout = 10
 
 [character]
-success_symbol = '[󰣇 ](bold #ffaa00)'
-error_symbol = '[󰅜 ](bold red)'
+success_symbol = '[](bold #ffaa00) '
+error_symbol = '[󰅜](bold red) '
 vimcmd_symbol = ' NORMAL'
 vimcmd_visual_symbol = ' VISUAL'
 
