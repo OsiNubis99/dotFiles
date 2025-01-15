@@ -1,6 +1,6 @@
 backup
 
-home/.config/btop/btop.log
+*.log*
 
 home/.config/fish/fish_variables
 
@@ -9,10 +9,5 @@ home/.config/lazygit/state.yml
 home/.config/nvim/sessions
 home/.config/nvim/workspaces.json
 
-home/.config/xmonad/build-x86_64-linux/
-home/.config/xmonad/xmonad-x86_64-linux
-home/.config/xmonad/xmonad.errors
-home/.config/xmonad/xmonad.hi
-home/.config/xmonad/xmonad.o
-
 *.DS_Store
+home/.config/nvim/lazy-lock.json

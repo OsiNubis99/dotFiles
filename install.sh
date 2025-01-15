@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-sudo dnf install -y git stow
+# TODO: Install required packages with homebrew
+# brew install -y git stow
 
 # Welcome
 echo "Welcome to the Instalation Script"
@@ -14,9 +15,6 @@ fi
 echo "Creating base Folders"
 mkdir -p ~/.config
 mkdir -p ~/.local/share
-
-echo "Copy /etc configs"
-sudo cp -r ~/dotFiles/etc /
 
 ## Backup
 if [[ -d "$HOME/backup" ]]; then
@@ -33,13 +31,5 @@ fi
 echo "Stow home folder"
 stow -d "$HOME/dotFiles/home/" -t "$HOME/" .
 
-## ZSH
-rm -r -f ~/.zshrc
-ln -s ~/dotFiles/config/zsh/.zshrc ~/.zshrc
-rm -r -f ~/.zhistory
-ln -s ~/dotFiles/config/zsh/.zhistory ~/.zhistory
-
 # Final instalation
-echo "Inastalling all nedeed software..."
-cat ~/dotFiles/apps/* | sudo dnf install -y - 1>/dev/null || exit 1
 echo "Instalation Complete!"
