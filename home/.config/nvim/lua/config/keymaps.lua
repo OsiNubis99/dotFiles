@@ -4,10 +4,11 @@
 local keymap = vim.keymap -- for conciseness
 
 -- Save files
-keymap.set("n", "<D-s>", ":w<CR>", { noremap = true })
-keymap.set("i", "<D-s>", "<Esc>:w<CR>a", { noremap = true })
-keymap.set("n", "<leader>s", ":w<CR>", { desc = "Save file" })
+keymap.set("n", "<D-s>", ":w<CR>", { noremap = true, silent = true })
+keymap.set("i", "<D-s>", "<Esc>:w<CR>a", { noremap = true, silent = true })
+keymap.set("n", "s", ":w<CR>", { noremap = true, silent = true })
 keymap.set("n", "<leader>fs", ":w<CR>", { desc = "Save buffer" })
+keymap.set("n", "<leader>ps", ":wa<CR>", { desc = "Save all open buffers" })
 
 -- window management
 keymap.set("n", "<leader>ww", "<C-w>w", { desc = "Switch Windows" })
