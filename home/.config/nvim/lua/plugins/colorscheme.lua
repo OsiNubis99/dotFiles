@@ -1,11 +1,9 @@
 return {
   {
-    "cpea2506/one_monokai.nvim",
-    opts = {
-      transparent = true,
-      colors = {},
-      italics = true,
-    },
+    "GustavoPrietoP/doom-themes.nvim",
+    config = function()
+      vim.cmd("colorscheme doom-ayu-mirage")
+    end,
   },
   {
     "xiyaowong/transparent.nvim",
