@@ -43,16 +43,20 @@
 
 ## Built With
 
-- [Fedora Linux based system](https://nobaraproject.org/)
+- [Aerospace](https://github.com/nikitabobko/AeroSpace)
+- [Raycast](https://www.raycast.com/)
+- [Rectangle](https://rectangleapp.com/)
 - [Warp Terminal](https://www.warp.dev/)
 
 ### Content
 
-- [Alacritty](https://github.com/OsiNubis99/dotFiles/tree/main/home/.config/alacritty)
-- [Btop](https://github.com/OsiNubis99/dotFiles/tree/main/home/.config/btop)
-- [Emacs](https://github.com/OsiNubis99/dotFiles/tree/main/home/.config/doom)
+- [Aerospace](https://github.com/OsiNubis99/dotFiles/tree/main/home/.config/aerospace)
+- [Fish](https://github.com/OsiNubis99/dotFiles/tree/main/home/.config/fish)
+- [Ghostty](https://github.com/OsiNubis99/dotFiles/tree/main/home/.config/ghostty)
+- [LazyGit](https://github.com/OsiNubis99/dotFiles/tree/main/home/.config/lazygit)
 - [NVIM](https://github.com/OsiNubis99/dotFiles/tree/main/home/.config/nvim)
-- [Xmonad(UNMAINTAINED)](https://github.com/OsiNubis99/dotFiles/tree/main/home/.config/xmoand)
+- [Warp Terminal](https://github.com/OsiNubis99/dotFiles/tree/main/home/.config/warp-terminal)
+- [Starship](https://github.com/OsiNubis99/dotFiles/tree/main/home/.config)
 - [Wallpapers](https://github.com/OsiNubis99/dotFiles/tree/main/home/wallpapers)
 
 ### Preview
@@ -68,7 +72,11 @@
 
 ### Prerequisites
 
-You need any Fedora Linux distribution.
+You need any MacOS machine with the following applications installed:
+- [Aerospace](https://github.com/nikitabobko/AeroSpace)
+- [Raycast](https://www.raycast.com/)
+- [Rectangle](https://rectangleapp.com/)
+- [Warp Terminal](https://www.warp.dev/)
 
 ### Deployment
 
