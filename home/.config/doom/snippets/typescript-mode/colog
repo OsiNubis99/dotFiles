@@ -1,7 +1,0 @@
-# -*- mode: snippet -*-
-# name: Console log
-# uuid:
-# key: colog
-# condition: t
-# --
-$>console.log('`(buffer-name (current-buffer))` -> `(line-number-at-pos)`', ${'test'})

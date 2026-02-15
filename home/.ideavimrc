@@ -1,0 +1,162 @@
+""" Map leader to space ---------------------
+let mapleader=" "
+
+""" Plugins  --------------------------------
+set surround
+set multiple-cursors
+set commentary
+set argtextobj
+set easymotion
+set textobj-entire
+set ReplaceWithRegister
+set which-key
+
+""" Plugin settings -------------------------
+let g:argtextobj_pairs="[:],(:),<:>"
+
+""" Common settings -------------------------
+set showmode
+set so=5
+set incsearch
+set nu
+set notimeout
+set ideajoin
+set clipboard+=unnamedplus
+set ideastatusicon=gray
+set idearefactormode=keep
+set scrolloff=5
+set incsearch
+set which-key
+set relativenumber
+
+""" Mappings --------------------------------
+""" Files and buffers
+map <leader><space> <Action>(SearchEverywhere)
+map <leader>fg <Action>(FindInPath)
+map <leader>fb <Action>(Switcher)
+map <leader>fr <Action>(RecentFiles)
+map <leader>fn <Action>(NewFile)
+map <leader>ff <Action>(ReformatCode)
+map <leader>ps <Action>(SaveAll)
+
+""" Projects
+map <leader>pp <Action>(NextProjectWindow)
+map <leader>pP <Action>(PreviousProjectWindow)
+map <leader>pr <Action>(ManageRecentProjects)
+map <leader>po <Action>(OpenFile)
+map <leader>pd <Action>(CloseProject)
+map <leader>pn <Action>(NewProject)
+map <leader>pt <Action>(ActivateTerminalToolWindow)
+map <leader>px <Action>(ExportSettings)
+
+""" Tab navigation
+map <leader>bb <Action>(NextTab)
+map <leader>bB <Action>(PreviousTab)
+map <leader>w] <Action>(NextTab)
+map <leader>w[ <Action>(PreviousTab)
+
+""" Buffer operations
+map <leader>bd <Action>(CloseContent)
+map <leader>ba <Action>(CloseAllEditors)
+map <leader>bo <Action>(CloseAllEditorsButActive)
+map <leader>bb <Action>(NextTab)
+map <leader>bp <Action>(PreviousTab)
+
+""" MultiCursors
+map <C-n> <Plug>NextWholeOccurrence
+map <leader>mn <Plug>NextWholeOccurrence
+map <leader>ms <Plug>SkipOccurrence
+map <leader>mp <Plug>RemoveOccurrence
+map <leader>ma <Plug>AllWholeOccurrences
+
+""" Find and Replace
+map <leader>ss <Action>(Find)
+map <leader>sr <Action>(Replace)
+map <leader>sn <Plug>(easymotion-s)
+
+""" Code Navigation
+map <leader>o <Action>(FileStructurePopup)
+map <leader>; <Action>(GotoSymbol)
+map <leader>b <Action>(ToggleBookmark)
+map <leader>B <Action>(ShowBookmarks)
+
+""" Code Actions (similar to LazyVim's <leader>ca)
+map <leader>ca <Action>(ShowIntentionActions)
+map <leader>cf <Action>(ReformatCode)
+map <leader>co <Action>(OptimizeImports)
+map <leader>cs <Action>(SilentCodeCleanup)
+map <leader>ci <Action>(ImportAllClasses)
+
+""" Diagnostic navigation
+map <leader>ee <Action>(GotoNextError)
+map <leader>eE <Action>(GotoPreviousError)
+map <leader>ef <Action>(ShowErrorDescription)
+
+""" Git operations
+map <leader>gg <Action>(TUILauncher.lazygit)
+map <leader>gm <Action>(Vcs.QuickListPopupAction)
+map <leader>gb <Action>(Annotate)
+map <leader>gc <Action>(CheckinProject)
+map <leader>gd <Action>(Compare.LastVersion)
+map <leader>gl <Action>(Vcs.Show.Log)
+map <leader>gp <Action>(Vcs.Push)
+map <leader>gr <Action>(Vcs.RollbackChangedLines)
+map <leader>gt <Action>(Vcs.UpdateProject)
+
+" Enhanced code navigation
+map <leader>gi <Action>(GotoImplementation)
+map <leader>gt <Action>(GotoTest)
+map <leader>gs <Action>(GotoSuperMethod)
+map <leader>gu <Action>(ShowUsages)
+map <leader>gd <Action>(GotoDeclaration)
+map <leader>gr <Action>(FindUsages)
+
+""" Window management (Tabs and Splits)
+map <leader>ww <Action>(NextSplitter)
+map <leader>wv <Action>(SplitVertically)
+map <leader>ws <Action>(SplitHorizontally)
+map <leader>wd <Action>(Unsplit)
+map <leader>wm <Action>(MaximizeEditorInSplit)
+map <leader>wt <Action>(MoveEditorToOppositeTabGroup)
+map <leader>wr <Action>(MoveTabRight)
+map <leader>wc <Action>(CloseContent)
+map <leader>wo <Action>(UnsplitAll)<Action>(CloseAllEditorsButActive)
+map <leader>wh <C-w>h
+map <leader>wj <C-w>j
+map <leader>wk <C-w>k
+map <leader>wl <C-w>l
+map <leader>w= <Action>(StretchSplitToRight)
+map <leader>w- <Action>(StretchSplitToLeft)
+map <leader>w> <Action>(StretchSplitToRight)
+map <leader>w< <Action>(StretchSplitToLeft)
+map <leader>d <Action>(SplitVertically)<Action>(GotoDeclaration)
+map <leader>D <Action>(UnsplitAll)<Action>(CloseAllEditorsButActive)<Action>(SplitVertically)<Action>(GotoDeclaration)
+
+" .ideavimrc is a configuration file for IdeaVim plugin. It uses
+"   the same commands as the original .vimrc configuration.
+" You can find a list of commands here: https://jb.gg/h38q75
+" Find more examples here: https://jb.gg/share-ideavimrc
+
+
+"" -- Suggested options --
+" Show a few lines of context around the cursor. Note that this makes the
+" text scroll if you mouse-click near the start or end of the window.
+
+" --- Enable IdeaVim plugins https://jb.gg/ideavim-plugins
+Plug 'machakann/vim-highlightedyank'
+Plug 'tpope/vim-commentary'
+Plug 'justinmk/vim-sneak'
+
+Plug 'preservim/nerdtree'
+Plug 'terryma/vim-multiple-cursors'
+
+
+"" -- Map IDE actions to IdeaVim -- https://jb.gg/abva4t
+"" Map \r to the Reformat Code action
+"map \r <Action>(ReformatCode)
+
+"" Map <leader>d to start debug
+"map <leader>d <Action>(Debug)
+
+"" Map \b to toggle the breakpoint on the current line
+"map \b <Action>(ToggleLineBreakpoint)

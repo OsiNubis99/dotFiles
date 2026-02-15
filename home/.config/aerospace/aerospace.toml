@@ -1,0 +1,259 @@
+after-startup-command = []
+exec-on-workspace-change = []
+start-at-login = true
+automatically-unhide-macos-hidden-apps = false
+
+# Normalizations. See: https://nikitabobko.github.io/AeroSpace/guide#normalization
+enable-normalization-flatten-containers = true
+enable-normalization-opposite-orientation-for-nested-containers = true
+
+# See: https://nikitabobko.github.io/AeroSpace/guide#layouts
+# The 'accordion-padding' specifies the size of accordion padding
+# You can set 0 to disable the padding feature
+accordion-padding = 300
+
+# Possible values: tiles|accordion
+default-root-container-layout = 'accordion'
+
+# Possible values: horizontal|vertical|auto
+# 'auto' means: wide monitor (anything wider than high) gets horizontal orientation,
+#               tall monitor (anything higher than wide) gets vertical orientation
+default-root-container-orientation = 'auto'
+
+# Mouse follows focus when focused monitor changes
+# Drop it from your config, if you don't like this behavior
+# See https://nikitabobko.github.io/AeroSpace/guide#on-focus-changed-callbacks
+# See https://nikitabobko.github.io/AeroSpace/commands#move-mouse
+# Fallback value (if you omit the key): on-focused-monitor-changed = []
+on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
+
+
+# [[on-window-detected]]
+# if.app-id = 'com.apple.systempreferences'
+# if.app-name-regex-substring = 'settings'
+# if.window-title-regex-substring = 'substring'
+# if.workspace = 'workspace-name'
+# if.during-aerospace-startup = true
+# check-further-callbacks = true
+# run = ['layout floating', 'move-node-to-workspace S']  # The callback itself
+
+# Floating windows
+
+[[on-window-detected]]
+if.app-id = 'com.apple.LocalAuthentication.UIAgent'
+run = ['layout floating']
+
+# Miscellaneous
+
+[[on-window-detected]]
+if.app-id = 'com.googlecode.iterm2'
+run = ['layout floating', 'move-node-to-workspace misc']
+
+[[on-window-detected]]
+if.app-id = 'dev.warp.Warp-Stable'
+run = ['layout floating', 'move-node-to-workspace misc']
+
+[[on-window-detected]]
+if.app-id = 'com.apple.Music'
+run = ['layout floating', 'move-node-to-workspace misc']
+
+[[on-window-detected]]
+if.app-id = 'com.clickup.desktop-app'
+run = ['layout floating', 'move-node-to-workspace misc']
+
+# CHATS
+
+[[on-window-detected]]
+if.app-id = 'ru.keepcoder.Telegram'
+run = 'move-node-to-workspace chats'
+
+[[on-window-detected]]
+if.app-id = 'net.whatsapp.WhatsApp'
+run = 'move-node-to-workspace chats'
+
+[[on-window-detected]]
+if.app-id = 'com.hnc.Discord'
+run = 'move-node-to-workspace chats'
+
+[[on-window-detected]]
+if.app-id = 'com.tinyspeck.slackmacgap'
+run = 'move-node-to-workspace chats'
+
+# BROWSER
+
+[[on-window-detected]]
+if.app-id = 'com.jetbrains.WebStorm'
+run = ['layout floating', 'move-node-to-workspace browser']
+
+[[on-window-detected]]
+if.app-id = 'com.jetbrains.pycharm'
+run = ['layout floating', 'move-node-to-workspace browser']
+
+[[on-window-detected]]
+if.app-id = 'company.thebrowser.Browser'
+run = ['layout floating', 'move-node-to-workspace browser']
+
+# WORK ITEMS
+
+[[on-window-detected]]
+if.app-id = 'com.postmanlabs.mac'
+run = ['layout floating', 'move-node-to-workspace work-items']
+
+[[on-window-detected]]
+if.app-id = 'com.xkoji.altair'
+run = ['layout floating', 'move-node-to-workspace work-items']
+
+[[on-window-detected]]
+if.app-id = 'com.anchorfree.hss-mac' # Hotspot Shield
+run = ['layout floating', 'move-node-to-workspace work-items']
+
+[[on-window-detected]]
+if.app-id = 'org.openvpn.client.app'
+run = ['layout floating', 'move-node-to-workspace work-items']
+
+[[on-window-detected]]
+if.app-id = 'com.jetbrains.datagrip'
+run = ['layout floating', 'move-node-to-workspace work-items']
+
+[[on-window-detected]]
+if.app-id = 'com.jetbrains.toolbox'
+run = ['layout floating', 'move-node-to-workspace work-items']
+
+# Games
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'steam'
+run = ['layout floating', 'move-node-to-workspace games']
+
+[[on-window-detected]]
+if.app-id = 'com.hypixel.hytale-launcher'
+run = ['layout floating', 'move-node-to-workspace games']
+
+[[on-window-detected]]
+if.app-id = 'com.codeweavers.CrossOver'
+run = ['layout floating', 'move-node-to-workspace games']
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'riotgames'
+run = ['layout floating', 'move-node-to-workspace games']
+
+# DOCUMENTS
+
+[[on-window-detected]]
+if.app-id = 'com.apple.finder'
+run = ['layout tiling', 'move-node-to-workspace documents']
+
+# DEFAULT
+
+[[on-window-detected]]
+check-further-callbacks = true
+run = ['layout floating', 'move-node-to-workspace default']
+
+# Possible values: (qwerty|dvorak)
+# See https://nikitabobko.github.io/AeroSpace/guide#key-mapping
+[key-mapping]
+preset = 'dvorak'
+
+# Gaps between windows (inner-*) and between monitor edges (outer-*).
+# Possible values:
+# - Constant:     gaps.outer.top = 8
+# - Per monitor:  gaps.outer.top = [{ monitor.main = 16 }, { monitor."some-pattern" = 32 }, 24]
+#                 In this example, 24 is a default value when there is no match.
+#                 Monitor pattern is the same as for 'workspace-to-monitor-force-assignment'.
+#                 See: https://nikitabobko.github.io/AeroSpace/guide#assign-workspaces-to-monitors
+[gaps]
+inner.horizontal = 10
+inner.vertical = 10
+outer.left = 10
+outer.bottom = 10
+outer.top = 10
+outer.right = 10
+
+
+# 'main' binding mode declaration
+# See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
+# 'main' binding mode must be always presented
+# Fallback value (if you omit the key): mode.main.binding = {}
+[mode.main.binding]
+
+# All possible keys:
+# - Letters.        a, b, c, ..., z
+# - Numbers.        0, 1, 2, ..., 9
+# - Keypad numbers. keypad0, keypad1, keypad2, ..., keypad9
+# - F-keys.         f1, f2, ..., f20
+# - Special keys.   minus, equal, period, comma, slash, backslash, quote, semicolon, backtick,
+#                   leftSquareBracket, rightSquareBracket, space, enter, esc, backspace, tab
+# - Keypad special. keypadClear, keypadDecimalMark, keypadDivide, keypadEnter, keypadEqual,
+#                   keypadMinus, keypadMultiply, keypadPlus
+# - Arrows.         left, down, up, right
+# All possible modifiers: cmd, alt, ctrl, shift
+
+# All possible commands: https://nikitabobko.github.io/AeroSpace/commands
+
+alt-ctrl-shift-f = 'fullscreen --no-outer-gaps'
+alt-ctrl-f = 'layout floating'
+
+alt-shift-left = 'join-with left'
+alt-shift-down = 'join-with down'
+alt-shift-up = 'join-with up'
+alt-shift-right = 'join-with right'
+
+# See: https://nikitabobko.github.io/AeroSpace/commands#layout
+alt-slash = 'layout tiles horizontal vertical'
+alt-comma = 'layout accordion horizontal vertical'
+
+# See: https://nikitabobko.github.io/AeroSpace/commands#focus
+alt-h = 'focus left'
+alt-j = 'focus down'
+alt-k = 'focus up'
+alt-l = 'focus right'
+
+# See: https://nikitabobko.github.io/AeroSpace/commands#move
+alt-shift-h = 'move left'
+alt-shift-j = 'move down'
+alt-shift-k = 'move up'
+alt-shift-l = 'move right'
+
+# See: https://nikitabobko.github.io/AeroSpace/commands#resize
+alt-shift-minus = 'resize smart -50'
+alt-shift-equal = 'resize smart +50'
+
+# See: https://nikitabobko.github.io/AeroSpace/commands#workspace
+cmd-ctrl-shift-alt-1 = 'workspace misc'
+cmd-ctrl-shift-alt-2 = 'workspace chats'
+cmd-ctrl-shift-alt-3 = 'workspace browser'
+cmd-ctrl-shift-alt-4 = 'workspace work-items'
+cmd-ctrl-shift-alt-8 = 'workspace games'
+cmd-ctrl-shift-alt-9 = 'workspace documents'
+cmd-ctrl-shift-alt-0 = 'workspace default'
+
+# See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
+alt-shift-1 = 'move-node-to-workspace misc --focus-follows-window'
+alt-shift-2 = 'move-node-to-workspace chats --focus-follows-window'
+alt-shift-3 = 'move-node-to-workspace browser --focus-followswindow'
+alt-shift-4 = 'move-node-to-workspace work-items --focus-follows-window'
+alt-shift-8 = 'move-node-to-workspace games --focus-follows-window'
+alt-shift-9 = 'move-node-to-workspace documents --focus-follows-window'
+alt-shift-0 = 'move-node-to-workspace default --focus-follows-window'
+
+# Summon workspace in current monitor
+ctrl-alt-1 = 'summon-workspace --fail-if-noop misc'
+ctrl-alt-2 = 'summon-workspace --fail-if-noop chats'
+ctrl-alt-3 = 'summon-workspace --fail-if-noop browser'
+ctrl-alt-4 = 'summon-workspace --fail-if-noop work-items'
+ctrl-alt-8 = 'summon-workspace --fail-if-noop games'
+ctrl-alt-9 = 'summon-workspace --fail-if-noop documents'
+ctrl-alt-0 = 'summon-workspace --fail-if-noop default'
+
+lt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
+
+# See: https://nikitabobko.github.io/AeroSpace/commands#mode
+alt-shift-semicolon = 'mode service'
+
+# 'service' binding mode declaration.
+# See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
+[mode.service.binding]
+esc = ['reload-config', 'mode main']
+r = ['flatten-workspace-tree', 'mode main'] # reset layout
+f = ['layout floating tiling', 'mode main'] # Toggle between floating and tiling layout
+backspace = ['close-all-windows-but-current', 'mode main']
