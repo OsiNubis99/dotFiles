@@ -75,10 +75,6 @@ run = 'move-node-to-workspace chats'
 if.app-id = 'com.hnc.Discord'
 run = 'move-node-to-workspace chats'
 
-[[on-window-detected]]
-if.app-id = 'com.tinyspeck.slackmacgap'
-run = 'move-node-to-workspace chats'
-
 # BROWSER
 
 [[on-window-detected]]
@@ -92,6 +88,12 @@ run = ['layout floating', 'move-node-to-workspace browser']
 [[on-window-detected]]
 if.app-id = 'company.thebrowser.Browser'
 run = ['layout floating', 'move-node-to-workspace browser']
+
+# WORK CHATS
+
+[[on-window-detected]]
+if.app-id = 'com.tinyspeck.slackmacgap'
+run = ['layout tiling', 'move-node-to-workspace work-chats']
 
 # WORK ITEMS
 
