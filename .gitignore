@@ -12,3 +12,4 @@ home/.config/nvim/workspaces.json
 *.DS_Store
 home/.config/nvim/lazy-lock.json
 home/.config/nvim/lazyvim.json
+/home/.config/karabiner/automatic_backups
