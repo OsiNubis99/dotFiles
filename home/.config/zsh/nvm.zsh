@@ -1,19 +1,11 @@
 # NVM para zsh (equivalente a tu ~/.zshrc actual)
 export NVM_DIR="$HOME/.nvm"
 
-# Homebrew prefix (si existe) + fallback
-_nvm_prefix=""
-if command -v brew >/dev/null 2>&1; then
-  _nvm_prefix="$(brew --prefix 2>/dev/null)"
-fi
-
-# Cargar nvm
-if [ -n "$_nvm_prefix" ] && [ -s "$_nvm_prefix/opt/nvm/nvm.sh" ]; then
-  source "$_nvm_prefix/opt/nvm/nvm.sh"
-elif [ -s "/opt/homebrew/opt/nvm/nvm.sh" ]; then
-  source "/opt/homebrew/opt/nvm/nvm.sh"
-elif [ -s "/usr/local/opt/nvm/nvm.sh" ]; then
-  source "/usr/local/opt/nvm/nvm.sh"
+# Cargar nvm: primero ~/.nvm (instalación directa), luego homebrew como fallback
+if [ -s "$NVM_DIR/nvm.sh" ]; then
+  source "$NVM_DIR/nvm.sh"
+elif command -v brew >/dev/null 2>&1 && [ -s "$(brew --prefix 2>/dev/null)/opt/nvm/nvm.sh" ]; then
+  source "$(brew --prefix)/opt/nvm/nvm.sh"
 fi
 
 # Completion (opcional)

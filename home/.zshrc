@@ -13,3 +13,4 @@ case $- in
     fi
   ;;
 esac
+export PATH="/opt/homebrew/opt/libpq/bin:$PATH"

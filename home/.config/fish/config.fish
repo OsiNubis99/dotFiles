@@ -4,6 +4,9 @@ end
 
 export LANG=en_US.UTF-8
 
+# Claude Code
+set -gx CLAUDE_ENV_FILE "$HOME/.claude/shell-init.sh"
+
 # Brew
 fish_add_path /opt/homebrew/bin
 

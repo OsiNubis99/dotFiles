@@ -10,6 +10,15 @@ home/.config/nvim/sessions
 home/.config/nvim/workspaces.json
 
 *.DS_Store
+
+home/.claude.json
 home/.config/nvim/lazy-lock.json
 home/.config/nvim/lazyvim.json
 /home/.config/karabiner/automatic_backups
+
+# Claude Code: estado efímero / local (no versionar)
+.claude/scheduled_tasks.lock
+.claude/settings.local.json
+home/.claude/.last-cleanup
+home/.claude/sessions/
+home/.zsh_history

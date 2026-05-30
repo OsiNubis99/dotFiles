@@ -1,0 +1,23 @@
+# Runtime / session data
+history.jsonl
+skills/
+session-env/
+shell-snapshots/
+ide/
+tasks/
+todos/
+plans/
+
+# Cache y datos temporales
+paste-cache/
+cache/
+statsig/
+downloads/
+debug/
+
+# Info sensible
+projects/
+plugins/
+telemetry/
+file-history/
+backups/

@@ -78,15 +78,11 @@ run = 'move-node-to-workspace chats'
 # BROWSER
 
 [[on-window-detected]]
-if.app-id = 'com.jetbrains.WebStorm'
-run = ['layout floating', 'move-node-to-workspace browser']
-
-[[on-window-detected]]
-if.app-id = 'com.jetbrains.pycharm'
-run = ['layout floating', 'move-node-to-workspace browser']
-
-[[on-window-detected]]
 if.app-id = 'company.thebrowser.Browser'
+run = ['layout floating', 'move-node-to-workspace browser']
+
+[[on-window-detected]]
+if.app-id = 'com.google.Chrome'
 run = ['layout floating', 'move-node-to-workspace browser']
 
 # WORK CHATS
@@ -96,6 +92,18 @@ if.app-id = 'com.tinyspeck.slackmacgap'
 run = ['layout tiling', 'move-node-to-workspace work-chats']
 
 # WORK ITEMS
+
+[[on-window-detected]]
+if.app-id = 'com.anthropic.claudefordesktop'
+run = ['layout floating', 'move-node-to-workspace work-items']
+
+[[on-window-detected]]
+if.app-id = 'com.jetbrains.WebStorm'
+run = ['layout floating', 'move-node-to-workspace work-items']
+
+[[on-window-detected]]
+if.app-id = 'com.jetbrains.pycharm'
+run = ['layout floating', 'move-node-to-workspace work-items']
 
 [[on-window-detected]]
 if.app-id = 'com.postmanlabs.mac'
@@ -125,6 +133,22 @@ run = ['layout floating', 'move-node-to-workspace work-items']
 
 [[on-window-detected]]
 if.app-name-regex-substring = 'steam'
+run = ['layout floating', 'move-node-to-workspace games']
+
+[[on-window-detected]]
+if.workspace = 'games'
+run = ['layout floating', 'move-node-to-workspace games']
+
+[[on-window-detected]]
+if.app-id = 'com.larian.bg3' # Baldur's Gate 3
+run = ['layout floating', 'move-node-to-workspace games']
+
+[[on-window-detected]]
+if.app-id = 'unity.Team-Cherry.Silksong'
+run = ['layout floating', 'move-node-to-workspace games']
+
+[[on-window-detected]]
+if.app-id = 'com.coffeestain.valheim-steam'
 run = ['layout floating', 'move-node-to-workspace games']
 
 [[on-window-detected]]
