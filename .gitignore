@@ -22,3 +22,6 @@ home/.config/nvim/lazyvim.json
 home/.claude/.last-cleanup
 home/.claude/sessions/
 home/.zsh_history
+
+# CLAUDE.md global vive en ~/backup (fuera del público); acá solo el symlink
+home/.claude/CLAUDE.md
