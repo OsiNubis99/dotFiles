@@ -43,21 +43,17 @@ Al editar archivos en `home/`, estas modificando directamente las configs activa
 - **AeroSpace**: `home/.config/aerospace/` - Window tiling
 - **Claude Code**: `home/.claude/` - Configuracion global de Claude
 
-### Los dos `CLAUDE.md` del repo
+### `CLAUDE.md` y config de Claude
 
-Este repo contiene **dos** `CLAUDE.md` con propositos distintos. No confundirlos:
+- **`CLAUDE.md` (raiz)**: instrucciones **del proyecto** dotFiles. Solo importa
+  `@docs/context.md`. Aplica cuando se trabaja EN este repo.
+- **`home/.claude/`**: solo la config de la herramienta Claude Code que es parte del setup
+  de la PC (`settings.json`, `shell-init.sh`, `.gitignore`).
 
-| Archivo | Symlink a | Rol | Alcance |
-|---------|-----------|-----|---------|
-| `CLAUDE.md` (raiz) | — (vive en el repo) | Instrucciones **del proyecto** dotFiles. Solo importa `@docs/context.md`. | Solo aplica cuando se trabaja EN este repo |
-| `home/.claude/CLAUDE.md` | `~/.claude/CLAUDE.md` | Instrucciones **globales** de Claude Code. Las que Claude lee en CUALQUIER proyecto de la Mac. | Toda la maquina |
-
-- El de la **raiz** es el `CLAUDE.md` estandar de cualquier repo (apunta a su `docs/context.md`).
-- El de **`home/.claude/`** se enlaza con `stow` a `~/.claude/CLAUDE.md`, por eso Claude
-  lo trata como el "global": preferencias generales, convenciones de comentarios,
-  ClickUp, reglas de operaciones destructivas, y el puntero a [codeaver.server](../home/.claude/docs/codeaver-server.md).
-- Editar `home/.claude/CLAUDE.md` en el repo modifica directamente el global activo
-  (mismo inode via stow).
+> El `CLAUDE.md` **global** de Claude (preferencias de trabajo, convenciones, contexto de
+> proyectos/clientes) **no vive en este repo**: dotFiles es público y solo contiene config
+> de la PC. Ese global y la documentación de trabajo viven fuera (en `~/backup`), y
+> `~/.claude/CLAUDE.md` es un symlink hacia allí.
 
 ---
 
